@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/hall3-mess",
+            "outputPath": "mess-build/public",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -50,7 +50,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hall3-mess:build"
+            "browserTarget": "hall3-mess:build",
+            "port": 8080
           },
           "configurations": {
             "production": {

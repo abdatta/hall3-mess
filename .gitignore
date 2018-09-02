@@ -1,12 +1,17 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
+/mess-build
 /dist
 /tmp
 /out-tsc
 
+# private files
+/server/src/config/local.ts
+
 # dependencies
 /node_modules
+/server/node_modules
 
 # IDEs and editors
 /.idea
