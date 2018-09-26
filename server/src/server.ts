@@ -3,13 +3,18 @@ import express from 'express';
 import httpLogger from 'morgan';
 import moment from 'moment';
 import path from 'path';
+import session from 'express-session';
+import connectMongo from 'connect-mongo';
+import mongoose from 'mongoose';
 
 // Routes
-import { AccountsRoute } from './routes/accounts.routes';
+import { AccountsRoute } from './routes/accounts.route';
 
 // Models
+import { UserModel } from './models/user.model';
 
 // Schema
+import { UserSchema } from './schemas/user.schema';
 
 // Config
 import { Config } from './config/local';
@@ -25,6 +30,9 @@ export class Server {
   public app: express.Application;
 
   // The mongoose Connection
+  private connection!: mongoose.Connection;
+
+  private userModel!: mongoose.Model<UserModel>; // an instance of UserModel
 
   /**
    * Bootstrap the application
@@ -92,11 +100,34 @@ export class Server {
 
     // connect to mongoose
 
+    require('mongoose').Promise = global.Promise;
+
+    const connection: mongoose.Connection = mongoose.createConnection(MONGODB_CONNECTION, { useNewUrlParser: true });
+    mongoose.set('useCreateIndex', true);
+    this.connection = connection;
+
+    // create models
+    this.userModel = connection.model<UserModel>('User', UserSchema);
+
     // create MongoStore
+    const MongoStore = connectMongo(session);
 
     // create session
+    const esession = session({
+      secret: Config.session_secret,
+      saveUninitialized: true,
+      resave: false,
+      store: new MongoStore({
+        mongooseConnection: connection
+      }),
+      cookie: {
+        // domain: 'mess.hall3iitk.com', // TODO: make this for domain specific
+        maxAge: 1 * 24 * 60 * 60 * 1000  // 1 day
+      }
+    });
 
     // use session
+    this.app.use(esession);
 
   }
 
@@ -108,8 +139,8 @@ export class Server {
    */
   public routes = () => {
 
-    // Main Website API Routes
-    this.app.use('/api/accounts', AccountsRoute.create());
+    // API Routes
+    this.app.use('/api/accounts', AccountsRoute.create(this.userModel));
 
     // Public Routes
     this.app.use('/', express.static(path.join(__dirname, '../public')));
@@ -124,7 +155,7 @@ export class Server {
    */
   public shutdown = () => {
     console.log('Shutting Down');
-    // this.connection.close();
+    this.connection.close();
   }
 
 }

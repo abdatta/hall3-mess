@@ -1,6 +1,8 @@
 import { Router } from 'express';
+import { Model } from 'mongoose';
 
 import { AccountCtrl } from '../controllers/accounts.controller';
+import { UserModel } from '../models/user.model';
 
 /**
  * For supplying data
@@ -17,14 +19,15 @@ export class AccountsRoute {
      * @return {Router} the router for this route
      * @static
      */
-    public static create(): Router {
+    public static create(userModel: Model<UserModel>): Router {
 
-        const accountCtrl: AccountCtrl = new AccountCtrl();
+        const accountCtrl: AccountCtrl = new AccountCtrl(userModel);
 
         const router: Router = Router();
 
         router
-            .get('/login', accountCtrl.logIn);
+            .post('/login', accountCtrl.logIn)
+            .post('/signup', accountCtrl.createUser);
 
         return router;
     }
