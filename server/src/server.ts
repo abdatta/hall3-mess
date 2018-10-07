@@ -102,8 +102,9 @@ export class Server {
 
     require('mongoose').Promise = global.Promise;
 
-    const connection: mongoose.Connection = mongoose.createConnection(MONGODB_CONNECTION, { useNewUrlParser: true });
+    mongoose.set('useNewUrlParser', true);
     mongoose.set('useCreateIndex', true);
+    const connection: mongoose.Connection = mongoose.createConnection(MONGODB_CONNECTION);
     this.connection = connection;
 
     // create models

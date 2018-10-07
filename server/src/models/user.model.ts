@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
  * @interface UserModel
  */
 export interface UserModel extends Document {
-    name: string,
+    name: string;
     rollno: string;
     password: string;
     email: string;
