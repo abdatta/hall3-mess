@@ -10,7 +10,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 cd hall3-mess
 npm install
 cd server
-npm install```
+npm install
+```
 
 ## Development server
 
