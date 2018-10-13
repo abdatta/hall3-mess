@@ -2,6 +2,17 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
 
+## Installation
+- Install/Update node and npm
+- Install mongodb
+- Run the following commands
+```git clone https://github.com/abdatta/hall3-mess.git
+cd hall3-mess
+npm install
+cd server
+npm install
+```
+
 ## Development server
 
 Run `npm start` for a dev server. Navigate to `http://localhost:8080/`. The app will automatically reload if you change any of the source files.
