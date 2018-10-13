@@ -17,7 +17,6 @@ import { ThisweekComponent } from './thisweek/thisweek.component';
 import { HistoryComponent } from './history/history.component';
 import { NotwellComponent } from './notwell/notwell.component';
 
-//This is my case 
 const routes: Routes = [
     {
         path: '',
@@ -34,13 +33,13 @@ const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent,
-        children :[
-            { path: '',component: BookComponent },
-            { path: 'book',component: BookComponent },
-            { path: 'prebook',component: PrebookComponent },
-            { path: 'thisweek',component:ThisweekComponent },
-            { path: 'history',component:HistoryComponent},
-            { path: 'notwell',component:NotwellComponent}
+        children : [
+            { path: '', component: BookComponent },
+            { path: 'book', component: BookComponent },
+            { path: 'prebook', component: PrebookComponent },
+            { path: 'thisweek', component: ThisweekComponent },
+            { path: 'history', component: HistoryComponent},
+            { path: 'notwell', component: NotwellComponent}
         ]
     }
 ];
