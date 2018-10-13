@@ -14,6 +14,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule} from '@angular/material';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { BookComponent } from './book/book.component';
+import { PrebookComponent } from './prebook/prebook.component';
+import { ThisweekComponent } from './thisweek/thisweek.component';
+import { HistoryComponent } from './history/history.component';
+import { NotwellComponent } from './notwell/notwell.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +26,12 @@ import { LayoutModule } from '@angular/cdk/layout';
     LoginComponent,
     SignupComponent,
     HomeComponent,
-    MainNavComponent
+    MainNavComponent,
+    BookComponent,
+    PrebookComponent,
+    ThisweekComponent,
+    HistoryComponent,
+    NotwellComponent
   ],
   imports: [
     BrowserModule,
