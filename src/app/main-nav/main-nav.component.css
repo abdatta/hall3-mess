@@ -3,10 +3,11 @@
 }
 
 .sidenav {
-  width: 250px;
+  width: 220px;
 }
 
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
 }
+
