@@ -18,9 +18,10 @@ h3 { color: #4a89dc; }
 
 form {
 	
-    text-align: center;
-	width: 380px;
-	margin: 4em auto;
+	text-align: center;
+	max-width: 380px;
+	width: 95%;
+	margin: 0 auto;
 	padding: 3em 3em 2em 3em;
 	background:#fafafa;
   border: 1px solid #ebebeb;
@@ -243,4 +244,10 @@ footer img:hover { opacity: .83; }
 
 footer img:focus , footer a:focus { outline: none; }
 
-  
+.flex {
+	display: flex;
+    flex-flow: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
