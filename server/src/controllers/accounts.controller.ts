@@ -24,18 +24,34 @@ export class AccountCtrl {
      * @constructor
      */
     public sanitize = (user: any) => {
+        user = JSON.parse(JSON.stringify(user));
         user['password'] = undefined;
+        user['_id'] = undefined;
         user['__v'] = undefined;
         return user;
     }
 
     /**
-     * Log In a user
+     * Check authentication status
      *
      * @class AccountCtrl
-     * @method logIn
+     * @method checkAuth
      */
-    public logIn = (req: Request, res: Response) => {
+    public checkAuth = (req: Request, res: Response, next: NextFunction) => {
+        if (req.isAuthenticated()) {
+            next();
+        } else {
+            res.sendStatus(401);  // Unauthorized
+        }
+    }
+
+    /**
+     * Update a account of a user
+     *
+     * @class AccountCtrl
+     * @method updateUser
+     */
+    public updateUser = (req: Request, res: Response) => {
         this.userModel.findOne({
             'rollno': req.body.rollno
         }, (err, user: UserModel) => {
@@ -43,45 +59,20 @@ export class AccountCtrl {
                 this.internalServer(res, err);
             }
             if (!user) {
-                res.sendStatus(404);  // User does not exist
+                res.sendStatus(404);  // Not found
+            } else if (!user.validPassword(req.body.password)) {
+                res.sendStatus(403); // Wrong Password, forbidden
             } else {
-                if (user.validPassword(req.body.password)) {
-                    res.status(200).send('Log in successful.');
-                } else {
-                    res.status(403).send('Incorrect Password!');
+                user.name = req.body.name || user.name;
+                if (req.body['newpassword']) {
+                    user.password = user.generateHash(req.body['newpassword']);
                 }
-            }
-        });
-    }
-
-    /**
-     * Create an account for a new user
-     *
-     * @class AccountCtrl
-     * @method createUser
-     */
-    public createUser = (req: Request, res: Response) => {
-        this.userModel.findOne({
-            'rollno': req.body.rollno
-        }, (err, user: UserModel) => {
-            if (err) {
-                this.internalServer(res, err);
-            }
-            if (user) {
-                res.sendStatus(403);  // Already exists, so forbidden
-            } else {
-                const newUser = new this.userModel();
-                newUser.name = req.body.name;
-                newUser.rollno = req.body.rollno;
-                newUser.password = newUser.generateHash(req.body.password);
-                if (req.body.email) {
-                    newUser.email = req.body.email;
-                }
-                newUser.save((error) => {
+                user.email = req.body.email || user.email || (user.rollno + '@iitk.ac.in');
+                user.save((error) => {
                     if (error) {
                         this.internalServer(res, error);
                     } else {
-                        res.status(200).json(this.sanitize(newUser));
+                        res.status(200).json(this.sanitize(user));
                     }
                 });
             }
@@ -89,9 +80,20 @@ export class AccountCtrl {
     }
 
     /**
+     * Logout user
+     *
+     * @class AccountCtrl
+     * @method logout
+     */
+    public logout = (req: Request, res: Response) => {
+        req.logout();
+        res.sendStatus(200);
+    }
+
+    /**
      * Send internal server error messages
      *
-     * @class AskTheHECCtrl
+     * @class AccountCtrl
      * @method internalServer
      */
     private internalServer = (res: Response, err: any) => {

@@ -7,7 +7,7 @@
 /out-tsc
 
 # private files
-/server/src/config/local.ts
+/server/src/config/local.config.ts
 
 # dependencies
 /node_modules

@@ -12,7 +12,7 @@ npm install
 cd server
 npm install
 ```
-- Ask for the missing `local.ts` file from any of the contributors and put it inside a new folder `\server\src\config`.
+- Ask for the missing `local.config.ts` file from any of the contributors and put it inside the folder `\server\src\config`.
 - Run `npm start` from the root of the repository, and there you go!
 
 ## Development server

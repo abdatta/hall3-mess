@@ -64,10 +64,7 @@
         "npm run prod"
       ],
       "post-commit": [],
-      "post-checkout": [
-        "git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD | grep -q -E ^package.json && npm install || echo",
-        "git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD | grep -q server/package.json && cd server && npm install || echo"
-      ],
+      "post-checkout": [],
       "post-merge": [
         "git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD | grep -q -E ^package.json && npm install || echo",
         "git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD | grep -q server/package.json && cd server && npm install || echo"
