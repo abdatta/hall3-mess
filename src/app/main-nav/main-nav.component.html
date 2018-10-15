@@ -8,13 +8,18 @@
     [opened]="!(isHandset$ | async)">
     <mat-toolbar color="primary"><mat-icon>account_circle</mat-icon>&nbsp;170161</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/home/book"><mat-icon>border_color </mat-icon> &nbsp;Book</a>
+      <div class="mobile" (click)="drawer.toggle()"><a mat-list-item routerLink="/home/book" ><mat-icon>border_color </mat-icon> &nbsp;Book</a>
       <a mat-list-item routerLink="/home/prebook"><mat-icon>restaurant </mat-icon>  &nbsp;Pre-Book</a>
       <a mat-list-item routerLink="/home/thisweek"><mat-icon>restaurant_menu </mat-icon> &nbsp;This week menu</a>
       <a mat-list-item routerLink="/home/history"><mat-icon>calendar_today</mat-icon> &nbsp;Bills and History</a>
       <a mat-list-item routerLink="/home/notwell"><mat-icon>local_hospital</mat-icon> &nbsp;Not Well</a>
-      <a mat-list-item routerLink="/"><img src="assets/img/logout.png">  &nbsp;Logout</a>
+      <a mat-list-item routerLink="/"><img src="assets/img/logout.png">  &nbsp;Logout</a></div>
       
+      <div class="laptop"><a mat-list-item routerLink="/home/prebook"><mat-icon>restaurant </mat-icon>  &nbsp;Pre-Book</a>
+      <a mat-list-item routerLink="/home/thisweek"><mat-icon>restaurant_menu </mat-icon> &nbsp;This week menu</a>
+      <a mat-list-item routerLink="/home/history"><mat-icon>calendar_today</mat-icon> &nbsp;Bills and History</a>
+      <a mat-list-item routerLink="/home/notwell"><mat-icon>local_hospital</mat-icon> &nbsp;Not Well</a>
+      <a mat-list-item routerLink="/"><img src="assets/img/logout.png">  &nbsp;Logout</a></div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

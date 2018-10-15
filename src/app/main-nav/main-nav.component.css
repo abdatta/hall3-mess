@@ -3,7 +3,7 @@
 }
 
 .sidenav {
-  width: 220px;
+  width: 200px;
 }
 
 .mat-toolbar.mat-primary {
@@ -11,3 +11,20 @@
   top: 0;
 }
 
+@media (min-width:960px) {
+  .mobile{
+    display: none;
+  }
+}
+
+@media (max-width:960px) {
+  .laptop{
+    display: none;
+  }
+}
+
+@media (max-width:840px) {
+  .laptop{
+    display: none;
+  }
+}
