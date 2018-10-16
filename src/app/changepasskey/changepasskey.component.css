@@ -1,6 +1,7 @@
 #container {
     display: grid;
     padding: 5px 7px;
+
 }
 
 ul {
@@ -11,9 +12,9 @@ ul {
 li {
     background: rgb(236, 236, 236);
     border-radius: 8px;
-    padding: 7px;
+    padding: 20px;
     margin-bottom: 8px;
-   
+    text-align: center;
 }
                 
 a {
@@ -23,28 +24,12 @@ a {
     color:#00A8FF;
 }
 
-.arrow {
-    background-color: rgb(236, 236, 236);
-    color: rgb(0, 0, 0);
-    padding: 2px 5px;
-    text-align: center;
-    text-decoration: none;
-    border: none;
-    font-size: 5px;
-    margin: 0px;
-    cursor: pointer;
-}
-
-.pull-right {
-    float: right;
-}
-
 .button {
 	border-radius: 10px;
   position: relative;
   display: inline-block;
   padding: 12px 24px;
-  margin: auto;
+  margin: .3em 0 1em 0;
   width: 120px;
   vertical-align: middle;
   color: #fff;
@@ -55,9 +40,9 @@ a {
   letter-spacing: 1px;
   background: transparent;
   border: 0;
+ 
   cursor: pointer;
   transition: all 0.15s ease;
-  
 }
 .button:focus { outline: 0; }
 
@@ -70,7 +55,7 @@ a {
 }
 
 .buttonBlue:hover { background: #2265bd; }
-               
+           
                 
             
         

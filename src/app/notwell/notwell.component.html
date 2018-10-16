@@ -7,12 +7,22 @@
           <br>
           <form>
             List of items:<br>
-            <input type="radio" name="fooditem" value="Curd-rice">Curd-rice<br>
-            <input type="radio" name="fooditem" value="Dal-rice">Dal-rice<br>
-            <input type="radio" name="fooditem" value="Riceonly">Rice-only<br><br>
-            <input type="text" name="name" placeholder="Name:"><br><br>
-            <input type="text" name="wing" placeholder="Wing:(Ex: 3bot)"><br><br>
-            <input type="text" name="wing" placeholder="Room:(Ex: 133)"><br><br>
+            <input class="w3-radio" type="radio" name="fooditem" value="Curd-rice">Curd-rice
+            <input class="w3-radio" type="radio" name="fooditem" value="Dal-rice">Dal-rice
+            <input class="w3-radio" type="radio" name="fooditem" value="Riceonly">Rice-only<br><br>
+            <div class="w3-row-padding">
+              <div class="w3-third">
+                <input class="w3-input w3-border" type="text" placeholder="Name:" autofocus>
+              </div>
+              <div class="w3-third">
+                <input class="w3-input w3-border" type="text" placeholder="Wing:(Ex: 5top)">
+              </div>
+              <div class="w3-third">
+                <input class="w3-input w3-border" type="text" placeholder="Room:(Ex: 350)">
+              </div>
+            </div>
+            <br>
+            
             <button type="submit" class="button buttonBlue"><b>Submit</b></button>
           </form>
       </li>

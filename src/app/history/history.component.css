@@ -11,9 +11,10 @@ ul {
 
 li {
     background: rgb(236, 236, 236);
-    border-radius: 8px;
+    border-radius: 8px 8px 0px 0px;
     padding: 20px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
+    margin-top:4px;
 }
                 
 a {
@@ -22,8 +23,52 @@ a {
     font-weight: bold;
     color:#00A8FF;
 }
-        
-               
+
+mat-expansion-panel{
+    background: rgb(236, 236, 236);
+    border-radius: 0px 0px 8px 8px;
+    margin:-4px 2px 4px 2px;
+
+}
+
+.expand {
+    background: rgb(255, 255, 255);
+    border-radius: 8px 8px 8px 8px;
+    padding: 8px;
+    margin: 4px -16px 4px -16px;
+}
+
+.note{
+    text-align:center;
+    margin:auto;
+    padding: auto;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 0px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.c1{
+    margin-left:-10px;
+}
+
+.c2{
+    margin-right:-10px;
+    width:51%;
+}
+
+.pull-right {
+    float: right;
+}
                 
             
         

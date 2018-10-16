@@ -19,6 +19,13 @@ import { PrebookComponent } from './prebook/prebook.component';
 import { ThisweekComponent } from './thisweek/thisweek.component';
 import { HistoryComponent } from './history/history.component';
 import { NotwellComponent } from './notwell/notwell.component';
+import { ChangepasskeyComponent } from './changepasskey/changepasskey.component';
+import { GuestroomComponent } from './guestroom/guestroom.component';
+import { ForgotkeyComponent } from './forgotkey/forgotkey.component';
+
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -31,7 +38,10 @@ import { NotwellComponent } from './notwell/notwell.component';
     PrebookComponent,
     ThisweekComponent,
     HistoryComponent,
-    NotwellComponent
+    NotwellComponent,
+    ChangepasskeyComponent,
+    GuestroomComponent,
+    ForgotkeyComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +54,10 @@ import { NotwellComponent } from './notwell/notwell.component';
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatExpansionModule,
+    MatSlideToggleModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]
