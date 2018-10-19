@@ -21,7 +21,7 @@ export class AccountCtrl {
      * Sanitize user json being sent
      *
      * @class AccountCtrl
-     * @constructor
+     * @method sanitize
      */
     public sanitize = (user: any) => {
         user = JSON.parse(JSON.stringify(user));

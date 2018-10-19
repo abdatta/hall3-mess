@@ -6,16 +6,16 @@ import { AccountCtrl } from '../controllers/accounts.controller';
 import { UserModel } from '../models/user.model';
 
 /**
- * For supplying data
+ * For authentication purposes
  *
- * @class InfoRoute
+ * @class AccountsRoute
  */
 export class AccountsRoute {
 
     /**
      * Create the router
      *
-     * @class InfoRoute
+     * @class AccountsRoute
      * @method create
      * @return {Router} the router for this route
      * @static
