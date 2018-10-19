@@ -10,12 +10,15 @@ import passport from 'passport';
 
 // Routes
 import { AccountsRoute } from './routes/accounts.route';
+import { DishesRoute } from './routes/dishes.route';
 
 // Models
 import { UserModel } from './models/user.model';
+import { DishModel } from './models/dish.model';
 
 // Schema
 import { UserSchema } from './schemas/user.schema';
+import { DishSchema } from './schemas/dish.schema';
 
 // Config
 import { LocalConfig } from './config/local.config';
@@ -35,6 +38,7 @@ export class Server {
   private connection!: mongoose.Connection;
 
   private userModel!: mongoose.Model<UserModel>; // an instance of UserModel
+  private dishModel!: mongoose.Model<DishModel>; // an instance of DishModel
 
   /**
    * Bootstrap the application
@@ -111,6 +115,7 @@ export class Server {
 
     // create models
     this.userModel = connection.model<UserModel>('User', UserSchema);
+    this.dishModel = connection.model<DishModel>('Dish', DishSchema);
 
     // create MongoStore
     const MongoStore = connectMongo(session);
@@ -149,6 +154,7 @@ export class Server {
 
     // API Routes
     this.app.use('/api/account', AccountsRoute.create(this.userModel, passport));
+    this.app.use('/api/dishes', DishesRoute.create(this.dishModel));
 
     // Public Routes
     this.app.use('/', express.static(path.join(__dirname, '../public')));
