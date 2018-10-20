@@ -57,7 +57,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatListModule,
     MatExpansionModule,
     MatSlideToggleModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
