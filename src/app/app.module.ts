@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -26,6 +27,7 @@ import { ForgotkeyComponent } from './forgotkey/forgotkey.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatButtonModule,
     MatCheckboxModule,
     AppRoutingModule,
@@ -58,6 +61,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatExpansionModule,
     MatSlideToggleModule,
     MatFormFieldModule,
+    MatCardModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

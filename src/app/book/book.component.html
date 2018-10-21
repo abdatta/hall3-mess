@@ -1,39 +1,20 @@
-<div id="container">
-  <ul>
-    <li>
-      <span>Paneer-Mushroom</span>
-      <button class="arrow pull-right"><mat-icon>keyboard_arrow_right</mat-icon></button>
-      <span  class="pull-right" id="element1">&nbsp;&nbsp; 1&nbsp;&nbsp; </span>
-      <button class="arrow pull-right"><mat-icon>keyboard_arrow_left</mat-icon></button>
-    </li>
-    
-    <li>
-      <span>Dal-Fry</span>
-      <button class="arrow pull-right"><mat-icon>keyboard_arrow_right</mat-icon></button>
-      <span  class="pull-right" id="element1">&nbsp;&nbsp; 0&nbsp;&nbsp; </span>
-      <button class="arrow pull-right"><mat-icon>keyboard_arrow_left</mat-icon></button>
-    </li>
-
-    <li>
-        <span>Papad</span>
-        <button class="arrow pull-right"><mat-icon>keyboard_arrow_right</mat-icon></button>
-        <span  class="pull-right" id="element1">&nbsp;&nbsp; 0&nbsp;&nbsp; </span>
-        <button class="arrow pull-right"><mat-icon>keyboard_arrow_left</mat-icon></button>
-    </li>
-
-    <li>
-        <span>Paneer Bujiya</span>
-        <button class="arrow pull-right"><mat-icon>keyboard_arrow_right</mat-icon></button>
-        <span  class="pull-right" id="element1">&nbsp;&nbsp; 0&nbsp;&nbsp; </span>
-        <button class="arrow pull-right"><mat-icon>keyboard_arrow_left</mat-icon></button>
-    </li>
-
-    <li>
-        <span>Egg</span>
-        <button class="arrow pull-right"><mat-icon>keyboard_arrow_right</mat-icon></button>
-        <span  class="pull-right" id="element1">&nbsp;&nbsp; 2&nbsp;&nbsp; </span>
-        <button class="arrow pull-right"><mat-icon>keyboard_arrow_left</mat-icon></button>
-    </li>
-  </ul>
-  <button mat-raised-button color="primary" type="submit" class="buttonBlue"><b>Submit</b></button>
+<div class="container">
+  <h2>Book Today's Extras</h2>
+  <div class="disher">
+    <mat-card class="dish-item" *ngFor="let dish of dishes; let i=index;">
+      <mat-checkbox [(ngModel)]="dish.selected" (ngModelChange)="resetQuantity(i)"></mat-checkbox>
+      <button mat-button class="dish-button" (click)="dish.selected=!dish.selected; resetQuantity(i)">{{dish.name}}</button>
+      <div></div>
+      <div *ngIf="dish.selected" class="no-shrink">
+        <button mat-icon-button (click)="changeQuantity(i,-1)" [disabled]="dish.quantity<=1">
+          <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_left</mat-icon>
+        </button>
+        <span>{{dish.quantity}}</span>
+        <button mat-icon-button  (click)="changeQuantity(i,1)">
+            <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_right</mat-icon>
+          </button>
+      </div>
+    </mat-card>
+  </div>
+  <button mat-raised-button color="primary" class="buttonBlue"><b>Submit</b></button>
 </div>
