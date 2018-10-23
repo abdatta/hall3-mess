@@ -1,33 +1,47 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { environment } from '../environments/environment';
+
+// Angular Modules
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-import { AppRoutingModule } from './app-routing.module';
-
-import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { HomeComponent } from './home/home.component';
-
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule} from '@angular/material';
-import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { BookComponent } from './book/book.component';
-import { PrebookComponent } from './prebook/prebook.component';
-import { ThisweekComponent } from './thisweek/thisweek.component';
-import { HistoryComponent } from './history/history.component';
-import { NotwellComponent } from './notwell/notwell.component';
-import { ChangepasskeyComponent } from './changepasskey/changepasskey.component';
-import { GuestroomComponent } from './guestroom/guestroom.component';
-import { ForgotkeyComponent } from './forgotkey/forgotkey.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { AppRoutingModule } from '@app/app-routing.module';
 
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule} from '@angular/material/card';
+
+// Material Modules
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatListModule
+} from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+
+// Services
+import { DishesService } from '@app/services/dishes.service';
+
+// Components
+import { AppComponent } from '@app/app.component';
+import { LoginComponent } from '@app/login/login.component';
+import { SignupComponent } from '@app/signup/signup.component';
+import { HomeComponent } from '@app/home/home.component';
+import { MainNavComponent } from '@app/main-nav/main-nav.component';
+import { BookComponent } from '@app/book/book.component';
+import { PrebookComponent } from '@app/prebook/prebook.component';
+import { ThisweekComponent } from '@app/thisweek/thisweek.component';
+import { HistoryComponent } from '@app/history/history.component';
+import { NotwellComponent } from '@app/notwell/notwell.component';
+import { ChangepasskeyComponent } from '@app/changepasskey/changepasskey.component';
+import { GuestroomComponent } from '@app/guestroom/guestroom.component';
+import { ForgotkeyComponent } from '@app/forgotkey/forgotkey.component';
 
 @NgModule({
   declarations: [
@@ -49,11 +63,12 @@ import {MatCardModule} from '@angular/material/card';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatButtonModule,
-    MatCheckboxModule,
+    HttpClientModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     LayoutModule,
+    MatButtonModule,
+    MatCheckboxModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
@@ -64,7 +79,9 @@ import {MatCardModule} from '@angular/material/card';
     MatCardModule,
     MatCheckboxModule
   ],
-  providers: [],
+  providers: [
+    DishesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

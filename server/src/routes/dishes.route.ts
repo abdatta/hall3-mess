@@ -5,7 +5,7 @@ import { DishesCtrl } from '../controllers/dishes.controller';
 import { DishModel } from '../models/dish.model';
 
 /**
- * For supplying data
+ * For the various dishes in extras
  *
  * @class DishesRoute
  */

@@ -3,7 +3,8 @@
   <div class="disher">
     <mat-card class="dish-item" *ngFor="let dish of dishes; let i=index;">
       <mat-checkbox [(ngModel)]="dish.selected" (ngModelChange)="resetQuantity(i)"></mat-checkbox>
-      <button mat-button class="dish-button" (click)="dish.selected=!dish.selected; resetQuantity(i)">{{dish.name}}</button>
+      <button mat-button class="dish-button"
+              (click)="dish.selected=!dish.selected; resetQuantity(i)">{{dish.name}} (&#8377;{{dish.price}})</button>
       <div></div>
       <div *ngIf="dish.selected" class="no-shrink">
         <button mat-icon-button (click)="changeQuantity(i,-1)" [disabled]="dish.quantity<=1">

@@ -10,7 +10,7 @@ h2 {
 }
 
 mat-checkbox {
-    padding: 8px 0 8px 5px;
+    padding-left: 10px;
 }
 
 .disher {
@@ -21,7 +21,7 @@ mat-checkbox {
 }
 
 .dish-item {
-    padding: 13px;
+    padding: 10px;
     margin: 5px 0;
     display: flex;
     align-items: baseline;

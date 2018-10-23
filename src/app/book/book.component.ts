@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DishesService } from '@app/services';
+import { DishModel } from '@app/models';
 
 @Component({
   selector: 'app-book',
@@ -8,37 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class BookComponent implements OnInit {
 
   // sample dishes for extras
-  dishes = [
-    {
-      name: 'Paneer-Mushroom',
-      selected: false,
-      quantity: 1
-    },
-    {
-      name: 'Dal-Fry',
-      selected: false,
-      quantity: 1
-    },
-    {
-      name: 'Chicken Butter Masala',
-      selected: false,
-      quantity: 1
-    },
-    {
-      name: 'Paneer Bujiya',
-      selected: false,
-      quantity: 1
-    },
-    {
-      name: 'Egg',
-      selected: false,
-      quantity: 1
-    }
-  ];
+  dishes: DishModel[];
 
-  constructor() { }
+  constructor(private dishesService: DishesService) { }
 
   ngOnInit() {
+    this.dishesService.getTodaysDishes()
+      .subscribe(dishes => {
+        this.dishes = dishes;
+        dishes.forEach(dish => dish.quantity = 0);
+      });
   }
 
   changeQuantity(i: number, q: number) {

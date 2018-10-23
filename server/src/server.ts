@@ -11,14 +11,17 @@ import passport from 'passport';
 // Routes
 import { AccountsRoute } from './routes/accounts.route';
 import { DishesRoute } from './routes/dishes.route';
+import { TokensRoute } from './routes/tokens.route';
 
 // Models
 import { UserModel } from './models/user.model';
 import { DishModel } from './models/dish.model';
+import { TokenModel } from './models/token.model';
 
 // Schema
 import { UserSchema } from './schemas/user.schema';
 import { DishSchema } from './schemas/dish.schema';
+import { TokenSchema } from './schemas/token.schema';
 
 // Config
 import { LocalConfig } from './config/local.config';
@@ -39,6 +42,7 @@ export class Server {
 
   private userModel!: mongoose.Model<UserModel>; // an instance of UserModel
   private dishModel!: mongoose.Model<DishModel>; // an instance of DishModel
+  private tokenModel!: mongoose.Model<TokenModel>; // an instance of TokenModel
 
   /**
    * Bootstrap the application
@@ -116,6 +120,7 @@ export class Server {
     // create models
     this.userModel = connection.model<UserModel>('User', UserSchema);
     this.dishModel = connection.model<DishModel>('Dish', DishSchema);
+    this.tokenModel = connection.model<TokenModel>('Token', TokenSchema);
 
     // create MongoStore
     const MongoStore = connectMongo(session);
@@ -155,6 +160,7 @@ export class Server {
     // API Routes
     this.app.use('/api/account', AccountsRoute.create(this.userModel, passport));
     this.app.use('/api/dishes', DishesRoute.create(this.dishModel));
+    this.app.use('/api/tokens', TokensRoute.create(this.tokenModel, this.dishModel, this.userModel));
 
     // Public Routes
     this.app.use('/', express.static(path.join(__dirname, '../public')));

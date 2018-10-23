@@ -1,12 +1,12 @@
-import { Schema, HookNextFunction, Document } from 'mongoose';
-import { UserModel } from '../models/user.model';
+import { Schema, HookNextFunction, SchemaType, SchemaTypes } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export let UserSchema: Schema = new Schema({
     name: {type: String, default: ''},
     rollno: {type: String, unique: true, required: true},
-    password: {type: String, default: ''},
-    email: {type: String}
+    password: {type: String, default: '', required: true},
+    email: {type: String},
+    tokens: {type: [{type: SchemaTypes.ObjectId, ref: 'Token'}], default: []}
 });
 
 // Generating Password hash

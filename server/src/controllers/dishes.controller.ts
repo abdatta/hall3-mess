@@ -28,6 +28,7 @@ export class DishesCtrl {
         const dish = new this.dishModel();
         dish.name = req.body.name;
         dish.days = req.body.days;
+        dish.price = req.body.price;
         dish.slot = req.body.slot;
         if (req.body.prebookable) {
             dish.prebookable = req.body.prebookable;
@@ -56,13 +57,14 @@ export class DishesCtrl {
      */
     public getTodaysDishes = (req: Request, res: Response) => {
         const today = moment().format('ddd');
-        this.dishModel.find({ days: today }, (err: Error, dishes: DishModel[]) => {
+        this.dishModel.find({ days: today }, '-days -__v',
+          (err: Error, dishes: DishModel[]) => {
             if (err) {
                 this.internalServer(res, err);
             } else {
                 res.status(200).json(dishes);
             }
-        });
+          });
     }
 
     /**
@@ -80,6 +82,7 @@ export class DishesCtrl {
             } else {
                 dish.name = req.body.name || dish.name;
                 dish.days = req.body.days || dish.days;
+                dish.price = req.body.price || dish.price;
                 dish.slot = req.body.slot || dish.slot;
                 if (req.body.prebookable !== undefined) {
                     dish.prebookable = req.body.prebookable;

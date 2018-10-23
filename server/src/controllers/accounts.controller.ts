@@ -25,6 +25,7 @@ export class AccountCtrl {
      */
     public sanitize = (user: any) => {
         user = JSON.parse(JSON.stringify(user));
+        user['tokens'] = undefined;
         user['password'] = undefined;
         user['_id'] = undefined;
         user['__v'] = undefined;
@@ -54,11 +55,10 @@ export class AccountCtrl {
     public updateUser = (req: Request, res: Response) => {
         this.userModel.findOne({
             'rollno': req.body.rollno
-        }, (err, user: UserModel) => {
+        }, (err: Error, user: UserModel) => {
             if (err) {
                 this.internalServer(res, err);
-            }
-            if (!user) {
+            } else if (!user) {
                 res.sendStatus(404);  // Not found
             } else if (!user.validPassword(req.body.password)) {
                 res.sendStatus(403); // Wrong Password, forbidden
