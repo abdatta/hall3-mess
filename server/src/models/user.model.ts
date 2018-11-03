@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import { TokenModel } from './token.model';
 /**
  * Interface for User
  *
@@ -9,7 +10,7 @@ export interface UserModel extends Document {
     rollno: string;
     password: string;
     email: string;
-    tokens: string[];
+    tokens: string[] | TokenModel[];
     generateHash: (password: string) => string;
     validPassword: (password: string) => boolean;
 }

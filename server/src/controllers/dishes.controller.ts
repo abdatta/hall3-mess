@@ -33,20 +33,14 @@ export class DishesCtrl {
         if (req.body.prebookable) {
             dish.prebookable = req.body.prebookable;
         }
-        this.setUniqueId((error: Error, id: string) => {
-            if (error) {
-                this.internalServer(res, error);
+        dish.save((err: Error, savedDish: DishModel) => {
+            if (err) {
+                this.internalServer(res, err);
             } else {
-                dish._id = id;
-                dish.save((err: Error, savedDish: DishModel) => {
-                    if (err) {
-                        this.internalServer(res, err);
-                    } else {
-                        res.status(200).json(savedDish);
-                    }
-                });
+                res.status(200).json(savedDish);
             }
         });
+
     }
 
     /**
@@ -118,25 +112,6 @@ export class DishesCtrl {
                         res.sendStatus(200);
                     }
                 });
-            }
-        });
-    }
-
-    /**
-     * Create a random unique id for dish
-     *
-     * @class DishesCtrl
-     * @method setUniqueId
-     */
-    private setUniqueId(cb: (err: Error | any, id: string | any) => void) {
-        const id = 'd' + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-        this.dishModel.findById(id, (err: Error, dish: DishModel) => {
-            if (err) {
-                cb(err, null);
-            } else if (dish) {
-                this.setUniqueId(cb);
-            } else {
-                cb(null, id);
             }
         });
     }
