@@ -6,7 +6,7 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)">
-    <mat-toolbar color="primary"><mat-icon>account_circle</mat-icon>&nbsp;170161</mat-toolbar>
+    <mat-toolbar color="primary"><mat-icon>account_circle</mat-icon>&nbsp;{{ rollno }}</mat-toolbar>
     <mat-nav-list>
       <div class="mobile" (click)="drawer.toggle()">
         <a mat-list-item routerLink="/home/book" ><mat-icon>border_color </mat-icon> &nbsp;Book</a>

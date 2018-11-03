@@ -4,11 +4,19 @@
     <div class="group">
     <h2>Hall-3 Mess Signup</h2></div>
   <div class="group">
-    <input type="email" autofocus><span class="highlight"></span><span class="bar"></span>
-    <label><b>IIT-K Mail ID</b></label>
+    <input autofocus #roll><span class="highlight"></span><span class="bar"></span>
+    <label><b>IIT-K ROLL NO</b></label>
+  </div>
+  <div class="group">
+    <input type="password" autofocus #pass><span class="highlight"></span><span class="bar"></span>
+    <label><b>PASSWORD</b></label>
+  </div>
+  <div class="group">
+    <input type="password" autofocus #repass><span class="highlight"></span><span class="bar"></span>
+    <label><b>RETYPE PASSWORD</b></label>
   </div>
   
-  <button mat-raised-button color="primary" type="submit" class="buttonBlue" routerLink="/login"><b>Signup</b>
+  <button mat-raised-button color="primary" type="submit" class="buttonBlue" (click)="signUp(roll.value, pass.value, repass.value)"><b>Signup</b>
     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
   </button>
   <div class="forsignup"><p>Please Check Your Mail For Instructions.<br><br>Have done this once?&nbsp;<a routerLink="/login">Login</a>

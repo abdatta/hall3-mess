@@ -12,8 +12,7 @@ export class LoginComponent implements OnInit {
 
   // TODO: Add errors for invalid login
   submitted = false;
-  loginerror = '';
-  signuperror = '';
+  error = '';
 
   constructor(private authService: AuthService,
               private router: Router) { }
@@ -28,7 +27,7 @@ export class LoginComponent implements OnInit {
       if (s === 200) {
         this.router.navigateByUrl('/home');
       } else {
-        this.loginerror = 'Incorrect Username or Password';
+        this.error = 'Incorrect Username or Password';
         this.submitted = false;
       }
     });
