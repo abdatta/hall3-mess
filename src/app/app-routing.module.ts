@@ -16,22 +16,28 @@ import { NotwellComponent } from '@app/notwell/notwell.component';
 import { GuestroomComponent } from '@app/guestroom/guestroom.component';
 import { ChangepasskeyComponent } from '@app/changepasskey/changepasskey.component';
 
+import { AuthGuard, UnAuthGuard } from '@app/guards';
+
 const routes: Routes = [
     {
         path: '',
-        component: LoginComponent
+        redirectTo: 'login',
+        pathMatch: 'full'
     },
     {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [UnAuthGuard]
     },
     {
         path: 'signup',
-        component: SignupComponent
+        component: SignupComponent,
+        canActivate: [UnAuthGuard]
     },
     {
         path: 'home',
         component: HomeComponent,
+        canActivate: [AuthGuard],
         children : [
             { path: '', redirectTo: 'book', pathMatch: 'full' },
             { path: 'book', component: BookComponent },
@@ -45,7 +51,8 @@ const routes: Routes = [
     },
     {
         path: 'forgotkey',
-        component: ForgotkeyComponent
+        component: ForgotkeyComponent,
+        canActivate: [UnAuthGuard]
     },
 ];
 

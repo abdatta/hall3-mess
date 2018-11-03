@@ -5,11 +5,15 @@
       <h2>Hall-3 Mess Login</h2>
     </div>
     <div class="group">
-      <input type="password" autofocus><span class="highlight"></span><span class="bar"></span>
-      <label><b>PASS-KEY</b></label>
+      <input autofocus #roll><span class="highlight"></span><span class="bar"></span>
+      <label><b>ROLL NO</b></label>
+    </div>
+    <div class="group">
+      <input type="password" autofocus #pass><span class="highlight"></span><span class="bar"></span>
+      <label><b>PASS KEY</b></label>
     </div>
 
-    <button mat-raised-button color="primary" type="submit" class="buttonBlue" routerLink="/home" ><b>Login</b>
+    <button mat-raised-button color="primary" type="submit" class="buttonBlue" (click)="logIn(roll.value, pass.value)" ><b>Login</b>
       <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
     </button>
     <div class="forsignup">

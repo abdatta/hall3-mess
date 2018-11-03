@@ -28,7 +28,7 @@ export class AccountsRoute {
 
         router
             .get('/auth',  accountCtrl.checkAuth, (req, res) => res.json(accountCtrl.sanitize(req.user)))
-            .post('/login',  passport.authenticate('mess-signin'), (req, res) => res.sendStatus(202))
+            .post('/login',  passport.authenticate('mess-signin'), (req, res) => res.json(accountCtrl.sanitize(req.user)))
             .post('/signup', passport.authenticate('mess-signup'), accountCtrl.updateUser)
             .post('/logout', accountCtrl.checkAuth, accountCtrl.logout);
 

@@ -16,7 +16,7 @@
         <a mat-list-item routerLink="/home/notwell"><mat-icon>local_hospital</mat-icon> &nbsp;Not Well</a>
         <a mat-list-item routerLink="/home/changepasskey"><mat-icon>vpn_key</mat-icon> &nbsp;Change Pass-Key</a>
         <a mat-list-item routerLink="/home/guestroom"><mat-icon>hotel</mat-icon> &nbsp;Book Guest Room</a>
-        <a mat-list-item routerLink="/"><img src="assets/img/logout.png">  &nbsp;Logout</a>
+        <a mat-list-item (click)="logout()"><img src="assets/img/logout.png">  &nbsp;Logout</a>
       </div>
       <div class="laptop">
         <a mat-list-item routerLink="/home/book" ><mat-icon>border_color </mat-icon> &nbsp;Book</a>
@@ -26,7 +26,7 @@
         <a mat-list-item routerLink="/home/notwell"><mat-icon>local_hospital</mat-icon> &nbsp;Not Well</a>
         <a mat-list-item routerLink="/home/changepasskey"><mat-icon>vpn_key</mat-icon> &nbsp;Change Pass-Key</a>
         <a mat-list-item routerLink="/home/guestroom"><mat-icon>hotel</mat-icon> &nbsp;Book Guest Room</a>
-        <a mat-list-item routerLink="/"><img src="assets/img/logout.png">  &nbsp;Logout</a>
+        <a mat-list-item (click)="logout()"><img src="assets/img/logout.png">  &nbsp;Logout</a>
       </div>
     </mat-nav-list>
   </mat-sidenav>
