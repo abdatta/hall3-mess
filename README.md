@@ -3,16 +3,14 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
 
 ## Installation
-- Install/Update node and npm
-- Install mongodb
-- Run the following commands
-```git clone https://github.com/abdatta/hall3-mess.git
-cd hall3-mess
-npm install
-cd server
-npm install
-```
-- Ask for the missing `local.config.ts` file from any of the contributors and put it inside the folder `\server\src\config`.
+
+- Install node.js and mongoDB, if not installed already.
+- Run `git clone https://github.com/abdatta/hall3-mess.git` to clone the repo.
+- Run `cd hall3-mess && npm install` to install dependencies for the Angular frontend.
+- Run `cd server && npm install` to install dependencies for the Node.js backend.
+- [Optional] From the `server` directory, run `mongorestore --db Hall3_Mess mock_db/` to load a sample mock database.
+
+- Ask for the missing `local.config.ts` file from any of the contributors and put it inside the folder `/server/src/config`.
 - Run `npm start` from the root of the repository, and there you go!
 
 ## Development server
