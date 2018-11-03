@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DishesService } from '@app/services';
+import { DishesService, TokensService } from '@app/services';
 import { DishModel } from '@app/models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book',
@@ -12,13 +13,18 @@ export class BookComponent implements OnInit {
   // sample dishes for extras
   dishes: DishModel[];
 
-  constructor(private dishesService: DishesService) { }
+  constructor(private router: Router,
+              private dishesService: DishesService,
+              private tokensService: TokensService) { }
 
   ngOnInit() {
     this.dishesService.getTodaysDishes()
       .subscribe(dishes => {
         this.dishes = dishes;
-        dishes.forEach(dish => dish.quantity = 0);
+        dishes.forEach(dish => {
+          dish.quantity = 0;
+          dish['selected'] = false;
+        });
       });
   }
 
@@ -31,6 +37,16 @@ export class BookComponent implements OnInit {
 
   resetQuantity(i: number) {
     this.dishes[i].quantity = 1;
+  }
+
+  book() {
+    this.tokensService
+      .bookToken(this.dishes.filter(dish => dish['selected']))
+      .subscribe(token => {
+        if (token) {
+          this.router.navigateByUrl('/home/history');
+        } // TODO: to handle cases of failure
+      });
   }
 
 }
