@@ -1,75 +1,40 @@
-#container {
-    display: grid;
-    padding: 5px 7px;
-
+.container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 10px;
 }
 
-ul {
-    list-style-type: none;
-    margin:0;padding:0;
-}   
-
-li {
-    background: rgb(236, 236, 236);
-    border-radius: 8px 8px 0px 0px;
-    padding: 20px;
-    margin-bottom: 4px;
-    margin-top:4px;
+mat-accordion {
+    width: 90%;
+    max-width: 700px;
+    margin: 10px 0;
 }
-                
-a {
-    font-size: 1.5em;
-    text-decoration: none;
+
+.dishes {
+    width: 100%;
+}
+
+:host >>> .mat-expansion-panel-body {
+    padding: 0 16px 16px;
+}
+
+.mat-expansion-panel-header-title {
+    color: rgba(0,0,0,.54);
+}
+
+.mat-expansion-panel-header-description {
+    color: black;
+}
+
+tr.mat-footer-row {
     font-weight: bold;
-    color:#00A8FF;
 }
 
-mat-expansion-panel{
-    background: rgb(236, 236, 236);
-    border-radius: 0px 0px 8px 8px;
-    margin:-4px 2px 4px 2px;
+.mat-column-Quantity {
+    text-align: center;
+ }
 
-}
-
-.expand {
-    background: rgb(255, 255, 255);
-    border-radius: 8px 8px 8px 8px;
-    padding: 8px;
-    margin: 4px -16px 4px -16px;
-}
-
-.note{
-    text-align:center;
-    margin:auto;
-    padding: auto;
-}
-
-.column {
-    float: left;
-    width: 50%;
-    padding: 0px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.c1{
-    margin-left:-10px;
-}
-
-.c2{
-    margin-right:-10px;
-    width:51%;
-}
-
-.pull-right {
-    float: right;
-}
-                
-            
-        
-    
+ .mat-column-Cost {
+    text-align: center;
+ }

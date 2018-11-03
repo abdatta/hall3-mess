@@ -18,12 +18,14 @@ import {
   MatToolbarModule,
   MatSidenavModule,
   MatIconModule,
-  MatListModule
+  MatListModule,
+  MatInputModule
 } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 
 // Services
 import { DishesService } from '@app/services/dishes.service';
@@ -73,11 +75,13 @@ import { ForgotkeyComponent } from '@app/forgotkey/forgotkey.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatInputModule,
     MatExpansionModule,
     MatSlideToggleModule,
     MatFormFieldModule,
     MatCardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule
   ],
   providers: [
     DishesService
