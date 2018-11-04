@@ -54,13 +54,13 @@ export class AccountCtrl {
      */
     public updateUser = (req: Request, res: Response) => {
         this.userModel.findOne({
-            'rollno': req.body.rollno
+            'rollno': req.user.rollno
         }, (err: Error, user: UserModel) => {
             if (err) {
                 this.internalServer(res, err);
             } else if (!user) {
                 res.sendStatus(404);  // Not found
-            } else if (!user.validPassword(req.body.password)) {
+            } else if (req.body['newpassword'] && !user.validPassword(req.body.password)) {
                 res.sendStatus(403); // Wrong Password, forbidden
             } else {
                 user.name = req.body.name || user.name;

@@ -11,12 +11,12 @@ export let UserSchema: Schema = new Schema({
 
 // Generating Password hash
 UserSchema.methods.generateHash = function(password: string) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
+    return bcrypt.hashSync(password || '', bcrypt.genSaltSync(8));
 };
 
 // Checking if password is valid
 UserSchema.methods.validPassword = function(password: string) {
-    return bcrypt.compareSync(password, this.password);
+    return bcrypt.compareSync(password || '', this.password);
 };
 
 UserSchema.pre('save', function(this: any, next: HookNextFunction) {
