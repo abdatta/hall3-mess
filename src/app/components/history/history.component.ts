@@ -16,10 +16,12 @@ export class HistoryComponent implements OnInit {
   dates = [];
   init_id: string;
 
+  load = false;
+
   constructor(private tokensService: TokensService,
               private route: ActivatedRoute) {}
-
   ngOnInit() {
+    this.load = true;
     this.tokensService.getTokens()
       .subscribe(tokens => {
         // sort tokens by date and time
@@ -44,6 +46,8 @@ export class HistoryComponent implements OnInit {
               this.init_id = param.show;
             }
           });
+
+        this.load = false;
       });
   }
 

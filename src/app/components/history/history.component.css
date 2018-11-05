@@ -47,3 +47,8 @@ tr.mat-footer-row {
  .mat-column-Cost {
     text-align: center;
  }
+
+ .spinner{
+    padding:auto;
+    margin-top:60px;
+    }

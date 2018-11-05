@@ -16,8 +16,9 @@ export class BookComponent implements OnInit {
   constructor(private router: Router,
               private dishesService: DishesService,
               private tokensService: TokensService) { }
+load = false;
 
-  ngOnInit() {
+  ngOnInit() {  this.load = true;
     this.dishesService.getTodaysDishes()
       .subscribe(dishes => {
         this.dishes = dishes;
@@ -25,6 +26,7 @@ export class BookComponent implements OnInit {
           dish.quantity = 0;
           dish['selected'] = false;
         });
+        this.load = false;
       });
   }
 

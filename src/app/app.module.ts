@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppRoutingModule } from '@app/app-routing.module';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {
   LoginComponent,
@@ -86,7 +87,8 @@ import { AppComponent } from '@app/app.component';
     MatCardModule,
     MatCheckboxModule,
     MatTableModule,
-    MatRadioModule
+    MatRadioModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     DishesService
