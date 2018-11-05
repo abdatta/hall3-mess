@@ -12,7 +12,8 @@ import * as moment from 'moment';
 
 export class HistoryComponent implements OnInit {
 
-  tokens = [];
+  grouped_tokens = {};
+  dates = [];
   init_id: string;
 
   constructor(private tokensService: TokensService,
@@ -21,8 +22,22 @@ export class HistoryComponent implements OnInit {
   ngOnInit() {
     this.tokensService.getTokens()
       .subscribe(tokens => {
-        this.tokens = tokens.sort((t1, t2) =>
+        // sort tokens by date and time
+        tokens = tokens.sort((t1, t2) =>
                         t2.date.localeCompare(t1.date));
+
+        // group tokens by date
+        tokens.forEach(token => {
+          const date = moment(token.date).format('Do MMMM \'YY');
+          if (this.grouped_tokens[date]) {
+            this.grouped_tokens[date].push(token);
+          } else {
+            this.grouped_tokens[date] = [token];
+            this.dates.push(date);
+          }
+        });
+
+        // query parameters
         this.route.queryParams
           .subscribe(param => {
             if (param.show) {
@@ -42,6 +57,6 @@ export class HistoryComponent implements OnInit {
   // TODO : Display seperate accordians for each date.
 
   format(date: string) {
-    return moment(date).format('Do\u00A0MMM\'YY, hh:mm\u00A0a');
+    return moment(date).format('hh:mm\u00A0a');
   }
 }

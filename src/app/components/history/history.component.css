@@ -7,12 +7,20 @@
 
 mat-accordion {
     width: 90%;
-    max-width: 700px;
+    max-width: 600px;
     margin: 10px 0;
 }
 
 .dishes {
     width: 100%;
+}
+
+.date {
+    margin: 15px 20px 5px;
+}
+
+.mat-expansion-panel-spacing {
+    margin: 8px 0;
 }
 
 :host >>> .mat-expansion-panel-body {
