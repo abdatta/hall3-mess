@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ChildActivationEnd } from '@angular/router/src/events';
-import { createViewChildren } from '@angular/compiler/src/core';
 
 // App Components
-import { LoginComponent } from '@app/login/login.component';
-import { SignupComponent } from '@app/signup/signup.component';
-import { ForgotkeyComponent } from '@app/forgotkey/forgotkey.component';
-import { HomeComponent } from '@app/home/home.component';
-import { BookComponent } from '@app/book/book.component';
-import { PrebookComponent } from '@app/prebook/prebook.component';
-import { ThisweekComponent } from '@app/thisweek/thisweek.component';
-import { HistoryComponent } from '@app/history/history.component';
-import { NotwellComponent } from '@app/notwell/notwell.component';
-import { GuestroomComponent } from '@app/guestroom/guestroom.component';
-import { ChangepasskeyComponent } from '@app/changepasskey/changepasskey.component';
+import {
+  LoginComponent,
+  SignupComponent,
+  HomeComponent,
+  BookComponent,
+  PrebookComponent,
+  ThisweekComponent,
+  HistoryComponent,
+  NotwellComponent,
+  ChangepasskeyComponent,
+  GuestroomComponent,
+  ForgotkeyComponent
+} from '@app/components';
 
 import { AuthGuard, UnAuthGuard } from '@app/guards';
 

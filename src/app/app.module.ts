@@ -10,6 +10,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppRoutingModule } from '@app/app-routing.module';
 
+import {
+  LoginComponent,
+  SignupComponent,
+  HomeComponent,
+  MainNavComponent,
+  BookComponent,
+  PrebookComponent,
+  ThisweekComponent,
+  HistoryComponent,
+  NotwellComponent,
+  ChangepasskeyComponent,
+  GuestroomComponent,
+  ForgotkeyComponent
+} from '@app/components';
 
 // Material Modules
 import {
@@ -32,18 +46,7 @@ import { DishesService } from '@app/services/dishes.service';
 
 // Components
 import { AppComponent } from '@app/app.component';
-import { LoginComponent } from '@app/login/login.component';
-import { SignupComponent } from '@app/signup/signup.component';
-import { HomeComponent } from '@app/home/home.component';
-import { MainNavComponent } from '@app/main-nav/main-nav.component';
-import { BookComponent } from '@app/book/book.component';
-import { PrebookComponent } from '@app/prebook/prebook.component';
-import { ThisweekComponent } from '@app/thisweek/thisweek.component';
-import { HistoryComponent } from '@app/history/history.component';
-import { NotwellComponent } from '@app/notwell/notwell.component';
-import { ChangepasskeyComponent } from '@app/changepasskey/changepasskey.component';
-import { GuestroomComponent } from '@app/guestroom/guestroom.component';
-import { ForgotkeyComponent } from '@app/forgotkey/forgotkey.component';
+
 
 @NgModule({
   declarations: [
