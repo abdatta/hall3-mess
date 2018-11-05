@@ -7,9 +7,11 @@
           <br>
           <form>
             List of items:<br>
-            <input class="w3-radio" type="radio" name="fooditem" value="Curd-rice">Curd-rice
-            <input class="w3-radio" type="radio" name="fooditem" value="Dal-rice">Dal-rice
-            <input class="w3-radio" type="radio" name="fooditem" value="Riceonly">Rice-only<br><br>
+            <mat-radio-group>
+              <mat-radio-button value="Curd-rice">Curd-rice &nbsp;&nbsp;</mat-radio-button>
+              <mat-radio-button value="Dal-rice">Dal-rice &nbsp;&nbsp;</mat-radio-button>
+              <mat-radio-button value="Riceonly">Rice-only &nbsp;&nbsp;</mat-radio-button>
+            </mat-radio-group><br><br>
             <div class="w3-row-padding">
               <div class="w3-third">
                 <input class="w3-input w3-border" type="text" placeholder="Name:" autofocus>

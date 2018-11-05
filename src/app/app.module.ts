@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppRoutingModule } from '@app/app-routing.module';
+import {MatRadioModule} from '@angular/material/radio';
 
 import {
   LoginComponent,
@@ -84,7 +85,8 @@ import { AppComponent } from '@app/app.component';
     MatFormFieldModule,
     MatCardModule,
     MatCheckboxModule,
-    MatTableModule
+    MatTableModule,
+    MatRadioModule
   ],
   providers: [
     DishesService

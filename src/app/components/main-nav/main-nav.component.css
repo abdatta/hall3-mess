@@ -11,6 +11,10 @@
   top: 0;
 }
 
+.activated {
+  color: rgb(1, 1, 165);
+}
+
 @media (min-width:960px) {
   .mobile{
     display: none;

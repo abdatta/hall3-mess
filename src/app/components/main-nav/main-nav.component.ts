@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AuthService } from '@app/services';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-main-nav',
@@ -19,8 +20,11 @@ export class MainNavComponent implements OnInit {
       map(result => result.matches)
     );
 
+  currentUrl: string;
   constructor(private breakpointObserver: BreakpointObserver,
-              private authService: AuthService) {}
+              private authService: AuthService, private router: Router) {
+                router.events.subscribe((_: NavigationEnd) => this.currentUrl = _.url);
+              }
 
   ngOnInit() {
     this.authService.getUser()
