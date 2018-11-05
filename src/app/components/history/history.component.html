@@ -1,7 +1,7 @@
 <div class="container">
     <h2>History</h2>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let token of tokens">
+    <mat-expansion-panel *ngFor="let token of tokens" [expanded]="token._id === init_id">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ format(token.date) }}

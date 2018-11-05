@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TokensService } from '@app/services';
 import { TokenModel } from '@app/models';
 import * as moment from 'moment';
@@ -12,14 +13,23 @@ import * as moment from 'moment';
 export class HistoryComponent implements OnInit {
 
   tokens = [];
+  init_id: string;
 
-  constructor(private tokensService: TokensService) {}
+  constructor(private tokensService: TokensService,
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.tokensService.getTokens()
-      .subscribe(tokens =>
+      .subscribe(tokens => {
         this.tokens = tokens.sort((t1, t2) =>
-                        t2.date.localeCompare(t1.date)));
+                        t2.date.localeCompare(t1.date));
+        this.route.queryParams
+          .subscribe(param => {
+            if (param.show) {
+              this.init_id = param.show;
+            }
+          });
+      });
   }
 
   getCost(token: TokenModel) {

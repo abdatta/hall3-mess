@@ -44,7 +44,7 @@ export class BookComponent implements OnInit {
       .bookToken(this.dishes.filter(dish => dish['selected']))
       .subscribe(token => {
         if (token) {
-          this.router.navigateByUrl('/home/history');
+          this.router.navigateByUrl('/home/history?show=' + token._id);
         } // TODO: to handle cases of failure
       });
   }
