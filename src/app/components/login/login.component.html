@@ -6,17 +6,17 @@
     
     
     <mat-form-field class="centeraln">
-      <input matInput placeholder="ROLL NO" type="text" autofocus #roll>
+      <input matInput placeholder="Roll No" type="text" autofocus #roll>
   </mat-form-field>
   <mat-form-field class="centeraln">
-      <input matInput placeholder="PIN" type="password" #pass>
+      <input matInput placeholder="Password" type="password" #pass>
   </mat-form-field><br>
     <button mat-raised-button color="primary" type="submit" class="buttonBlue" (click)="logIn(roll.value, pass.value)" ><b>Login</b>
       <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
     </button>
     <div class="forsignup">
-      <p>Never share your PIN</p>
-      <p>First time?&nbsp;<a routerLink="/signup">Signup</a><br>Don't remember key?&nbsp;<a routerLink="/forgotkey">forgotkey</a></p>
+      <p>Never share your password</p>
+      <p>First time?&nbsp;<a routerLink="/signup">Signup</a><br><a routerLink="/forgotkey">Forgot Password?</a></p>
     </div>
   </form>
   <footer>

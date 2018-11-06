@@ -7,17 +7,17 @@
     <input matInput placeholder="Roll No" type="text" autofocus #roll>
 </mat-form-field>
 <mat-form-field class="container">
-    <input matInput placeholder="PIN" type="password" #pass>
+    <input matInput placeholder="Password" type="password" #pass>
 </mat-form-field>
 <mat-form-field class="container">
-    <input matInput placeholder="Retype PIN" type="password" #repass>
+    <input matInput placeholder="Retype Password" type="password" #repass>
 </mat-form-field>
   <br>
   <button mat-raised-button color="primary" type="submit" class="buttonBlue" (click)="signUp(roll.value, pass.value, repass.value)"><b>Signup</b>
     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
   </button>
   <div class="forsignup"><p><br>Have done this once?&nbsp;<a routerLink="/login">Login</a>
-    <br>Don't remember key?&nbsp;<a routerLink="/forgotkey">forgotkey</a></p></div>
+    <br><a routerLink="/forgotkey">Forgot Password?</a></p></div>
 </form>
 
 <!--Add a Jscript for after signup statement-->

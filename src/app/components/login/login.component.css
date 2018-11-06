@@ -38,20 +38,6 @@ form {
 	color: #000
 }
 
-input {
-	text-align: center;
-	font-size: 18px;
-	padding: 10px 10px 10px 5px;
-	-webkit-appearance: none;
-	display: block;
-	background: #fafafa;
-	color: #636363;
-	width: 100%;
-	border: none;
-	border-radius: 0;
-	border-bottom: 1px solid #757575;
-}
-
 input:focus { outline: none; }
 
 
