@@ -1,21 +1,18 @@
 <div class="flex">
 <form>
     <footer><img src="assets/img/mauryans_logo.png"></footer>
-    <div class="group">
-    <h2>Hall-3 Mess Signup</h2></div>
-  <div class="group">
-    <input autofocus #roll><span class="highlight"></span><span class="bar"></span>
-    <label><b>IIT-K ROLL NO</b></label>
-  </div>
-  <div class="group">
-    <input type="password" autofocus #pass><span class="highlight"></span><span class="bar"></span>
-    <label><b>PASSWORD</b></label>
-  </div>
-  <div class="group">
-    <input type="password" autofocus #repass><span class="highlight"></span><span class="bar"></span>
-    <label><b>RETYPE PASSWORD</b></label>
-  </div>
-  
+    <h3><b>Hall-3 Mess Signup</b></h3>
+ 
+  <mat-form-field class="container">
+    <input matInput placeholder="Roll No" type="text" autofocus #roll>
+</mat-form-field>
+<mat-form-field class="container">
+    <input matInput placeholder="PIN" type="password" #pass>
+</mat-form-field>
+<mat-form-field class="container">
+    <input matInput placeholder="Retype PIN" type="password" #repass>
+</mat-form-field>
+  <br>
   <button mat-raised-button color="primary" type="submit" class="buttonBlue" (click)="signUp(roll.value, pass.value, repass.value)"><b>Signup</b>
     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
   </button>
