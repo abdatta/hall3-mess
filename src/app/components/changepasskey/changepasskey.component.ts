@@ -10,11 +10,9 @@ import {MatSnackBar} from '@angular/material';
 })
 export class ChangepasskeyComponent implements OnInit {
 
-  error = '';
-  noinput = '';
-  input1: string;
-  input2: string;
-  input3: string;
+  currpass: string;
+  newpass: string;
+  renewpass: string;
 
   constructor(private authService: AuthService,
     private router: Router , public snackBar: MatSnackBar) { }
@@ -22,40 +20,44 @@ export class ChangepasskeyComponent implements OnInit {
   ngOnInit() {
   }
 
-  openSnackBar() {
-    this.snackBar.open( this.error , this.noinput , {
+  openSnackBar(error: string, action?: string ) {
+    return this.snackBar.open( error, action || '', {
       duration: 1600,
     });
   }
 
   clear() {
-    this.input1 = '';
-    this.input2 = '';
-    this.input3 = '';
+    this.currpass = '';
+    this.newpass = '';
+    this.renewpass = '';
   }
 
-  chngpin(oldpin: string, newpin: string , renewpin: string ) {
-    if (oldpin === newpin) {
-       this.error = 'New PIN isnt New'; this.openSnackBar();
-       this.input2 = '';
-       this.input3 = '';
-      } else if (newpin === renewpin) {
-    this.authService.chngpin(oldpin , newpin)
-        .subscribe((s: number) => {
-      if (s === 200) {
-        this.error = 'PIN successfully changed';
-        this.openSnackBar();
-        this.clear();
-      } else if (s === 403) {
-        this.error = 'current PIN is wrong';
-        this.openSnackBar();
-        this.clear();
-      } else {
-        this.error = 'Some error occured, Please try again';
-        this.openSnackBar();
-        this.clear();
-      }
-    }); } else { this.error = 'Retype PIN correctly'; this.openSnackBar(); this.input2 = '';
-    this.input3 = ''; }
+  changepassword() {
+    if (!this.newpass) {
+      this.openSnackBar('New PIN cannot be empty.');
+    } else if (this.currpass === this.newpass) {
+      this.openSnackBar('New PIN cannot be same as current PIN.');
+      this.newpass = '';
+      this.renewpass = '';
+    } else if (this.newpass === this.renewpass) {
+      this.authService.chngpin(this.currpass , this.newpass)
+          .subscribe((s: number) => {
+            if (s === 200) {
+              this.openSnackBar('PIN successfully changed.');
+              this.clear();
+            } else if (s === 403) {
+              this.openSnackBar('Current PIN is incorrect.');
+              this.clear();
+            } else {
+              this.openSnackBar('Oops! Some error occured.', 'Retry')
+                .onAction().subscribe(_ => this.changepassword());
+              this.clear();
+            }
+          });
+    } else {
+      this.openSnackBar('Retype PIN correctly');
+      this.newpass = '';
+      this.renewpass = '';
+    }
   }
 }
