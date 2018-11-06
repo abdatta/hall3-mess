@@ -4,13 +4,13 @@
   <mat-card > 
           
           <mat-form-field class="container">
-              <input matInput placeholder="Current PIN" type="password" #oldpin>
+              <input matInput placeholder="Current PIN" type="password" [(ngModel)]="input1" #oldpin>
           </mat-form-field>
           <mat-form-field class="container">
-              <input matInput placeholder="New PIN" type="password" #newpin>
+              <input matInput placeholder="New PIN" type="password" [(ngModel)]="input2" #newpin>
           </mat-form-field>
           <mat-form-field class="container">
-              <input matInput placeholder="Retype New PIN" type="password" #renewpin>
+              <input matInput placeholder="Retype New PIN" type="password" [(ngModel)]="input3" #renewpin>
           </mat-form-field>
             <br>
             <button mat-raised-button color="primary" type="submit" class="buttonBlue" (click)="chngpin(oldpin.value, newpin.value, renewpin.value)"><b>Change</b></button>
