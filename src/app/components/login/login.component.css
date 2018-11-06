@@ -35,6 +35,7 @@ form {
 	position: relative; 
 	margin-bottom: 45px; 
 	text-align: center;
+	color: #000
 }
 
 input {
@@ -223,4 +224,8 @@ footer img:focus , footer a:focus { outline: none; }
     height: 100%;
     align-items: center;
     justify-content: center;
+}
+
+.centeraln{
+	text-align: center;
 }

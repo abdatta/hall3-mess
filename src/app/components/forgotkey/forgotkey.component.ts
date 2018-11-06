@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-forgotkey',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotkeyComponent implements OnInit {
 
-  constructor() { }
+  error = '';
+  noinput = '';
+  constructor(private router: Router ,  public snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
