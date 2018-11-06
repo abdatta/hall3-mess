@@ -2,7 +2,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
-    padding: 5px 7px;
+    padding: 10px;
 }
 
 h2 {
@@ -45,6 +45,5 @@ mat-checkbox {
 }
 
 .spinner{
-padding:auto;
-margin-top:120px;
+    margin-top:60px;
 }

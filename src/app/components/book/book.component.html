@@ -1,7 +1,7 @@
-<div class="container spinner" *ngIf="load"><mat-spinner></mat-spinner></div>
-<div class="container"  *ngIf="!load">
-  <h3><b>Book Today's Extras</b></h3>
-  <div class="disher">
+<div class="container">
+  <h2>Book Today's Extras</h2>
+  <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+  <div class="disher" *ngIf="!loading">
     <mat-card class="dish-item" *ngFor="let dish of dishes; let i=index;">
       <mat-checkbox [(ngModel)]="dish.selected" (ngModelChange)="resetQuantity(i)"></mat-checkbox>
       <button mat-button class="dish-button"
@@ -18,5 +18,5 @@
       </div>
     </mat-card>
   </div>
-  <button mat-raised-button color="primary" class="buttonBlue" (click)="book()"><b>Submit</b></button>
+  <button *ngIf="!loading" mat-raised-button color="primary" class="buttonBlue" (click)="book()"><b>Submit</b></button>
 </div>

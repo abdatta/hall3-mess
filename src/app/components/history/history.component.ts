@@ -15,13 +15,14 @@ export class HistoryComponent implements OnInit {
   grouped_tokens = {};
   dates = [];
   init_id: string;
-
-  load = false;
+  loading: boolean;
 
   constructor(private tokensService: TokensService,
               private route: ActivatedRoute) {}
   ngOnInit() {
-    this.load = true;
+    // tokens are being loaded
+    this.loading = true;
+
     this.tokensService.getTokens()
       .subscribe(tokens => {
         // sort tokens by date and time
@@ -47,7 +48,8 @@ export class HistoryComponent implements OnInit {
             }
           });
 
-        this.load = false;
+        // tokens successfully loaded
+        this.loading = false;
       });
   }
 

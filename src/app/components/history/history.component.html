@@ -1,7 +1,7 @@
-<div class="container spinner" *ngIf="load"><mat-spinner></mat-spinner></div>
-<div class="container" *ngIf="!load">
-    <h3><b>History</b></h3>
-  <mat-accordion>
+<div class="container">
+  <h2>History</h2>
+  <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+  <mat-accordion *ngIf="!loading">
     <div></div> <!-- so that margin-top of first element is not set to 0 -->
     <div *ngFor="let date of dates">
       <div class="date">{{ date }}</div>

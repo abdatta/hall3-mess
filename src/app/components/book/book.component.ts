@@ -12,13 +12,14 @@ export class BookComponent implements OnInit {
 
   // sample dishes for extras
   dishes: DishModel[];
+  loading: boolean;
 
   constructor(private router: Router,
               private dishesService: DishesService,
               private tokensService: TokensService) { }
-load = false;
 
-  ngOnInit() {  this.load = true;
+  ngOnInit() {
+    this.loading = true;
     this.dishesService.getTodaysDishes()
       .subscribe(dishes => {
         this.dishes = dishes;
@@ -26,7 +27,7 @@ load = false;
           dish.quantity = 0;
           dish['selected'] = false;
         });
-        this.load = false;
+        this.loading = false;
       });
   }
 
