@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import {MatSnackBar} from '@angular/material';
 import { AuthService } from '@app/services';
 
 @Component({
@@ -13,11 +13,17 @@ export class LoginComponent implements OnInit {
   // TODO: Add errors for invalid login
   submitted = false;
   error = '';
-
+  noinput = '';
   constructor(private authService: AuthService,
-              private router: Router) { }
+              private router: Router ,  public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+  }
+
+  openSnackBar() {
+    this.snackBar.open( this.error , this.noinput , {
+      duration: 1600,
+    });
   }
 
   logIn(rollno: string, password: string) {
@@ -29,6 +35,7 @@ export class LoginComponent implements OnInit {
       } else {
         this.error = 'Incorrect Username or Password';
         this.submitted = false;
+        this.openSnackBar();
       }
     });
   }
