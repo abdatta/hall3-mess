@@ -51,6 +51,17 @@ export class AuthService {
       );
   }
 
+  chngpin(oldpin: string, newpin: string): Observable<number> {
+    return this.http.patch<UserModel>('/api/account/update', { password: oldpin, newpassword: newpin })
+      .pipe(
+        map((response: UserModel) => {
+          this.currentUser = Promise.resolve(response);
+          return 200;
+        }),
+        catchError(this.handleError)
+      );
+  }
+
   logout(): void {
     this.currentUser = Promise.resolve(null);
     // To execute observable, it is converted to a promise

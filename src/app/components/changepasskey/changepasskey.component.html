@@ -1,28 +1,21 @@
-<div id="container">
-    
-    <ul>
-      <li>
-          <span>Change PIN 
-          </span>  
-          <br>
-          <br>
-          <form>
-            <div class="w3-row-padding">
-              <div class="w3-third">
-                <input class="w3-input w3-border" type="password" placeholder="Present PIN" autofocus>
-              </div>
-              <div class="w3-third">
-                <input class="w3-input w3-border" type="password" placeholder="New PIN">
-              </div>
-              <div class="w3-third">
-                <input class="w3-input w3-border" type="password" placeholder="Confirm PIN">
-              </div>
-            </div>
+<div class="container">
+  <h3><b>Change PIN</b></h3>
+    <div class="disher" #form>
+  <mat-card > 
+          
+          <mat-form-field class="container">
+              <input matInput placeholder="Current PIN" type="password" #oldpin>
+          </mat-form-field>
+          <mat-form-field class="container">
+              <input matInput placeholder="New PIN" type="password" #newpin>
+          </mat-form-field>
+          <mat-form-field class="container">
+              <input matInput placeholder="Retype New PIN" type="password" #renewpin>
+          </mat-form-field>
             <br>
-            
-            <button mat-raised-button color="primary" type="submit" class="buttonBlue"><b>Change</b></button>
-          </form>
-      </li>
-    </ul>
+            <button mat-raised-button color="primary" type="submit" class="buttonBlue" (click)="chngpin(oldpin.value, newpin.value, renewpin.value)"><b>Change</b></button>
+ <!---->
+    </mat-card>
+    </div>
   </div>
   

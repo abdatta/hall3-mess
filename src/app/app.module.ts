@@ -11,6 +11,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppRoutingModule } from '@app/app-routing.module';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {
   LoginComponent,
@@ -88,7 +89,8 @@ import { AppComponent } from '@app/app.component';
     MatCheckboxModule,
     MatTableModule,
     MatRadioModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ],
   providers: [
     DishesService
