@@ -2,7 +2,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
-    padding: 5px 7px;
+    padding: 10px;
     text-align: center;
 
 }
@@ -27,6 +27,15 @@ a {
     color:#00A8FF;
 }
 
+.items {
+    display: flex;
+    justify-content: space-around;
+}
+
+.details {
+    display: flex;
+    justify-content: space-around;
+}
 
 /* Button modifiers */
 

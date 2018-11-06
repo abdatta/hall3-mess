@@ -1,30 +1,27 @@
-
-  <div class="container">
-    <h3><b>Not Well ?</b></h3>
-      <div class="disher" #form>
+<div class="container">
+  <h2>Not Well?</h2>
+  <div class="disher">
     <mat-card > 
-      <span>Please utilise this service if you are not well,and want the any of following item at your room.<br></span>
-      <br>List of items:<br>
-      <mat-radio-group>
+      <div>When you are not well and need the any of following item at your room:</div>
+      <br>
+      <mat-radio-group class="items">
         <mat-radio-button value="Curd-rice">Curd-rice &nbsp;&nbsp;</mat-radio-button>
         <mat-radio-button value="Dal-rice">Dal-rice &nbsp;&nbsp;</mat-radio-button>
         <mat-radio-button value="Riceonly">Rice-only &nbsp;&nbsp;</mat-radio-button>
       </mat-radio-group><br>
-            <mat-form-field class="container">
-                <input matInput placeholder="Name:" type="text">
-            </mat-form-field>
-            <mat-form-field class="container">
-                <input matInput placeholder="Wing:(Ex: 5top)" type="text">
-            </mat-form-field>
-            <mat-form-field class="container">
-                <input matInput placeholder="Room:(Ex: 350)" type="text">
-            </mat-form-field>
-              <br>
-              <button mat-raised-button color="primary" type="submit" class="buttonBlue"><b>Submit</b></button>
-      </mat-card>
+      <div class="details">
+        <mat-form-field>
+            <input matInput placeholder="Your Wing">
+            <mat-hint>Eg. 5-Top</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Your Room">
+            <mat-hint>Eg. 350</mat-hint>
+        </mat-form-field>
       </div>
-      <h3><b>Get Well Soon</b></h3>
-    </div>
-    
-  
-  
+      <br>
+      <button mat-raised-button color="primary" type="submit" class="buttonBlue"><b>Submit</b></button>
+    </mat-card>
+  </div>
+  <h3>Get Well Soon!</h3>
+</div>
