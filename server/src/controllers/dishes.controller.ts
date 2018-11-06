@@ -62,6 +62,24 @@ export class DishesCtrl {
     }
 
     /**
+     * Get list of someday's dishes
+     *
+     * @class DishesCtrl
+     * @method getSomedaysDishes
+     */
+    public getSomedaysDishes = (req: Request, res: Response) => {
+        const day = moment(req.params.day + 'day', 'dddd').format('ddd');
+        this.dishModel.find({ days: day }, '-days -__v',
+          (err: Error, dishes: DishModel[]) => {
+            if (err) {
+                this.internalServer(res, err);
+            } else {
+                res.status(200).json(dishes);
+            }
+          });
+    }
+
+    /**
      * Update details of a dish in database
      *
      * @class DishesCtrl
