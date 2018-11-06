@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DishesService, TokensService } from '@app/services';
 import { DishModel } from '@app/models';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-book',
@@ -10,11 +11,11 @@ import { Router } from '@angular/router';
 })
 export class BookComponent implements OnInit {
 
-  // sample dishes for extras
   dishes: DishModel[];
   loading: boolean;
 
   constructor(private router: Router,
+              private snackBar: MatSnackBar,
               private dishesService: DishesService,
               private tokensService: TokensService) { }
 
@@ -22,7 +23,7 @@ export class BookComponent implements OnInit {
     this.loading = true;
     this.dishesService.getTodaysDishes()
       .subscribe(dishes => {
-        this.dishes = dishes;
+        this.dishes = dishes.filter(dish => !dish.prebookable);
         dishes.forEach(dish => {
           dish.quantity = 0;
           dish['selected'] = false;
@@ -49,6 +50,14 @@ export class BookComponent implements OnInit {
         if (token) {
           this.router.navigateByUrl('/home/history?show=' + token._id);
         } // TODO: to handle cases of failure
+      },
+      error => {
+        if (error === 400) {
+          this.snackBar.open('Invalid Request', null, { duration: 1600 });
+        } else {
+          this.snackBar.open('Oops! Some error occured', 'Retry', { duration: 1600 })
+            .onAction().subscribe(_ => this.book());
+        }
       });
   }
 

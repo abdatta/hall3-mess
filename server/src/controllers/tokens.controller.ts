@@ -65,7 +65,12 @@ export class TokensCtrl {
         }
 
         const today = moment().format('ddd');
-        this.dishModel.find({_id: { $in: Object.keys(quantity) }, days: today},
+        const tomorrow = moment().add(1, 'd').format('ddd');
+        this.dishModel.find({_id: { $in: Object.keys(quantity) },
+            $or: [
+                {days: today},
+                {days: tomorrow, prebookable: true}
+            ]},
             (error: Error, dishes: DishModel[]) => {
                 if (error) {
                     this.internalServer(res, error);

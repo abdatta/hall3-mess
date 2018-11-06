@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { TokenModel, DishModel } from '@app/models';
@@ -23,9 +23,6 @@ export class TokensService {
   }
 
   handleError(error: any): Observable<any> {
-    if (error.status) {
-      return of(error.status);
-    }
-    return Observable.throw(error.message || error);
+    return throwError(error.status || error.message || error);
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { UserModel } from '@app/models';
@@ -79,6 +79,6 @@ export class AuthService {
     if (error.status) {
       return of(error.status);
     }
-    return Observable.throw(error.message || error);
+    return throwError(error.message || error);
   }
 }

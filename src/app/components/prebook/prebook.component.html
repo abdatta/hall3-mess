@@ -1,51 +1,23 @@
-<div id="container">
-  
-    <ul>
-      <li>
-          <p class="note">Note:Items booking closes one day before and you could book items for day after tommorow also.</p>
-      </li>
-      <li>
-          <div class="note">Tuesday(16-10-2018):</div>
-      </li>
-      <li>
-        <div class="note">Lunch:</div>
-        <span>Dahi Chicken</span>
-        <button class="arrow pull-right"><mat-icon>keyboard_arrow_right</mat-icon></button>
-        <span  class="pull-right" id="element1">&nbsp;&nbsp; 1&nbsp;&nbsp; </span>
-        <button class="arrow pull-right"><mat-icon>keyboard_arrow_left</mat-icon></button>
-      </li>
+<div class="container">
+        <h2>Prebook Tomorrow's Extras</h2>
+        <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+        <div class="disher" *ngIf="!loading">
+          <mat-card class="dish-item" *ngFor="let dish of dishes; let i=index;">
+            <mat-checkbox [(ngModel)]="dish.selected" (ngModelChange)="resetQuantity(i)"></mat-checkbox>
+            <button mat-button class="dish-button"
+                    (click)="dish.selected=!dish.selected; resetQuantity(i)">{{dish.name}} (&#8377;{{dish.price}})</button>
+            <div></div>
+            <div *ngIf="dish.selected" class="no-shrink">
+              <button mat-icon-button (click)="changeQuantity(i,-1)" [disabled]="dish.quantity<=1">
+                <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_left</mat-icon>
+              </button>
+              <span>{{dish.quantity}}</span>
+              <button mat-icon-button  (click)="changeQuantity(i,1)">
+                  <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+          </mat-card>
+        </div>
+        <button *ngIf="!loading" mat-raised-button color="primary" class="buttonBlue" (click)="prebook()"><b>Prebook</b></button>
+      </div>
       
-      <li>
-        <div class="note">Dinner:</div>
-        <span>Fish-Fry</span>
-        <button class="arrow pull-right"><mat-icon>keyboard_arrow_right</mat-icon></button>
-        <span  class="pull-right" id="element1">&nbsp;&nbsp; 0&nbsp;&nbsp; </span>
-        <button class="arrow pull-right"><mat-icon>keyboard_arrow_left</mat-icon></button>
-      </li>
-  
-      <li>
-          <div class="note">Wednesday(17-10-2018):</div>
-      </li>
-
-      <li>
-          <div class="note">Lunch:</div>
-          <div class="note">No Item Found !!</div>
-          <!--<span>Paneer Bujiya</span>
-          <button class="arrow pull-right"><mat-icon>keyboard_arrow_right</mat-icon></button>
-          <span  class="pull-right" id="element1">&nbsp;&nbsp; 0&nbsp;&nbsp; </span>
-          <button class="arrow pull-right"><mat-icon>keyboard_arrow_left</mat-icon></button>-->
-      </li>
-
-      <li>
-          <div class="note">Dinner:</div>
-          <span>Chicken Biryani</span>
-          <button class="arrow pull-right"><mat-icon>keyboard_arrow_right</mat-icon></button>
-          <span  class="pull-right" id="element1">&nbsp;&nbsp; 0&nbsp;&nbsp; </span>
-          <button class="arrow pull-right"><mat-icon>keyboard_arrow_left</mat-icon></button>
-      </li>
-    </ul>
-    <button mat-raised-button color="primary" type="submit" class="buttonBlue"><b>BOOK</b></button>
-    <br>
-    <p class="note">**These items when booked will show up in book section at that time and you could generate QR with that or simply login and get token.</p>
-  </div>
-  
