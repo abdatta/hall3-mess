@@ -9,6 +9,8 @@ import { MatSnackBar } from '@angular/material';
 })
 export class ForgotkeyComponent implements OnInit {
 
+  submitting: boolean;
+
   constructor(private router: Router ,
               public snackBar: MatSnackBar) { }
 

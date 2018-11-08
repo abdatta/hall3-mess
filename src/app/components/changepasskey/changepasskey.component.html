@@ -2,24 +2,30 @@
     <h2>Change Password</h2>
     <div class="passes">
         <mat-card> 
-            <mat-form-field class="container">
-                <input  matInput #currpass
-                        placeholder="Current Password"
-                        type="password" autofocus
-                        (keyup.enter)="newpass.focus()">
-            </mat-form-field>
-            <mat-form-field class="container">
-                <input  matInput #newpass
-                        placeholder="New Password"
-                        type="password"
-                        (keyup.enter)="renewpass.focus()">
-            </mat-form-field>
-            <mat-form-field class="container">
-                <input  matInput #renewpass
-                        placeholder="Retype New Password"
-                        type="password"
-                        (keyup.enter)="!submitting && changepassword(currpass, newpass, renewpass)">
-            </mat-form-field>
+            <div>
+                Current Password: 
+                <mat-form-field>
+                    <input  matInput #currpass
+                            type="password" autofocus
+                            (keyup.enter)="newpass.focus()">
+                </mat-form-field>
+            </div>
+            <div>
+                New Password: 
+                <mat-form-field>
+                    <input  matInput #newpass
+                            type="password"
+                            (keyup.enter)="renewpass.focus()">
+                </mat-form-field>
+            </div>
+            <div>
+                Retype New Password: 
+                <mat-form-field>
+                    <input  matInput #renewpass
+                            type="password"
+                            (keyup.enter)="!submitting && changepassword(currpass, newpass, renewpass)">
+                </mat-form-field>
+            </div>
             <br>
             <div class="container"  *ngIf="submitting">
                 <mat-progress-bar mode="indeterminate"></mat-progress-bar>
