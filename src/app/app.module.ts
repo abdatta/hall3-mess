@@ -9,10 +9,36 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppRoutingModule } from '@app/app-routing.module';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
 
+// Material Modules
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatListModule,
+  MatInputModule,
+  MatExpansionModule,
+  MatSlideToggleModule,
+  MatFormFieldModule,
+  MatCardModule,
+  MatTableModule,
+  MatRadioModule,
+  MatProgressSpinnerModule,
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS
+} from '@angular/material';
+
+// Services
+import {
+  AuthService,
+  DishesService,
+  TokensService
+} from '@app/services';
+
+// Components
+import { AppComponent } from '@app/app.component';
 import {
   LoginComponent,
   SignupComponent,
@@ -27,28 +53,6 @@ import {
   GuestroomComponent,
   ForgotkeyComponent
 } from '@app/components';
-
-// Material Modules
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatToolbarModule,
-  MatSidenavModule,
-  MatIconModule,
-  MatListModule,
-  MatInputModule
-} from '@angular/material';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-
-// Services
-import { DishesService } from '@app/services/dishes.service';
-
-// Components
-import { AppComponent } from '@app/app.component';
 
 
 @NgModule({
@@ -93,7 +97,13 @@ import { AppComponent } from '@app/app.component';
     MatSnackBarModule
   ],
   providers: [
-    DishesService
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: { duration: 2500 }
+    },
+    AuthService,
+    DishesService,
+    TokensService
   ],
   bootstrap: [AppComponent]
 })

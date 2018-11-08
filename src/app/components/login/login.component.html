@@ -1,18 +1,15 @@
 <div class="flex">
   <form>
     <footer><img src="assets/img/mauryans_logo.png"></footer>
-    
-      <h3><b>Hall-3 Mess Login</b></h3>
-    
-    
+    <h3><b>Hall-3 Mess Login</b></h3>
     <mat-form-field class="centeraln">
-      <input matInput placeholder="Roll No" type="text" autofocus #roll>
-  </mat-form-field>
-  <mat-form-field class="centeraln">
-      <input matInput placeholder="Password" type="password" #pass>
-  </mat-form-field><br>
-    <button mat-raised-button color="primary" type="submit" class="buttonBlue" (click)="logIn(roll.value, pass.value)" ><b>Login</b>
-      <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+      <input matInput placeholder="Roll No" type="text" autofocus (keyup.enter)="pass.focus()"  #roll>
+    </mat-form-field>
+    <mat-form-field class="centeraln">
+      <input matInput placeholder="Password" type="password" (keyup.enter)="logIn(roll.value, pass.value)" #pass>
+    </mat-form-field><br>
+    <button mat-raised-button color="primary" type="button" (click)="logIn(roll.value, pass.value)">
+      <b>Login</b>
     </button>
     <div class="forsignup">
       <p>Never share your password</p>

@@ -10,34 +10,35 @@ import { AuthService } from '@app/services';
 })
 export class LoginComponent implements OnInit {
 
-  // TODO: Add errors for invalid login
-  submitted = false;
-  error = '';
-  noinput = '';
+  submitting: boolean;
+
   constructor(private authService: AuthService,
               private router: Router ,  public snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
 
-  openSnackBar() {
-    this.snackBar.open( this.error , this.noinput , {
-      duration: 1600,
-    });
+  log(e) {
+    console.log(e);
   }
-
   logIn(rollno: string, password: string) {
-    this.submitted = true;
-    this.authService.logIn(rollno, password)
+    if (rollno && password) {
+      this.submitting = true;
+      this.authService.logIn(rollno, password)
         .subscribe((s: number) => {
-      if (s === 200) {
-        this.router.navigateByUrl('/home');
-      } else {
-        this.error = 'Incorrect Username or Password';
-        this.submitted = false;
-        this.openSnackBar();
-      }
-    });
+          if (s === 200) {
+            this.router.navigateByUrl('/home');
+          } else if (s === 401) {
+            this.snackBar.open('Incorrect Username or Password');
+          } else {
+            this.snackBar.open('Oops! Some error occured.', 'Retry')
+                  .onAction().subscribe(_ => this.logIn(rollno, password));
+          }
+          this.submitting = false;
+      });
+    } else {
+      this.snackBar.open('Please fill all the fields.');
+    }
   }
 
 }

@@ -3,16 +3,18 @@
     <div class="passes">
         <mat-card> 
             <mat-form-field class="container">
-                <input matInput placeholder="Current Password" type="password" [(ngModel)]="currpass">
+                <input matInput placeholder="Current Password" autofocus type="password" (keyup.enter)="newpass.focus()" #currpass>
             </mat-form-field>
             <mat-form-field class="container">
-                <input matInput placeholder="New PIN" type="password" [(ngModel)]="newpass">
+                <input matInput placeholder="New Password" type="password" (keyup.enter)="renewpass.focus()" #newpass>
             </mat-form-field>
             <mat-form-field class="container">
-                <input matInput placeholder="Retype New PIN" type="password" [(ngModel)]="renewpass">
+                <input matInput placeholder="Retype New Password" type="password" (keyup.enter)="changepassword(currpass, newpass, renewpass)" #renewpass>
             </mat-form-field>
             <br>
-            <button mat-raised-button color="primary" type="submit" class="buttonBlue" (click)="changepassword()"><b>Change</b></button>
+            <button mat-raised-button color="primary" type="button" (click)="changepassword(currpass, newpass, renewpass)">
+                <b>Change</b>
+            </button>
         </mat-card>
     </div>
 </div>

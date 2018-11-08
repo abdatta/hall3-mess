@@ -1,28 +1,29 @@
 <div class="flex">
-<form>
+  <form>
     <footer><img src="assets/img/mauryans_logo.png"></footer>
     <h3><b>Hall-3 Mess Signup</b></h3>
- 
-  <mat-form-field class="container">
-    <input matInput placeholder="Roll No" type="text" autofocus #roll>
-</mat-form-field>
-<mat-form-field class="container">
-    <input matInput placeholder="Password" type="password" #pass>
-</mat-form-field>
-<mat-form-field class="container">
-    <input matInput placeholder="Retype Password" type="password" #repass>
-</mat-form-field>
-  <br>
-  <button mat-raised-button color="primary" type="submit" class="buttonBlue" (click)="signUp(roll.value, pass.value, repass.value)"><b>Signup</b>
-    <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
-  </button>
-  <div class="forsignup"><p><br>Have done this once?&nbsp;<a routerLink="/login">Login</a>
-    <br><a routerLink="/forgotkey">Forgot Password?</a></p></div>
-</form>
-
-<!--Add a Jscript for after signup statement-->
-<footer>
-  <p><a href="https://www.iitk.ac.in/hall3/" target="_blank">Hall-3 </a>Mess Automation Portal</p>
-</footer>
+    <mat-form-field class="container">
+      <input matInput placeholder="Roll No" type="text" (keyup.enter)="pass.focus()" autofocus #roll>
+    </mat-form-field>
+    <mat-form-field class="container">
+      <input matInput placeholder="Password" type="password" (keyup.enter)="repass.focus()" #pass>
+    </mat-form-field>
+    <mat-form-field class="container">
+      <input matInput placeholder="Retype Password" type="password" (keyup.enter)="signUp(roll.value, pass.value, repass.value)" #repass>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" type="button" (click)="signUp(roll.value, pass.value, repass.value)">
+      <b>Signup</b>
+    </button>
+    <div class="forsignup">
+      <p>
+        <br>Have done this once?&nbsp;<a routerLink="/login">Login</a>
+        <br><a routerLink="/forgotkey">Forgot Password?</a>
+      </p>
+    </div>
+  </form>
+  <footer>
+    <p><a href="http://hall3iitk.com/" target="_blank">Hall-3 </a>Mess Automation Portal</p>
+  </footer>
 </div>
 

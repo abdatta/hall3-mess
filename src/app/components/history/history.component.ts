@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TokensService } from '@app/services';
 import { TokenModel } from '@app/models';
 import * as moment from 'moment';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-history',
@@ -18,6 +19,7 @@ export class HistoryComponent implements OnInit {
   loading: boolean;
 
   constructor(private tokensService: TokensService,
+              private snackBar: MatSnackBar,
               private route: ActivatedRoute) {}
   ngOnInit() {
     // tokens are being loaded
@@ -49,6 +51,10 @@ export class HistoryComponent implements OnInit {
           });
 
         // tokens successfully loaded
+        this.loading = false;
+      },
+      error => {
+        this.snackBar.open('Oops! Some error occured. Please refresh the page.');
         this.loading = false;
       });
   }

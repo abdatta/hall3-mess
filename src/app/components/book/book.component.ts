@@ -29,6 +29,10 @@ export class BookComponent implements OnInit {
           dish['selected'] = false;
         });
         this.loading = false;
+      },
+      error => {
+        this.snackBar.open('Oops! Some error occured. Please refresh the page.');
+        this.loading = false;
       });
   }
 
@@ -44,21 +48,26 @@ export class BookComponent implements OnInit {
   }
 
   book() {
-    this.tokensService
-      .bookToken(this.dishes.filter(dish => dish['selected']))
-      .subscribe(token => {
-        if (token) {
-          this.router.navigateByUrl('/home/history?show=' + token._id);
-        } // TODO: to handle cases of failure
-      },
-      error => {
-        if (error === 400) {
-          this.snackBar.open('Invalid Request', null, { duration: 1600 });
-        } else {
-          this.snackBar.open('Oops! Some error occured', 'Retry', { duration: 1600 })
-            .onAction().subscribe(_ => this.book());
-        }
-      });
+    const dishes = this.dishes && this.dishes.filter(dish => dish['selected']);
+    if (dishes && dishes.length) {
+      this.tokensService
+        .bookToken(dishes)
+        .subscribe(token => {
+          if (token) {
+            this.router.navigateByUrl('/home/history?show=' + token._id);
+          } // TODO: to handle cases of failure
+        },
+        error => {
+          if (error === 400) {
+            this.snackBar.open('Invalid Request');
+          } else {
+            this.snackBar.open('Oops! Some error occured', 'Retry')
+              .onAction().subscribe(_ => this.book());
+          }
+        });
+    } else {
+        this.snackBar.open('No dish is selected.');
+    }
   }
 
 }

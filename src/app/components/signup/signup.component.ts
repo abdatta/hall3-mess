@@ -10,37 +10,35 @@ import { AuthService } from '@app/services';
 })
 export class SignupComponent implements OnInit {
 
-  submitted = false;
-  error = '';
-  noinput = '';
+  submitting: boolean;
   constructor(private authService: AuthService,
               private router: Router , public snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
 
-  openSnackBar() {
-    this.snackBar.open( this.error , this.noinput , {
-      duration: 2700,
-    });
-  }
   signUp(rollno: string, password: string, repassword: string) {
-    if (password === repassword) {
-      this.authService.signUp(rollno, password)
-        .subscribe(s => {
-          if (s === 200) {
-            this.router.navigateByUrl('/home');
-            this.error = 'Please Check your mail for first time PIN';
-            this.openSnackBar();
-          } else {
-            this.error = 'User already exists';
-            this.submitted = false;
-            this.openSnackBar();
-          }
-        });
+    if (rollno && password && repassword) {
+      if (password === repassword) {
+        this.submitting = true;
+        this.authService.signUp(rollno, password)
+          .subscribe(s => {
+            if (s === 200) {
+              this.router.navigateByUrl('/home');
+              this.snackBar.open('Sign up successful! Please check your mail.');
+            } else if (s === 401) {
+              this.snackBar.open('User already exists.');
+            } else {
+              this.snackBar.open('Oops! Some error occured.', 'Retry')
+                  .onAction().subscribe(_ => this.signUp(rollno, password, repassword));
+            }
+            this.submitting = true;
+          });
+        } else {
+          this.snackBar.open('Passwords do not match.');
+        }
       } else {
-        this.error = 'Passwords do not match';
-        this.openSnackBar();
+        this.snackBar.open('Please fill all the fields.');
       }
   }
 

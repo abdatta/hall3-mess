@@ -69,7 +69,7 @@ export class AuthService {
       .pipe(
         catchError(this.handleError)
       )
-      .subscribe(o => this.router.navigateByUrl('/'));
+      .subscribe(_ => this.router.navigateByUrl('/'));
   }
 
   handleError(error: any): Observable<any> {
