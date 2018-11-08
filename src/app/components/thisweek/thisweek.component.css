@@ -49,8 +49,42 @@ a {
     margin:auto;
     padding: auto;
 }
-               
-                
-            
+
+.mat-tab-group {
+    margin-bottom: 48px;
+  }
+
+.slots {
+    display: flex;
+    justify-content: space-around;
+}
+
+.alignmt{
+    width: 30%;
+    max-width: 480px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+@media all and (max-width: 800px) {
+    .slots {
+      /* When on medium sized screens, we center it by evenly distributing empty space around items */
+      justify-content: space-around;
+    }
+  }
+  
+  /* Small screens */
+  @media all and (max-width: 500px) {
+    .slots {
+      /* On small screens, we are no longer using row direction but column */
+      flex-direction: column;
+      
+    }
+    .alignmt{
+        margin: auto;
+        margin-top: 5px;
+        width:90%;
+    }
+  }
         
     

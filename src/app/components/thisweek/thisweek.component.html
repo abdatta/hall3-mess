@@ -1,17 +1,20 @@
-<div id="container">
-    <ul>
-      <li>
-          <div class="note">Monday Breakfast:</div>
-          <div class="note">Idle,bread,egg,milk</div>
-      </li>
-      <li>
-          <div class="note">Monday Lunch:</div>
-          <div class="note">Idle,bread,egg,milk</div>
-      </li>
-      <li>
-          <div class="note">Monday Dinner:</div>
-          <div class="note">Idle,bread,egg,milk</div>
-      </li>
-    </ul>
-  </div>
-  
+  <mat-tab-group mat-align-tabs="center" >
+    <div>
+    <mat-tab *ngFor="let day of days;" label="{{day}}">
+        <div class="slots">
+            <mat-card class="alignmt">
+                <h5>Breakfast:</h5>
+                <span>&bull;</span>
+            </mat-card>
+            <mat-card class="alignmt">
+                <h5>Lunch:</h5>
+                <span>&bull;</span>
+            </mat-card>
+            <mat-card class="alignmt">
+                <h5>Dinner:</h5>
+                <span>&bull;</span>
+            </mat-card>
+        </div>
+    </mat-tab>
+    </div>
+  </mat-tab-group>
