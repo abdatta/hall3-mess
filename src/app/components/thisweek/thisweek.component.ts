@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DishesService, TokensService } from '@app/services';
 import { DishModel } from '@app/models';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-thisweek',
@@ -9,54 +10,43 @@ import { DishModel } from '@app/models';
 })
 export class ThisweekComponent implements OnInit {
 
-  days = ["Monday",
-         "Tuesday",
-         "Wednesday",
-         "Thrusday",
-         "Friday",
-         "Saturday",
-         "Sunday"];
-
-  mondaydishes: DishModel[];
-  tuesdaydishes: DishModel[];
-  wednesdaydishes: DishModel[];
-  thursdaydishes: DishModel[];
-  fridaydishes: DishModel[];
-  saturdaydishes: DishModel[];
-  sundaydishes: DishModel[];
-
+  days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
+  today: string;
+  menu = {};
 
   constructor(private dishesService: DishesService, private tokensService: TokensService) { }
 
   ngOnInit() {
-    this.dishesService.getSomedaysDishes('monday')
-    .subscribe(dishes => {
-      this.mondaydishes = dishes; 
-    });
-    this.dishesService.getSomedaysDishes('tuesday')
-    .subscribe(dishes => {
-      this.tuesdaydishes = dishes; 
-    });
-    this.dishesService.getSomedaysDishes('wednesday')
-    .subscribe(dishes => {
-      this.wednesdaydishes = dishes; 
-    });
-    this.dishesService.getSomedaysDishes('thursday')
-    .subscribe(dishes => {
-      this.thursdaydishes = dishes; 
-    });
-    this.dishesService.getSomedaysDishes('friday')
-    .subscribe(dishes => {
-      this.fridaydishes = dishes; 
-    });
-    this.dishesService.getSomedaysDishes('saturday')
-    .subscribe(dishes => {
-      this.saturdaydishes = dishes; 
-    });
-    this.dishesService.getSomedaysDishes('sunday')
-    .subscribe(dishes => {
-      this.sundaydishes = dishes; 
-    });
+    this.today = moment().format('dddd');
+    for (const day of this.days) {
+      this.dishesService.getSomedaysDishes(day)
+        .subscribe(dishes => {
+          this.menu[day] = {
+            Breakfast: this.groupByPrebookable(this.filterSlot(dishes, 'Breakfast')),
+            Lunch: this.groupByPrebookable(this.filterSlot(dishes, 'Lunch')),
+            Dinner: this.groupByPrebookable(this.filterSlot(dishes, 'Dinner')),
+          };
+        });
+    }
+}
+
+filterSlot(dishes: DishModel[], slot: 'Breakfast' | 'Lunch' | 'Dinner') {
+  return dishes && dishes.filter(dish => dish.slot.includes(slot));
+}
+
+groupByPrebookable(dishes: DishModel[]) {
+  return {
+    pre: dishes.filter(dish => dish.prebookable),
+    notpre: dishes.filter(dish => !dish.prebookable)
+  };
 }
 
 }

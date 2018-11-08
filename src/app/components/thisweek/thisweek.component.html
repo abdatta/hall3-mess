@@ -1,20 +1,26 @@
-  <mat-tab-group mat-align-tabs="center" >
-    <div>
-    <mat-tab *ngFor="let day of days;" label="{{day}}">
-        <div class="slots">
-            <mat-card class="alignmt">
-                <h5>Breakfast:</h5>
-                <span>&bull;</span>
-            </mat-card>
-            <mat-card class="alignmt">
-                <h5>Lunch:</h5>
-                <span>&bull;</span>
-            </mat-card>
-            <mat-card class="alignmt">
-                <h5>Dinner:</h5>
-                <span>&bull;</span>
+<mat-tab-group mat-stretch-tabs [selectedIndex]="days.indexOf(today)">
+    <mat-tab *ngFor="let day of days;" label="{{ day }}">
+        <h2>{{ day }} Menu</h2>
+        <div class="slots" *ngIf="!menu[day]">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div class="slots" *ngIf="menu[day]">
+            <mat-card class="alignmt" *ngFor="let slot of ['Breakfast', 'Lunch', 'Dinner']">
+                <h4>{{ slot }}</h4>
+                <mat-divider></mat-divider>
+                <mat-list role="list">
+                    <mat-list-item role="listitem" *ngFor="let dish of menu[day][slot].notpre">
+                        <p mat-line>{{ dish.name }}</p>
+                        <p mat-line>Price: &#8377;{{ dish.price }} </p>
+                    </mat-list-item>
+                    <mat-divider *ngIf="menu[day][slot].pre.length > 0"></mat-divider>
+                    <h3 mat-subheader *ngIf="menu[day][slot].pre.length > 0">Prebooked</h3>
+                    <mat-list-item *ngFor="let dish of menu[day][slot].pre">
+                        <p mat-line>{{ dish.name }}</p>
+                        <p mat-line>Price: &#8377;{{ dish.price }} </p>
+                    </mat-list-item>
+                </mat-list>
             </mat-card>
         </div>
     </mat-tab>
-    </div>
-  </mat-tab-group>
+</mat-tab-group>

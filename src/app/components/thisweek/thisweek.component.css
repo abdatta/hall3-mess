@@ -1,90 +1,45 @@
-#container {
-    display: grid;
-    padding: 5px 7px;
+:host >>> .mat-tab-body-content {
+    overflow: auto;
 }
 
-ul {
-    list-style-type: none;
-    margin:0;padding:0;
-}   
-
-li {
-    background: rgb(236, 236, 236);
-    border-radius: 8px;
-    padding: 7px;
-    margin-bottom: 8px;
-   
-}
-                
-a {
-    font-size: 1.5em;
-    text-decoration: none;
-    font-weight: bold;
-    color:#00A8FF;
+:host >>> .mat-tab-body {
+    height: calc(100vh - 114px);
 }
 
-.arrow {
-    background-color: rgb(236, 236, 236);
-    color: rgb(0, 0, 0);
-    padding: 2px 5px;
-    text-align: center;
-    text-decoration: none;
-    border: none;
-    font-size: 5px;
-    margin: 0px;
-    cursor: pointer;
+:host >>> .mat-tab-label-active {
+    opacity: 1;
 }
-
-.pull-right {
-    float: right;
-}
-
-.buttonBlue {
-    width:70px;
-    margin:auto;
-}
-
-.note{
-    text-align:center;
-    margin:auto;
-    padding: auto;
-}
-
-.mat-tab-group {
-    margin-bottom: 48px;
-  }
 
 .slots {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
 
 .alignmt{
-    width: 30%;
-    max-width: 480px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    width: 90%;
+    max-width: 330px;
+    margin: 10px 10px 30px;
 }
 
-@media all and (max-width: 800px) {
-    .slots {
-      /* When on medium sized screens, we center it by evenly distributing empty space around items */
-      justify-content: space-around;
-    }
-  }
-  
-  /* Small screens */
-  @media all and (max-width: 500px) {
-    .slots {
-      /* On small screens, we are no longer using row direction but column */
-      flex-direction: column;
-      
-    }
-    .alignmt{
-        margin: auto;
-        margin-top: 5px;
-        width:90%;
-    }
-  }
+.mat-list .mat-list-item {
+    height: 60px;
+}
+
+.mat-list .mat-list-item .mat-line:nth-child(n+2) {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.mat-subheader {
+    font-size: 13px;
+    font-weight: 600;
+}
         
-    
+h2, h4 {
+    text-align: center;
+}
+
+.mat-progress-spinner {
+    margin-top: 60px;
+}
+
