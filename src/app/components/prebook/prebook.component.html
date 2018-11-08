@@ -1,23 +1,24 @@
 <div class="container">
-        <h2>Prebook Tomorrow's Extras</h2>
-        <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
-        <div class="disher" *ngIf="!loading">
-          <mat-card class="dish-item" *ngFor="let dish of dishes; let i=index;">
-            <mat-checkbox [(ngModel)]="dish.selected" (ngModelChange)="resetQuantity(i)"></mat-checkbox>
-            <button mat-button class="dish-button"
-                    (click)="dish.selected=!dish.selected; resetQuantity(i)">{{dish.name}} (&#8377;{{dish.price}})</button>
-            <div></div>
-            <div *ngIf="dish.selected" class="no-shrink">
-              <button mat-icon-button (click)="changeQuantity(i,-1)" [disabled]="dish.quantity<=1">
-                <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_left</mat-icon>
-              </button>
-              <span>{{dish.quantity}}</span>
-              <button mat-icon-button  (click)="changeQuantity(i,1)">
-                  <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_right</mat-icon>
-                </button>
-            </div>
-          </mat-card>
-        </div>
-        <button *ngIf="!loading" mat-raised-button color="primary" class="buttonBlue" (click)="prebook()"><b>Prebook</b></button>
+  <h2>Prebook Tomorrow's Extras</h2>
+  <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+  <div class="disher" *ngIf="!loading">
+    <mat-card class="dish-item" *ngFor="let dish of dishes; let i=index;">
+      <mat-checkbox [(ngModel)]="dish.selected" (ngModelChange)="resetQuantity(i)"></mat-checkbox>
+      <button mat-button class="dish-button"
+              (click)="dish.selected=!dish.selected; resetQuantity(i)">{{dish.name}} (&#8377;{{dish.price}})</button>
+      <div></div>
+      <div *ngIf="dish.selected" class="no-shrink">
+        <button mat-icon-button (click)="changeQuantity(i,-1)" [disabled]="dish.quantity<=1">
+          <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_left</mat-icon>
+        </button>
+        <span>{{dish.quantity}}</span>
+        <button mat-icon-button  (click)="changeQuantity(i,1)">
+            <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_right</mat-icon>
+          </button>
       </div>
+    </mat-card>
+  </div>
+  <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
+  <button *ngIf="!loading && !submitting" mat-raised-button color="primary" class="buttonBlue" (click)="prebook()"><b>Prebook</b></button>
+</div>
       

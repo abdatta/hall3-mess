@@ -69,6 +69,6 @@ export class HistoryComponent implements OnInit {
   // TODO : Display seperate accordians for each date.
 
   format(date: string) {
-    return moment(date).format('hh:mm\u00A0a');
+    return moment(date).format('HH:mm') + '\u00A0hrs';
   }
 }

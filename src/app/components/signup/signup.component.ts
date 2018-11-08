@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit {
               this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.signUp(rollno, password, repassword));
             }
-            this.submitting = true;
+            this.submitting = false;
           });
         } else {
           this.snackBar.open('Passwords do not match.');

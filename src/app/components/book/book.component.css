@@ -20,6 +20,13 @@ mat-checkbox {
     margin-bottom: 20px;
 }
 
+.mat-progress-bar {
+    margin: 17px 0;
+    width: 45%;
+    max-width: 300px;
+    height: 3px;
+}
+
 .dish-item {
     padding: 10px;
     margin: 5px 0;
@@ -37,11 +44,6 @@ mat-checkbox {
 
 .no-shrink {
     flex: none;
-}
-
-.buttonBlue {
-    width:70px;
-    margin:auto;
 }
 
 .spinner{

@@ -1,21 +1,21 @@
-<div class="flex">
+<div class="container">
   <form>
-    <footer><img src="assets/img/mauryans_logo.png"></footer>
-    <h3><b>Forgot Password?</b></h3>  
-    <mat-form-field class="container">
-      <input matInput placeholder="Roll No" type="text">
+    <header><img src="assets/img/mauryans_logo.png"></header>
+    <h3>Forgot Password?</h3>
+    <mat-form-field>
+      <input matInput placeholder="Roll No." type="text">
     </mat-form-field>
-    <br>
-    <button mat-raised-button color="primary" type="submit" routerLink="/login" >
+    <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
+    <button mat-raised-button *ngIf="!submitting" type="button" color="primary">
       <b>Submit</b>
     </button>
-    <div class="forsignup">
+    <div class="links">
       <p>Reset password link will be sent to your email.</p>
-      <p>Just remembered it?&nbsp;<a routerLink="/login">Login</a><br>Didn't signup still?&nbsp;<a routerLink="/signup">Signup</a></p>
+      <p>Just remembered it?&nbsp;<a routerLink="/login">Login</a><br>Still didn't signup?&nbsp;<a routerLink="/signup">Signup</a></p>
     </div>
   </form>
   <footer>
-    <p><a href="http://hall3iitk.com/" target="_blank">Hall-3 </a>Mess Automation Portal</p>
+    <p><a href="http://hall3iitk.com/" target="_blank">Hall-3</a> Mess Automation Portal</p>
   </footer>
 </div>
   

@@ -14,6 +14,7 @@ export class PrebookComponent implements OnInit {
 
   dishes: DishModel[];
   loading: boolean;
+  submitting: boolean;
 
   constructor(private router: Router,
               private snackBar: MatSnackBar,
@@ -51,12 +52,14 @@ export class PrebookComponent implements OnInit {
   prebook() {
     const dishes = this.dishes && this.dishes.filter(dish => dish['selected']);
     if (dishes && dishes.length) {
+      this.submitting = true;
       this.tokensService
         .bookToken(dishes)
         .subscribe(token => {
           if (token) {
             this.router.navigateByUrl('/home/history?show=' + token._id);
           }
+          this.submitting = false;
         },
         error => {
           if (error === 400) {
@@ -65,6 +68,7 @@ export class PrebookComponent implements OnInit {
             this.snackBar.open('Oops! Some error occured', 'Retry')
               .onAction().subscribe(_ => this.prebook());
           }
+          this.submitting = false;
         });
       } else {
         this.snackBar.open('No dish is selected.');

@@ -1,29 +1,29 @@
-<div class="flex">
+<div class="container">
   <form>
-    <footer><img src="assets/img/mauryans_logo.png"></footer>
-    <h3><b>Hall-3 Mess Signup</b></h3>
-    <mat-form-field class="container">
+    <header><img src="assets/img/mauryans_logo.png"></header>
+    <h3>Hall-3 Mess Signup</h3>
+    <mat-form-field>
       <input matInput placeholder="Roll No" type="text" (keyup.enter)="pass.focus()" autofocus #roll>
     </mat-form-field>
-    <mat-form-field class="container">
+    <mat-form-field>
       <input matInput placeholder="Password" type="password" (keyup.enter)="repass.focus()" #pass>
     </mat-form-field>
-    <mat-form-field class="container">
-      <input matInput placeholder="Retype Password" type="password" (keyup.enter)="signUp(roll.value, pass.value, repass.value)" #repass>
+    <mat-form-field>
+      <input matInput placeholder="Retype Password" type="password" (keyup.enter)="repass.blur(); !submitting && signUp(roll.value, pass.value, repass.value)" #repass>
     </mat-form-field>
-    <br>
-    <button mat-raised-button color="primary" type="button" (click)="signUp(roll.value, pass.value, repass.value)">
+    <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
+    <button mat-raised-button *ngIf="!submitting" color="primary" type="button" (click)="signUp(roll.value, pass.value, repass.value)">
       <b>Signup</b>
     </button>
-    <div class="forsignup">
+    <div class="links">
       <p>
-        <br>Have done this once?&nbsp;<a routerLink="/login">Login</a>
-        <br><a routerLink="/forgotkey">Forgot Password?</a>
+        Have done this once?&nbsp;<a routerLink="/login">Login</a><br>
+        <a routerLink="/forgotkey">Forgot Password?</a>
       </p>
     </div>
   </form>
   <footer>
-    <p><a href="http://hall3iitk.com/" target="_blank">Hall-3 </a>Mess Automation Portal</p>
+    <p><a href="http://hall3iitk.com/" target="_blank">Hall-3</a> Mess Automation Portal</p>
   </footer>
 </div>
 

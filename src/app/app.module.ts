@@ -26,6 +26,7 @@ import {
   MatTableModule,
   MatRadioModule,
   MatProgressSpinnerModule,
+  MatProgressBarModule,
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS
 } from '@angular/material';
@@ -94,6 +95,7 @@ import {
     MatTableModule,
     MatRadioModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatSnackBarModule
   ],
   providers: [

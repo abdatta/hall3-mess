@@ -18,9 +18,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  log(e) {
-    console.log(e);
-  }
   logIn(rollno: string, password: string) {
     if (rollno && password) {
       this.submitting = true;
