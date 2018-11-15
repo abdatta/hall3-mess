@@ -53,7 +53,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "hall3-mess:build",
-            "port": 8080
+            "port": 8000
           },
           "configurations": {
             "production": {

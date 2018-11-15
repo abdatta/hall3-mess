@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"Hall3_Mess.dishes"}],"uuid":"75b515cdc94b477a9c8d62f2a938aba6"}
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"Hall3_Mess.dishes"}]}

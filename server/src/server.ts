@@ -128,7 +128,7 @@ export class Server {
     // create session
     const esession = session({
       secret: LocalConfig.session_secret,
-      saveUninitialized: true,
+      saveUninitialized: false,
       resave: false,
       store: new MongoStore({
         mongooseConnection: connection
@@ -164,6 +164,7 @@ export class Server {
 
     // Public Routes
     this.app.use('/', express.static(path.join(__dirname, '../public')));
+    this.app.use('*', express.static(path.join(__dirname, '../public/index.html')));
 
   }
 
