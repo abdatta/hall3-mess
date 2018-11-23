@@ -3,7 +3,7 @@
 }
 
 :host >>> .mat-tab-body {
-    height: calc(100vh - 114px);
+    height: calc(100vh - 105px);
 }
 
 :host >>> .mat-tab-label-active {
