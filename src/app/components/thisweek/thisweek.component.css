@@ -10,6 +10,10 @@
     opacity: 1;
 }
 
+:host >>> .mat-tab-label:focus:not(.mat-tab-label-active) {
+    opacity: 0.6;
+}
+
 .slots {
     display: flex;
     flex-wrap: wrap;

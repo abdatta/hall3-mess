@@ -1,6 +1,9 @@
 <mat-tab-group mat-stretch-tabs [(selectedIndex)]="active">
     <mat-tab *ngFor="let day of days;" label="{{ day }}">
-        <div (swipeleft)="nextday()" (swiperight)="prevday()">
+        <div (swipeleft)="nextday()"
+             (swiperight)="prevday()"
+             [style.touch-action]="'pan-y'"
+             [style.user-select]="'text'">
             <h2>{{ day }} Menu</h2>
             <div class="slots" *ngIf="!menu[day]">
                 <mat-spinner></mat-spinner>
