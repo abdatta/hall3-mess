@@ -19,13 +19,13 @@ export class ThisweekComponent implements OnInit {
     'Friday',
     'Saturday'
   ];
-  today: string;
+  active: number;
   menu = {};
 
   constructor(private dishesService: DishesService, private tokensService: TokensService) { }
 
   ngOnInit() {
-    this.today = moment().format('dddd');
+    this.active = this.days.indexOf(moment().format('dddd'));
     for (const day of this.days) {
       this.dishesService.getSomedaysDishes(day)
         .subscribe(dishes => {
@@ -36,17 +36,29 @@ export class ThisweekComponent implements OnInit {
           };
         });
     }
-}
+  }
 
-filterSlot(dishes: DishModel[], slot: 'Breakfast' | 'Lunch' | 'Dinner') {
-  return dishes && dishes.filter(dish => dish.slot.includes(slot));
-}
+  filterSlot(dishes: DishModel[], slot: 'Breakfast' | 'Lunch' | 'Dinner') {
+    return dishes && dishes.filter(dish => dish.slot.includes(slot));
+  }
 
-groupByPrebookable(dishes: DishModel[]) {
-  return {
-    pre: dishes.filter(dish => dish.prebookable),
-    notpre: dishes.filter(dish => !dish.prebookable)
-  };
-}
+  groupByPrebookable(dishes: DishModel[]) {
+    return {
+      pre: dishes.filter(dish => dish.prebookable),
+      notpre: dishes.filter(dish => !dish.prebookable)
+    };
+  }
+
+  nextday() {
+    if (this.active < 6) {
+      this.active++;
+    }
+  }
+
+  prevday() {
+    if (this.active > 0) {
+      this.active--;
+    }
+  }
 
 }
