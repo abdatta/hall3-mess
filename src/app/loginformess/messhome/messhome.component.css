@@ -15,6 +15,11 @@
 	font-weight: 650;
 	font-size: 1.5em;
 }
+
+.card{
+	width:90%;
+}
+
 .navbar{
 	background-color: blueviolet;
 	padding-top: 10px;

@@ -10,6 +10,7 @@ import { NotwellComponent } from './notwell/notwell.component';
 import { ChangepasskeyComponent } from './changepasskey/changepasskey.component';
 import { GuestroomComponent } from './guestroom/guestroom.component';
 import { ForgotkeyComponent } from './forgotkey/forgotkey.component';
+import { NotificationComponent } from './notification/notification.component';
 
 export {
     LoginComponent,
@@ -23,5 +24,6 @@ export {
     NotwellComponent,
     ChangepasskeyComponent,
     GuestroomComponent,
-    ForgotkeyComponent
+    ForgotkeyComponent,
+    NotificationComponent
 };

@@ -17,6 +17,7 @@ import {
   ChangepasskeyComponent,
   GuestroomComponent,
   ForgotkeyComponent,
+  NotificationComponent
 } from '@app/components';
 
 import { AuthGuard, UnAuthGuard } from '@app/guards';
@@ -49,7 +50,8 @@ const routes: Routes = [
             { path: 'history', component: HistoryComponent},
             { path: 'notwell', component: NotwellComponent},
             { path: 'guestroom', component: GuestroomComponent},
-            { path: 'changepasskey', component: ChangepasskeyComponent}
+            { path: 'changepasskey', component: ChangepasskeyComponent},
+            { path: 'notification', component: NotificationComponent}
         ]
     },
     {

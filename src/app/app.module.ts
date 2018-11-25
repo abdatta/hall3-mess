@@ -56,11 +56,13 @@ import {
   NotwellComponent,
   ChangepasskeyComponent,
   GuestroomComponent,
-  ForgotkeyComponent
+  ForgotkeyComponent,
+  NotificationComponent
 } from '@app/components';
 import { MessComponent } from '@app/loginformess/mess/mess.component';
 import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component';
 import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.component';
+
 
 @NgModule({
   declarations: [
@@ -79,7 +81,8 @@ import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.com
     ForgotkeyComponent,
     MessComponent,
     MesshomeComponent,
-    IssuetokenComponent
+    IssuetokenComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
