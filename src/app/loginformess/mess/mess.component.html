@@ -5,10 +5,9 @@
       <input matInput placeholder="User Name" type="text" autofocus (keyup.enter)="pass.focus()" autocomplete="new-password" autocomplete="off" #roll>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Password" type="password" autofocus (keyup.enter)="pass.focus()" autocomplete="off" (keyup.enter)="pass.blur(); !submitting && logIn(roll.value, pass.value);" #pass>
+      <input matInput placeholder="Password" type="password" autofocus (keyup.enter)="pass.focus()" autocomplete="off" #pass>
     </mat-form-field>
-    <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
-    <button mat-raised-button *ngIf="!submitting" color="primary" type="button" routerLink="/messhome">
+    <button mat-raised-button color="primary" type="button" routerLink="/messhome">
       <b>Login</b>
     </button>
     <div class="links">

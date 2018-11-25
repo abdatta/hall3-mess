@@ -3,6 +3,7 @@
     max-width: 430px;
     margin-top: 10px;
     margin-bottom: 20px;
+
 }
 
 .passes > .mat-card > div {
@@ -11,6 +12,7 @@
     justify-content: space-between;
     width: 100%;
     max-width: 350px;
+    text-align: center;
 }
 
 .mat-card {
@@ -22,6 +24,7 @@
 
 .mat-form-field {
     overflow: hidden;
+    text-align: center;
 }
 
 :host >>> .mat-form-field-infix {
@@ -34,3 +37,21 @@
     width: 50%;
     height: 3px;
 }
+
+@media (min-width:960px) {
+    .mobile{
+      display: none;
+    }
+  }
+  
+  @media (max-width:960px) {
+    .laptop{
+      display: none;
+    }
+  }
+  
+  @media (max-width:840px) {
+    .laptop{
+      display: none;
+    }
+  }
