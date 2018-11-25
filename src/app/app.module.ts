@@ -55,6 +55,7 @@ import {
   GuestroomComponent,
   ForgotkeyComponent
 } from '@app/components';
+import { MessComponent } from '@app/loginformess/mess/mess.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import {
     NotwellComponent,
     ChangepasskeyComponent,
     GuestroomComponent,
-    ForgotkeyComponent
+    ForgotkeyComponent,
+    MessComponent
   ],
   imports: [
     BrowserModule,

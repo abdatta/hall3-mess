@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { MessComponent } from '@app/loginformess/mess/mess.component';
 
 // App Components
 import {
@@ -50,10 +51,15 @@ const routes: Routes = [
         ]
     },
     {
-        path: 'forgotkey',
+        path: 'forgotpassword',
         component: ForgotkeyComponent,
         canActivate: [UnAuthGuard]
     },
+    {
+        path: 'mess',
+        component : MessComponent,
+        canActivate: [UnAuthGuard]
+    }
 ];
 
 @NgModule({
