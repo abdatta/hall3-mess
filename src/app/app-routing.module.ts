@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MessComponent } from '@app/loginformess/mess/mess.component';
+import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component';
 
 // App Components
 import {
@@ -14,7 +15,7 @@ import {
   NotwellComponent,
   ChangepasskeyComponent,
   GuestroomComponent,
-  ForgotkeyComponent
+  ForgotkeyComponent,
 } from '@app/components';
 
 import { AuthGuard, UnAuthGuard } from '@app/guards';
@@ -59,7 +60,11 @@ const routes: Routes = [
         path: 'mess',
         component : MessComponent,
         canActivate: [UnAuthGuard]
-    }
+    },
+    {
+        path: 'messhome',
+        component : MesshomeComponent
+    },
 ];
 
 @NgModule({
