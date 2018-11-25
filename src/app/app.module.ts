@@ -62,6 +62,8 @@ import {
 import { MessComponent } from '@app/loginformess/mess/mess.component';
 import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component';
 import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.component';
+import { MesssecyComponent } from '@app/messsecylogin/messsecy/messsecy.component';
+import { MesssecyhomeComponent } from '@app/messsecylogin/messsecyhome/messsecyhome.component';
 
 
 @NgModule({
@@ -82,7 +84,9 @@ import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.com
     MessComponent,
     MesshomeComponent,
     IssuetokenComponent,
-    NotificationComponent
+    NotificationComponent,
+    MesssecyComponent,
+    MesssecyhomeComponent
   ],
   imports: [
     BrowserModule,

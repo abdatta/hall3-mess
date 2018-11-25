@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { MessComponent } from '@app/loginformess/mess/mess.component';
 import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component';
 import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.component';
+import { MesssecyComponent } from '@app/messsecylogin/messsecy/messsecy.component';
+import { MesssecyhomeComponent } from '@app/messsecylogin/messsecyhome/messsecyhome.component';
 
 // App Components
 import {
@@ -17,7 +19,7 @@ import {
   ChangepasskeyComponent,
   GuestroomComponent,
   ForgotkeyComponent,
-  NotificationComponent
+  NotificationComponent,
 } from '@app/components';
 
 import { AuthGuard, UnAuthGuard } from '@app/guards';
@@ -72,6 +74,14 @@ const routes: Routes = [
             { path: 'issuetoken', component: IssuetokenComponent},
         ]
     },
+    {
+        path: 'messsecy',
+        component: MesssecyComponent,
+    },
+    {
+        path: 'messsecyhome',
+        component: MesssecyhomeComponent,
+    }
 ];
 
 @NgModule({
