@@ -1,22 +1,18 @@
-<div class="mastercontainer">
-  <div class="container">
-    <form autocomplete="new-password" autocomplete="off">
-      <header><img src="assets/img/mauryans_logo.png"></header>
-      <h3>Hall 3 Mess Login</h3>
-      <mat-form-field>
-        <input matInput placeholder="Roll No." type="text" autofocus (keyup.enter)="pass.focus()" autocomplete="new-password" autocomplete="off" autofocus #roll>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Password" type="password" autofocus (keyup.enter)="pass.focus()" autocomplete="off" #pass>
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="button">
-        <b>Login</b>
-      </button>
-      <div class="links">
-        <p>Never share your password</p>
-      </div>
-    </form>
-    <footer>
-      <p><a href="http://hall3iitk.com/" target="_blank" rel="noreferrer">Hall-3</a> Mess Automation Portal</p>
-    </footer>
-</div></div>
+<div>
+  <mat-card class="navbar">
+    <button mat-button [matMenuTriggerFor]="menu" class="menu"><mat-icon >menu</mat-icon></button>
+    <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/messhome/issuetoken"><div class="menuelement">Issue Token</div></button>
+    <button mat-menu-item>Current Session History</button>
+    <button mat-menu-item>Last Week Summary</button>
+    <button mat-menu-item>Non-Veg Summary</button>
+    <button mat-menu-item>View Non-Veg Booking</button>
+    <button mat-menu-item>Delete Item</button>
+    <button mat-menu-item>Logout</button>
+  </mat-menu>
+</mat-card>
+
+</div>
+<mat-card class="menucontainer">
+  <router-outlet></router-outlet>
+</mat-card>

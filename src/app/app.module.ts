@@ -30,6 +30,7 @@ import {
   MatTabsModule,
   MatSnackBarModule,
   MatGridListModule,
+  MatMenuModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS
 } from '@angular/material';
 
@@ -58,6 +59,7 @@ import {
 } from '@app/components';
 import { MessComponent } from '@app/loginformess/mess/mess.component';
 import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component';
+import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,8 @@ import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component
     GuestroomComponent,
     ForgotkeyComponent,
     MessComponent,
-    MesshomeComponent
+    MesshomeComponent,
+    IssuetokenComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +106,8 @@ import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component
     MatProgressBarModule,
     MatTabsModule,
     MatSnackBarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatMenuModule
   ],
   providers: [
     {

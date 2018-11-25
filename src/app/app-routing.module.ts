@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MessComponent } from '@app/loginformess/mess/mess.component';
 import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component';
+import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.component';
 
 // App Components
 import {
@@ -63,7 +64,10 @@ const routes: Routes = [
     },
     {
         path: 'messhome',
-        component : MesshomeComponent
+        component : MesshomeComponent,
+        children : [
+            { path: 'issuetoken', component: IssuetokenComponent}
+        ]
     },
 ];
 
