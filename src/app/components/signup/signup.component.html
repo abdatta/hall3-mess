@@ -1,15 +1,15 @@
 <div class="container form">
-  <form>
+  <form autocomplete="new-password" autocomplete="off">
     <header><img src="assets/img/mauryans_logo.png"></header>
     <h3>Hall-3 Mess Signup</h3>
     <mat-form-field>
-      <input matInput placeholder="Roll No" type="text" (keyup.enter)="pass.focus()" autofocus #roll>
+      <input matInput placeholder="Roll No" type="text" (keyup.enter)="pass.focus()" autocomplete="new-password" autocomplete="off" autofocus #roll>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Password" type="password" (keyup.enter)="repass.focus()" #pass>
+      <input matInput placeholder="Password" type="password" (keyup.enter)="repass.focus()" autocomplete="new-password" autocomplete="off" #pass>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Retype Password" type="password" (keyup.enter)="repass.blur(); !submitting && signUp(roll.value, pass.value, repass.value)" #repass>
+      <input matInput placeholder="Retype Password" type="password" (keyup.enter)="repass.blur(); !submitting && signUp(roll.value, pass.value, repass.value)" autocomplete="new-password" autocomplete="off" #repass>
     </mat-form-field>
     <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
     <button mat-raised-button *ngIf="!submitting" color="primary" type="button" (click)="signUp(roll.value, pass.value, repass.value)">

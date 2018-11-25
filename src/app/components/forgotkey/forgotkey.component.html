@@ -1,9 +1,9 @@
 <div class="container form">
-  <form>
+  <form autocomplete="new-password" autocomplete="off">
     <header><img src="assets/img/mauryans_logo.png"></header>
     <h3>Forgot Password?</h3>
     <mat-form-field>
-      <input matInput placeholder="Roll No." type="text">
+      <input matInput placeholder="Roll No." type="text" autocomplete="new-password" autocomplete="off">
     </mat-form-field>
     <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
     <button mat-raised-button *ngIf="!submitting" type="button" color="primary">
