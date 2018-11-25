@@ -66,7 +66,8 @@ const routes: Routes = [
         path: 'messhome',
         component : MesshomeComponent,
         children : [
-            { path: 'issuetoken', component: IssuetokenComponent}
+            { path: '', redirectTo: 'issuetoken', pathMatch: 'full' },
+            { path: 'issuetoken', component: IssuetokenComponent},
         ]
     },
 ];

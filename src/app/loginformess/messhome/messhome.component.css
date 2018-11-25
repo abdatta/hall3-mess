@@ -1,3 +1,20 @@
+.container{
+	width: 100%;
+	display:flex;
+	justify-content: space-between;
+}
+
+.a{
+	width:70%;
+}
+.b{
+	width:27%;
+	background-color: #444;
+	color: antiquewhite;
+	text-align: center;
+	font-weight: 650;
+	font-size: 1.5em;
+}
 .navbar{
 	background-color: blueviolet;
 	padding-top: 10px;

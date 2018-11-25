@@ -31,6 +31,7 @@ import {
   MatSnackBarModule,
   MatGridListModule,
   MatMenuModule,
+  MatBadgeModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS
 } from '@angular/material';
 
@@ -107,7 +108,8 @@ import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.com
     MatTabsModule,
     MatSnackBarModule,
     MatGridListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatBadgeModule
   ],
   providers: [
     {

@@ -8,11 +8,13 @@
     <button mat-menu-item>Non-Veg Summary</button>
     <button mat-menu-item>View Non-Veg Booking</button>
     <button mat-menu-item>Delete Item</button>
+    <button mat-menu-item>Notification History</button>
     <button mat-menu-item>Logout</button>
   </mat-menu>
 </mat-card>
-
 </div>
-<mat-card class="menucontainer">
-  <router-outlet></router-outlet>
-</mat-card>
+
+<div class="container">
+  <div class="a"><router-outlet></router-outlet></div>
+  <div class="b"> <span matBadge="5" matBadgeOverlap="false">Notification</span></div>
+</div>
