@@ -6,6 +6,9 @@ import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.com
 import { MesssecyComponent } from '@app/messsecylogin/messsecy/messsecy.component';
 import { MesssecyhomeComponent } from '@app/messsecylogin/messsecyhome/messsecyhome.component';
 import { NotifyComponent } from '@app/messsecylogin/notify/notify.component';
+import { ChangemesssecypasswordComponent } from '@app/messsecylogin/changemesssecypassword/changemesssecypassword.component';
+import { ChangemanagerpasswordComponent } from '@app/loginformess/changemanagerpassword/changemanagerpassword.component';
+
 
 // App Components
 import {
@@ -53,7 +56,7 @@ const routes: Routes = [
             { path: 'history', component: HistoryComponent},
             { path: 'notwell', component: NotwellComponent},
             { path: 'guestroom', component: GuestroomComponent},
-            { path: 'changepasskey', component: ChangepasskeyComponent},
+            { path: 'changepassword', component: ChangepasskeyComponent},
             { path: 'notification', component: NotificationComponent}
         ]
     },
@@ -73,6 +76,7 @@ const routes: Routes = [
         children : [
             { path: '', redirectTo: 'issuetoken', pathMatch: 'full' },
             { path: 'issuetoken', component: IssuetokenComponent},
+            { path: 'changepassword', component: ChangemanagerpasswordComponent},
         ]
     },
     {
@@ -85,8 +89,9 @@ const routes: Routes = [
         children : [
             { path: '', redirectTo: 'notify', pathMatch: 'full' },
             { path: 'notify', component: NotifyComponent},
+            { path: 'changepassword', component: ChangemesssecypasswordComponent},
         ]
-    }
+    },
 ];
 
 @NgModule({

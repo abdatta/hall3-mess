@@ -65,6 +65,8 @@ import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.com
 import { MesssecyComponent } from '@app/messsecylogin/messsecy/messsecy.component';
 import { MesssecyhomeComponent } from '@app/messsecylogin/messsecyhome/messsecyhome.component';
 import { NotifyComponent } from '@app/messsecylogin/notify/notify.component';
+import { ChangemesssecypasswordComponent } from '@app/messsecylogin/changemesssecypassword/changemesssecypassword.component';
+import { ChangemanagerpasswordComponent } from '@app/loginformess/changemanagerpassword/changemanagerpassword.component';
 
 
 @NgModule({
@@ -88,7 +90,9 @@ import { NotifyComponent } from '@app/messsecylogin/notify/notify.component';
     NotificationComponent,
     MesssecyComponent,
     MesssecyhomeComponent,
-    NotifyComponent
+    NotifyComponent,
+    ChangemesssecypasswordComponent,
+    ChangemanagerpasswordComponent
   ],
   imports: [
     BrowserModule,
