@@ -34,3 +34,13 @@
   }
 }
 
+:host >>> router-outlet + * > * {
+  height: calc(100vh - 64px);
+  overflow: auto;
+}
+
+@media (max-width: 599px) {
+  :host >>> router-outlet + * > * {
+    height: calc(100vh - 56px);
+  }
+}

@@ -1,11 +1,3 @@
-:host >>> .mat-tab-body-content {
-    overflow: auto;
-}
-
-:host >>> .mat-tab-body {
-    height: calc(100vh - 105px);
-}
-
 :host >>> .mat-tab-label-active {
     opacity: 1;
 }
@@ -23,7 +15,7 @@
 .alignmt{
     width: 90%;
     max-width: 330px;
-    margin: 10px 10px 30px;
+    margin: 10px 20px 20px;
 }
 
 .mat-list .mat-list-item {

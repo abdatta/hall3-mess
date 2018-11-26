@@ -1,13 +1,7 @@
-.container {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    padding: 10px;
-}
-
-mat-accordion {
+.mat-accordion {
     width: 90%;
     max-width: 600px;
+    margin-bottom: 20px;
 }
 
 .dishes {

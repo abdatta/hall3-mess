@@ -21,3 +21,23 @@ h2 {
 h3 {
   font-size: 25px;
 }
+
+h4 {
+  font-size: 20px;
+}
+
+.container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.container > * {
+  flex: none;
+}
+
+.container.form {
+  min-height: 100vh;
+  justify-content: center;
+  padding: 0 10px;
+}

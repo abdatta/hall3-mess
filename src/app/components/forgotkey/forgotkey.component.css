@@ -1,11 +1,3 @@
-.container {
-    display: flex;
-	flex-flow: column;
-	min-height: 100vh;
-    justify-content: center;
-    align-items: center;
-}
-
 form {
 	display: flex;
     flex-flow: column;
