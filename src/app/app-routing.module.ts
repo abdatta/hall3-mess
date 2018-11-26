@@ -5,6 +5,7 @@ import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component
 import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.component';
 import { MesssecyComponent } from '@app/messsecylogin/messsecy/messsecy.component';
 import { MesssecyhomeComponent } from '@app/messsecylogin/messsecyhome/messsecyhome.component';
+import { NotifyComponent } from '@app/messsecylogin/notify/notify.component';
 
 // App Components
 import {
@@ -81,6 +82,10 @@ const routes: Routes = [
     {
         path: 'messsecyhome',
         component: MesssecyhomeComponent,
+        children : [
+            { path: '', redirectTo: 'notify', pathMatch: 'full' },
+            { path: 'notify', component: NotifyComponent},
+        ]
     }
 ];
 
