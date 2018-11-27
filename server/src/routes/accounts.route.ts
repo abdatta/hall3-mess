@@ -27,6 +27,7 @@ export class AccountsRoute {
         const router: Router = Router();
 
         router
+            .get('/photo/:roll.jpg', accountCtrl.fetchPhoto)
             .get('/auth',  accountCtrl.checkAuth, (req, res) => res.json(accountCtrl.sanitize(req.user)))
             .post('/login',  passport.authenticate('mess-signin'), (req, res) => res.json(accountCtrl.sanitize(req.user)))
             .post('/signup', passport.authenticate('mess-signup'), accountCtrl.updateUser)

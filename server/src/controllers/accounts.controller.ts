@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Model } from 'mongoose';
+import request from 'request';
 
 import { UserModel } from '../models/user.model';
 
@@ -78,6 +79,18 @@ export class AccountCtrl {
             }
         });
     }
+
+    /**
+     * Fetch photo of a user from IITK OA
+     *
+     * @class AccountCtrl
+     * @method fetchPhoto
+     */
+    public fetchPhoto = (req: Request, res: Response) => {
+        const url = 'https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/'+ req.params.roll +'_0.jpg';
+        request.get(url).pipe(res);
+    }
+
 
     /**
      * Logout user
