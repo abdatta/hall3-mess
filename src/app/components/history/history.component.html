@@ -8,7 +8,7 @@
       <mat-expansion-panel *ngFor="let token of grouped_tokens[date]" [expanded]="token._id === init_id">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Time: {{ format(token.date) }}
+            {{ format(token.date) }}:
           </mat-panel-title>
           <mat-panel-description>
             Cost: &#8377;{{ getCost(token) }}

@@ -69,6 +69,17 @@ export class HistoryComponent implements OnInit {
   // TODO : Display seperate accordians for each date.
 
   format(date: string) {
-    return moment(date).format('HH:mm') + '\u00A0hrs';
+    if (moment(date).format('HHmm') <= '1045')
+    {
+      return 'Breakfast';
+    }
+    else if ((moment(date).format('HHmm') > '1045') && (moment(date).format('HHmm') <= '1700') )
+    {
+      return 'Lunch';
+    }
+    else (moment(date).format('HHmm') > '1700')
+    {
+      return 'Dinner';
+    }
   }
 }
