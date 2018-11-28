@@ -1,22 +1,30 @@
 <div>
   <mat-card class="navbar">
-    <button mat-button [matMenuTriggerFor]="menu" class="menu"><mat-icon >menu</mat-icon></button>
+    <button mat-button [matMenuTriggerFor]="menu" class="menu"><mat-icon class="white">menu</mat-icon></button>
     <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/messhome/issuetoken"><div class="menuelement">Issue Token</div></button>
-    <button mat-menu-item>Current Session History</button>
-    <button mat-menu-item>Last Week Summary</button>
-    <button mat-menu-item>Non-Veg Summary</button>
-    <button mat-menu-item>View Non-Veg Booking</button>
-    <button mat-menu-item>Delete Item</button>
-    <button mat-menu-item>Notification History</button>
-    <button mat-menu-item routerLink="/messhome/changepassword">Change Password</button>
-    <button mat-menu-item>Logout</button>
-  </mat-menu>
+      <button mat-menu-item routerLink="/messhome/issuetoken"><div class="menuelement">Issue Token</div></button>
+      <button mat-menu-item>Current Session History</button>
+      <button mat-menu-item>Last Week Summary</button>
+      <button mat-menu-item>Non-Veg Summary</button>
+      <button mat-menu-item>View Non-Veg Booking</button>
+      <button mat-menu-item>Delete Item</button>
+      <button mat-menu-item>Notification History</button>
+      <button mat-menu-item routerLink="/messhome/changepassword">Change Password</button>
+      <button mat-menu-item>Logout</button>
+    </mat-menu>
 </mat-card>
 </div>
 
-<div class="container">
-  <div class="a"><router-outlet></router-outlet></div>
-  <div class="b"><span matBadge="5" matBadgeOverlap="false">Notification</span>
-  <mat-card class="card"></mat-card></div>
+<div class="slots">
+  <mat-card class="sideone  definer">
+    <h3>Last Login</h3>
+    <mat-divider></mat-divider>
+  </mat-card>
+  <mat-card class="alignmt">
+    <router-outlet></router-outlet>
+  </mat-card>
+  <mat-card class="sideone">
+    <h3>Notification</h3>
+    <mat-divider></mat-divider>
+  </mat-card>
 </div>
