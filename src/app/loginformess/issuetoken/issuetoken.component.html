@@ -1,18 +1,23 @@
-
-  <div class="container">
-    <form autocomplete="new-password" autocomplete="off">
-      <h3>LOGIN</h3>
-      <mat-form-field>
-        <input matInput placeholder="Roll No." type="text" autofocus (keyup.enter)="pass.focus()" autocomplete="new-password" autocomplete="off" autofocus #roll>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Password" type="password" autofocus (keyup.enter)="pass.focus()" autocomplete="off" #pass>
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="button">
-        <b>Login</b>
-      </button>
-      <div class="links">
-        <p>Never share your password</p>
-      </div>
-    </form>
-</div>
+<div class="container">
+    <h2>Mess Login</h2>
+    <div class="passes">
+        <mat-card > 
+            <mat-form-field>
+                <input  matInput #currpassm placeholder="Roll No."
+                        type="text" autofocus
+                        (keyup.enter)="newpassm.focus()">
+            </mat-form-field>
+            <mat-form-field>
+                <input  matInput #newpassm placeholder="Password"
+                        type="password"
+                        (keyup.enter)="renewpassm.focus()">
+            </mat-form-field>
+            <br>
+            <button mat-raised-button color="primary" type="button">
+                <b>Login</b>
+            </button>
+        </mat-card>
+    </div>
+  </div>
+  
+  

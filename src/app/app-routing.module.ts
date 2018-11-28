@@ -77,6 +77,7 @@ const routes: Routes = [
             { path: '', redirectTo: 'issuetoken', pathMatch: 'full' },
             { path: 'issuetoken', component: IssuetokenComponent},
             { path: 'changepassword', component: ChangemanagerpasswordComponent},
+            { path: 'itemlist', component: BookComponent},
         ]
     },
     {
