@@ -60,16 +60,16 @@ import {
   NotificationComponent
 } from '@app/components/residentcomponents';
 
-import { MesssecyComponent,
-  MesssecyhomeComponent,
-  NotifyComponent,
-  ChangemesssecypasswordComponent } from '@app/components/messsecycomponents';
-  
-import { ChangemanagerpasswordComponent,
-NonvegbookingsComponent,
-MessComponent,
-MesshomeComponent,
-IssuetokenComponent } from '@app/components/managercomponents';
+import { MesssecyComponent } from '@app/components/messsecycomponents/messsecy/messsecy.component';
+import { MesssecyhomeComponent } from '@app/components/messsecycomponents/messsecyhome/messsecyhome.component';
+import { NotifyComponent } from '@app/components/messsecycomponents/notify/notify.component';
+import { ChangemesssecypasswordComponent } from '@app/components/messsecycomponents/changemesssecypassword/changemesssecypassword.component';
+
+import { ChangemanagerpasswordComponent } from '@app/components/managercomponents/changemanagerpassword/changemanagerpassword.component';
+import { NonvegbookingsComponent } from '@app/components/managercomponents/nonvegbookings/nonvegbookings.component';
+import { MessComponent } from '@app/components/managercomponents/mess/mess.component';
+import { MesshomeComponent } from '@app/components/managercomponents/messhome/messhome.component';
+import { IssuetokenComponent } from '@app/components/managercomponents/issuetoken/issuetoken.component';
 
 @NgModule({
   declarations: [
