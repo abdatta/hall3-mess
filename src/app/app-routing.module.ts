@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MessComponent } from '@app/loginformess/mess/mess.component';
-import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component';
-import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.component';
-import { MesssecyComponent } from '@app/messsecylogin/messsecy/messsecy.component';
-import { MesssecyhomeComponent } from '@app/messsecylogin/messsecyhome/messsecyhome.component';
-import { NotifyComponent } from '@app/messsecylogin/notify/notify.component';
-import { ChangemesssecypasswordComponent } from '@app/messsecylogin/changemesssecypassword/changemesssecypassword.component';
-import { ChangemanagerpasswordComponent } from '@app/loginformess/changemanagerpassword/changemanagerpassword.component';
 
+import { MesssecyComponent,
+MesssecyhomeComponent,
+NotifyComponent,
+ChangemesssecypasswordComponent } from '@app/components/messsecycomponents';
+
+import { ChangemanagerpasswordComponent,
+NonvegbookingsComponent,
+MessComponent,
+MesshomeComponent,
+IssuetokenComponent } from '@app/components/managercomponents';
 
 // App Components
 import {
@@ -24,7 +26,7 @@ import {
   GuestroomComponent,
   ForgotkeyComponent,
   NotificationComponent,
-} from '@app/components';
+} from '@app/components/residentcomponents';
 
 import { AuthGuard, UnAuthGuard } from '@app/guards';
 
@@ -78,6 +80,7 @@ const routes: Routes = [
             { path: 'issuetoken', component: IssuetokenComponent},
             { path: 'changepassword', component: ChangemanagerpasswordComponent},
             { path: 'itemlist', component: BookComponent},
+            { path: 'nonvegbookings', component: NonvegbookingsComponent},
         ]
     },
     {

@@ -58,16 +58,18 @@ import {
   GuestroomComponent,
   ForgotkeyComponent,
   NotificationComponent
-} from '@app/components';
-import { MessComponent } from '@app/loginformess/mess/mess.component';
-import { MesshomeComponent } from '@app/loginformess/messhome/messhome.component';
-import { IssuetokenComponent } from '@app/loginformess/issuetoken/issuetoken.component';
-import { MesssecyComponent } from '@app/messsecylogin/messsecy/messsecy.component';
-import { MesssecyhomeComponent } from '@app/messsecylogin/messsecyhome/messsecyhome.component';
-import { NotifyComponent } from '@app/messsecylogin/notify/notify.component';
-import { ChangemesssecypasswordComponent } from '@app/messsecylogin/changemesssecypassword/changemesssecypassword.component';
-import { ChangemanagerpasswordComponent } from '@app/loginformess/changemanagerpassword/changemanagerpassword.component';
+} from '@app/components/residentcomponents';
 
+import { MesssecyComponent,
+  MesssecyhomeComponent,
+  NotifyComponent,
+  ChangemesssecypasswordComponent } from '@app/components/messsecycomponents';
+  
+import { ChangemanagerpasswordComponent,
+NonvegbookingsComponent,
+MessComponent,
+MesshomeComponent,
+IssuetokenComponent } from '@app/components/managercomponents';
 
 @NgModule({
   declarations: [
@@ -92,7 +94,8 @@ import { ChangemanagerpasswordComponent } from '@app/loginformess/changemanagerp
     MesssecyhomeComponent,
     NotifyComponent,
     ChangemesssecypasswordComponent,
-    ChangemanagerpasswordComponent
+    ChangemanagerpasswordComponent,
+    NonvegbookingsComponent
   ],
   imports: [
     BrowserModule,
