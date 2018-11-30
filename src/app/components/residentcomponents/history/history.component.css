@@ -1,5 +1,9 @@
-.mat-accordion {
-    width: 90%;
+mat-tab-group {
+    width:100%;
+    max-width: 600px;
+}
+mat-accordion {
+    width: 100%;
     max-width: 600px;
     margin-bottom: 20px;
 }
@@ -44,3 +48,5 @@ tr.mat-footer-row {
  .spinner{
     margin-top: 60px;
 }
+
+

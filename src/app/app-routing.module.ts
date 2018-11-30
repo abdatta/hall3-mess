@@ -4,7 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { MesssecyComponent } from '@app/components/messsecycomponents/messsecy/messsecy.component';
 import { MesssecyhomeComponent } from '@app/components/messsecycomponents/messsecyhome/messsecyhome.component';
 import { NotifyComponent } from '@app/components/messsecycomponents/notify/notify.component';
-import { ChangemesssecypasswordComponent } from '@app/components/messsecycomponents/changemesssecypassword/changemesssecypassword.component';
+import {
+    ChangemesssecypasswordComponent
+} from '@app/components/messsecycomponents/changemesssecypassword/changemesssecypassword.component';
 
 import { ChangemanagerpasswordComponent } from '@app/components/managercomponents/changemanagerpassword/changemanagerpassword.component';
 import { NonvegbookingsComponent } from '@app/components/managercomponents/nonvegbookings/nonvegbookings.component';

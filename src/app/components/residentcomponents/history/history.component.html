@@ -1,6 +1,8 @@
 <div class="container">
-  <h2>History</h2>
-  <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+  <h3>History</h3>
+  <mat-tab-group mat-stretch-tabs>
+    <mat-tab label="Day-wise">
+      <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
   <mat-accordion *ngIf="!loading">
     <div></div> <!-- so that margin-top of first element is not set to 0 -->
     <div *ngFor="let date of dates">
@@ -42,4 +44,14 @@
     </div>
     <div></div> <!-- so that margin-bottom of last element is not set to 0 -->
   </mat-accordion>
+    </mat-tab>
+    <mat-tab label="Month-wise">
+      <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+      <mat-accordion *ngIf="!loading">
+        <div class="passes">
+        <mat-card class="center"></mat-card>
+        </div>
+      </mat-accordion>
+    </mat-tab>
+  </mat-tab-group>
 </div>
