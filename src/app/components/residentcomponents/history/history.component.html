@@ -49,7 +49,25 @@
       <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
       <mat-accordion *ngIf="!loading">
         <div class="passes">
-        <mat-card class="center"></mat-card>
+            <div class="date">November'18</div>
+        <mat-card>
+            <mat-card-subtitle class="dark"><span>Cost Heading</span><span>:</span><span>Cost(&#8377;)</span></mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <mat-card-subtitle><span>Basic</span><span>:</span><span>1097</span></mat-card-subtitle>
+            <mat-card-subtitle><span>Veg Extra</span><span>:</span><span>789</span></mat-card-subtitle>
+            <mat-card-subtitle><span>Non-Veg Extra</span><span>:</span><span>450</span></mat-card-subtitle>
+            <mat-card-subtitle><span>Ice-Cream</span><span>:</span><span>200</span></mat-card-subtitle>
+            <mat-card-subtitle><span>Juice</span><span>:</span><span>240</span></mat-card-subtitle>
+            <mat-card-subtitle><span>Electricity Bill</span><span>:</span><span>456</span></mat-card-subtitle>
+            <mat-card-subtitle><span>Est. Charge</span><span>:</span><span>60</span></mat-card-subtitle>
+            <mat-card-subtitle><span>Refund</span><span>:</span><span>-100</span></mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <mat-card-subtitle class="dark"><span>Total</span><span>:</span><span>&#8377;4520</span></mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <p>*Basic per day : &#8377;47.56<br>**Rebate applied for 3 days</p>
+            <mat-divider></mat-divider>
+            <div class="center"><button mat-raised-button color="primary">Pay Mess Bill</button></div>
+        </mat-card>
         </div>
       </mat-accordion>
     </mat-tab>

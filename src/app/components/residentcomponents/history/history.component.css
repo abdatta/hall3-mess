@@ -3,7 +3,7 @@ mat-tab-group {
     max-width: 600px;
 }
 mat-accordion {
-    width: 100%;
+    width: 90%;
     max-width: 600px;
     margin-bottom: 20px;
 }
@@ -17,7 +17,8 @@ mat-accordion {
 }
 
 .mat-expansion-panel-spacing {
-    margin: 8px 0;
+    margin: 8px 2px;
+    padding: 5px;
 }
 
 :host >>> .mat-expansion-panel-body {
@@ -49,4 +50,46 @@ tr.mat-footer-row {
     margin-top: 60px;
 }
 
+.passes{
+    padding: 5px;
+}
 
+h4 {
+    text-align: center;
+}
+
+mat-card-subtitle{
+    display: flex;
+    justify-content: space-between;
+    max-width: 350px;
+    margin: auto;
+}
+
+span{
+    width:33%;
+    text-align: center;
+}
+
+mat-card{
+    padding-top: 16px;
+    padding-bottom: 0px;
+}
+
+mat-card-subtitle{
+    line-height: 30px;
+}
+
+.dark{
+    color: black;
+}
+
+p{
+    text-align: center;
+}
+
+.center{
+    display: flex; 
+    justify-content: center;
+    margin:0px;
+    padding: 15px;
+}
