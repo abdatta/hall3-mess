@@ -10,11 +10,15 @@
     <mat-nav-list>
       <div class="mobile" (click)="drawer.toggle()">
         <a mat-list-item routerLink="/messsecyhome/notify" [class.activated]="currentUrl == '/messsecyhome/notify'"><mat-icon>notifications_active</mat-icon> &nbsp;Notify People</a>
+        <a mat-list-item routerLink="/messsecyhome/edititem" [class.activated]="currentUrl == '/messsecyhome/edititem'"><mat-icon>settings</mat-icon> &nbsp;Edit items</a>
+        <a mat-list-item routerLink="/messsecyhome/makebills" [class.activated]="currentUrl == '/messsecyhome/makebills'"><mat-icon>account_balance_wallet</mat-icon> &nbsp;Make Bills</a>
         <a mat-list-item routerLink="/messsecyhome/changepassword" [class.activated]="currentUrl == '/messsecyhome/changepassword'"><mat-icon>vpn_key</mat-icon> &nbsp;Change Password</a>
         <a mat-list-item ><img src="assets/img/logout.png">  &nbsp;Logout</a>
       </div>
       <div class="laptop">
         <a mat-list-item routerLink="/messsecyhome/notify" [class.activated]="currentUrl == '/messsecyhome/notify'"><mat-icon>notifications_active</mat-icon> &nbsp;Notify People</a>
+        <a mat-list-item routerLink="/messsecyhome/edititem" [class.activated]="currentUrl == '/messsecyhome/edititem'"><mat-icon>settings</mat-icon> &nbsp;Edit Items</a>
+        <a mat-list-item routerLink="/messsecyhome/makebills" [class.activated]="currentUrl == '/messsecyhome/makebills'"><mat-icon>account_balance_wallet</mat-icon> &nbsp;Make Bills</a>
         <a mat-list-item routerLink="/messsecyhome/changepassword" [class.activated]="currentUrl == '/messsecyhome/changepassword'"><mat-icon>vpn_key</mat-icon> &nbsp;Change Password</a>
         <a mat-list-item ><img src="assets/img/logout.png">  &nbsp;Logout</a>
       </div>

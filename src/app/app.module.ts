@@ -72,6 +72,9 @@ import { NonvegbookingsComponent } from '@app/components/managercomponents/nonve
 import { MessComponent } from '@app/components/managercomponents/mess/mess.component';
 import { MesshomeComponent } from '@app/components/managercomponents/messhome/messhome.component';
 import { IssuetokenComponent } from '@app/components/managercomponents/issuetoken/issuetoken.component';
+import { EdititemComponent } from '@app/components/messsecycomponents/edititem/edititem.component';
+import { SettingsComponent } from '@app/components/residentcomponents/settings/settings.component';
+import { MakebillsComponent } from '@app/components/messsecycomponents/makebills/makebills.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +100,10 @@ import { IssuetokenComponent } from '@app/components/managercomponents/issuetoke
     NotifyComponent,
     ChangemesssecypasswordComponent,
     ChangemanagerpasswordComponent,
-    NonvegbookingsComponent
+    NonvegbookingsComponent,
+    EdititemComponent,
+    SettingsComponent,
+    MakebillsComponent
   ],
   imports: [
     BrowserModule,

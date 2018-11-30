@@ -13,6 +13,10 @@ import { NonvegbookingsComponent } from '@app/components/managercomponents/nonve
 import { MessComponent } from '@app/components/managercomponents/mess/mess.component';
 import { MesshomeComponent } from '@app/components/managercomponents/messhome/messhome.component';
 import { IssuetokenComponent } from '@app/components/managercomponents/issuetoken/issuetoken.component';
+import { EdititemComponent } from '@app/components/messsecycomponents/edititem/edititem.component';
+import { SettingsComponent } from '@app/components/residentcomponents/settings/settings.component';
+import { MakebillsComponent } from '@app/components/messsecycomponents/makebills/makebills.component';
+
 // App Components
 import {
   LoginComponent,
@@ -60,7 +64,8 @@ const routes: Routes = [
             { path: 'notwell', component: NotwellComponent},
             { path: 'guestroom', component: GuestroomComponent},
             { path: 'changepassword', component: ChangepasskeyComponent},
-            { path: 'notification', component: NotificationComponent}
+            { path: 'notification', component: NotificationComponent},
+            { path: 'settings', component: SettingsComponent}
         ]
     },
     {
@@ -94,7 +99,9 @@ const routes: Routes = [
         children : [
             { path: '', redirectTo: 'notify', pathMatch: 'full' },
             { path: 'notify', component: NotifyComponent},
+            { path: 'edititem', component: EdititemComponent},
             { path: 'changepassword', component: ChangemesssecypasswordComponent},
+            { path: 'makebills', component: MakebillsComponent},
         ]
     },
 ];

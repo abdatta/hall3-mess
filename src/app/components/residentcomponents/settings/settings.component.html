@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Settings</h2>
+<mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+      <mat-accordion *ngIf="!loading">
+        <div class="passes">
+            <div class="date">Notification</div>
+        <mat-card>
+            <p><mat-slide-toggle></mat-slide-toggle>Recieve mails from Notice Board Hall-3</p>
+            <p><mat-slide-toggle></mat-slide-toggle>Recieve Push notifications on Android</p>
+        </mat-card>
+        </div>
+      </mat-accordion>
+</div>
