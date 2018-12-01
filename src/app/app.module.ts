@@ -76,6 +76,7 @@ import { IssuetokenComponent } from '@app/components/managercomponents/issuetoke
 import { EdititemComponent } from '@app/components/messsecycomponents/edititem/edititem.component';
 import { SettingsComponent } from '@app/components/residentcomponents/settings/settings.component';
 import { MakebillsComponent } from '@app/components/messsecycomponents/makebills/makebills.component';
+import { ItemslistComponent } from '@app/components/managercomponents/itemslist/itemslist.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { MakebillsComponent } from '@app/components/messsecycomponents/makebills
     NonvegbookingsComponent,
     EdititemComponent,
     SettingsComponent,
-    MakebillsComponent
+    MakebillsComponent,
+    ItemslistComponent
   ],
   imports: [
     BrowserModule,

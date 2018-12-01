@@ -75,7 +75,7 @@ export class MainNavComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout(this.currentUrl);
   }
 
 }

@@ -3,19 +3,17 @@
     <div class="passes">
         <mat-card > 
             <mat-form-field>
-                <input  matInput #currpassm placeholder="Roll No."
-                        type="text" autofocus
-                        (keyup.enter)="newpassm.focus()">
-            </mat-form-field>
-            <mat-form-field>
-                <input  matInput #newpassm placeholder="Password"
-                        type="password"
-                        >
-            </mat-form-field>
+                <input matInput placeholder="Roll No." type="text" autofocus (keyup.enter)="pass.focus()" autocomplete="new-password" autocomplete="off" #roll>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Password" type="password" autofocus (keyup.enter)="pass.focus()" autocomplete="off" (keyup.enter)="pass.blur(); !submitting && logIn(roll.value, pass.value);" #pass>
+              </mat-form-field>
             <br>
-            <button mat-raised-button color="primary" type="button">
-                <b>Login</b>
-            </button>
+            <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
+    
+    <button mat-raised-button *ngIf="!submitting" color="primary" type="button" (click)="logIn(roll.value, pass.value)">
+      <b>Login</b>
+    </button>
         </mat-card>
     </div>
   </div>
