@@ -23,6 +23,7 @@
         </button>
     </div>
   </mat-card>
+  <mat-divider></mat-divider>
 </div>
 <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
 <button *ngIf="!loading && !submitting" mat-raised-button color="primary" class="buttonBlue" (click)="book()"><b>Submit</b></button>

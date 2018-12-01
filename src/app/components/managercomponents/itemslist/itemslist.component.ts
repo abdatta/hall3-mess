@@ -4,6 +4,7 @@ import { DishModel } from '@app/models';
 import { Router , NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '@app/services';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-itemslist',
@@ -16,6 +17,7 @@ export class ItemslistComponent implements OnInit {
   loading: boolean;
   submitting: boolean;
   currentUrl: string;
+  slot: ('Breakfast' | 'Lunch' | 'Dinner');
 
   constructor(private router: Router,
               private snackBar: MatSnackBar,
@@ -25,9 +27,14 @@ export class ItemslistComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    if (moment().format('HHmm') <= '1045') {
+      this.slot = 'Breakfast';
+    } else if ((moment().format('HHmm') > '1045') && (moment().format('HHmm') <= '1700')) {
+      this.slot = 'Lunch';
+    } else {this.slot = 'Dinner'; }
     this.dishesService.getTodaysDishes()
       .subscribe(dishes => {
-        this.dishes = dishes.filter(dish => !dish.prebookable);
+        this.dishes = dishes.filter(dish => dish.slot.includes(this.slot) && !dish.prebookable);
         dishes.forEach(dish => {
           dish.quantity = 0;
           dish['selected'] = false;
