@@ -1,13 +1,6 @@
 <div class="container">
-  <h2>Settings</h2>
-<mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
-      <mat-accordion *ngIf="!loading">
-        <div class="passes">
-            <div class="date">Notification</div>
-        <mat-card>
-            <p><mat-slide-toggle></mat-slide-toggle>Recieve mails from Notice Board Hall-3</p>
-            <p><mat-slide-toggle></mat-slide-toggle>Recieve Push notifications on Android</p>
-        </mat-card>
-        </div>
-      </mat-accordion>
+  <h4>Notification Settings</h4>
+  <p><mat-slide-toggle>Receive mail notifications</mat-slide-toggle></p>
+  <p><mat-slide-toggle checked>Receive push notifications</mat-slide-toggle></p>
+  <br><button mat-raised-button color="primary" (click)="save()">Save</button>
 </div>

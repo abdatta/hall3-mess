@@ -1,8 +1,27 @@
 <div class="container">
   <h2>Notifications</h2>
-  <div class="disher">
-    <mat-card > 
-      <p>Want to change notificcation settings?<a routerLink="/home/settings">Change</a></p>
-    </mat-card>
-  </div>
+  <mat-accordion multi="true">
+      <div class="unread">
+        <span [matBadge]="filterRead(false).length" matBadgeOverlap="false" matBadgeColor="accent">Unread</span>
+        <button mat-button class="settings" (click)="openSettings()">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+      </div>
+      <mat-expansion-panel *ngFor="let notif of filterRead(false)" expanded>
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ notif.head }}</mat-panel-title>
+          <mat-panel-description>{{ notif.date }}</mat-panel-description>
+        </mat-expansion-panel-header>
+        {{ notif.details }}
+      </mat-expansion-panel>
+      <div class="read">Read</div>
+      <mat-expansion-panel *ngFor="let notif of filterRead(true)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ notif.head }}</mat-panel-title>
+            <mat-panel-description>{{ notif.date }}</mat-panel-description>
+          </mat-expansion-panel-header>
+          {{ notif.details }}
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>

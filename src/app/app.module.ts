@@ -32,6 +32,7 @@ import {
   MatGridListModule,
   MatMenuModule,
   MatBadgeModule,
+  MatDialogModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS
 } from '@angular/material';
 
@@ -133,7 +134,8 @@ import { MakebillsComponent } from '@app/components/messsecycomponents/makebills
     MatSnackBarModule,
     MatGridListModule,
     MatMenuModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatDialogModule
   ],
   providers: [
     {
