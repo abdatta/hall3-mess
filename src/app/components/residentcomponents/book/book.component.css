@@ -45,14 +45,3 @@ mat-checkbox {
 .mat-raised-button {
     margin: 10px;
 }
-
-@media (min-width:960px) {
-    .mobile{
-      display: none;
-    }
-  }
-
-.center{
-    text-align: center;
-}
-

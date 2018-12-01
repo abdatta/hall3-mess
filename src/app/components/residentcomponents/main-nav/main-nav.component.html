@@ -6,47 +6,47 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)">
-    <mat-toolbar color="primary"><mat-icon>account_circle</mat-icon>&nbsp;{{ rollno }}</mat-toolbar>
+    <mat-toolbar color="primary" class="mat-elevation-z3"><mat-icon>account_circle</mat-icon>&nbsp;{{ rollno }}</mat-toolbar>
     <mat-nav-list>
       <div class="mobile" (click)="drawer.toggle()">
-        <a mat-list-item routerLink="/home/book" [class.activated]="currentUrl == '/home/book'"><mat-icon>border_color </mat-icon> &nbsp;Book</a>
-        <a mat-list-item routerLink="/home/prebook" [class.activated]="currentUrl == '/home/prebook'"><mat-icon>restaurant </mat-icon>  &nbsp;Pre-Book</a>
-        <a mat-list-item routerLink="/home/thisweek" [class.activated]="currentUrl == '/home/thisweek'"><mat-icon>restaurant_menu </mat-icon> &nbsp;This week menu</a>
-        <a mat-list-item routerLink="/home/history" [class.activated]="currentUrl == '/home/history'"><mat-icon>calendar_today</mat-icon> &nbsp;Bills and History</a>
-        <a mat-list-item routerLink="/home/notification" [class.activated]="currentUrl == '/home/notification'"><mat-icon>notifications</mat-icon> &nbsp;<span matBadge="5" matBadgeOverlap="false">Notification</span></a>
-        <a mat-list-item routerLink="/home/notwell" [class.activated]="currentUrl == '/home/notwell'"><mat-icon>local_hospital</mat-icon> &nbsp;Not Well</a>
-        <a mat-list-item routerLink="/home/changepassword" [class.activated]="currentUrl == '/home/changepassword'"><mat-icon>vpn_key</mat-icon> &nbsp;Change Password</a>
-        <a mat-list-item routerLink="/home/settings" [class.activated]="currentUrl == '/home/settings'"><mat-icon>settings</mat-icon> &nbsp;Settings</a>
-        <a mat-list-item routerLink="/home/guestroom" [class.activated]="currentUrl =='/home/guestroom'"><mat-icon>hotel</mat-icon> &nbsp;Book Guest Room</a>
-        <a mat-list-item (click)="logout()"><img src="assets/img/logout.png">  &nbsp;Logout</a>
+          <a  *ngFor="let nav of navs"
+          mat-list-item
+          [routerLink]="nav.url"
+          [class.activated]="currentUrl == nav.url">
+          <mat-icon [matBadge]="nav.badge" matBadgeColor="accent">{{ nav.icon }}</mat-icon>
+          <span class="nav-title">{{ nav.title }}</span>
+      </a>
+      <a mat-list-item (click)="logout()"><img src="assets/img/logout.png">
+        <span class="nav-title">Logout</span>
+      </a>
       </div>
       <div class="laptop">
-        <a mat-list-item routerLink="/home/book" [class.activated]="currentUrl == '/home/book'"><mat-icon>border_color </mat-icon> &nbsp;Book</a>
-        <a mat-list-item routerLink="/home/prebook" [class.activated]="currentUrl == '/home/prebook'"><mat-icon>restaurant </mat-icon>  &nbsp;Pre-Book</a>
-        <a mat-list-item routerLink="/home/thisweek" [class.activated]="currentUrl == '/home/thisweek'"><mat-icon>restaurant_menu </mat-icon> &nbsp;This week menu</a>
-        <a mat-list-item routerLink="/home/history" [class.activated]="currentUrl == '/home/history'"><mat-icon>calendar_today</mat-icon> &nbsp;Bills and History</a>
-        <a mat-list-item routerLink="/home/notification" [class.activated]="currentUrl == '/home/notification'"><mat-icon>notifications</mat-icon> &nbsp;<span matBadge="5" matBadgeOverlap="false">Notification</span></a>
-        <a mat-list-item routerLink="/home/notwell" [class.activated]="currentUrl == '/home/notwell'"><mat-icon>local_hospital</mat-icon> &nbsp;Not Well</a>
-        <a mat-list-item routerLink="/home/changepassword" [class.activated]="currentUrl == '/home/changepassword'"><mat-icon>vpn_key</mat-icon> &nbsp;Change Password</a>
-        <a mat-list-item routerLink="/home/settings" [class.activated]="currentUrl == '/home/settings'"><mat-icon>settings</mat-icon> &nbsp;Settings</a>
-        <a mat-list-item routerLink="/home/guestroom" [class.activated]="currentUrl == '/home/guestroom'"><mat-icon>hotel</mat-icon> &nbsp;Book Guest Room</a>
-        <a mat-list-item (click)="logout()"><img src="assets/img/logout.png">  &nbsp;Logout</a>
+        <a  *ngFor="let nav of navs"
+            mat-list-item
+            [routerLink]="nav.url"
+            [class.activated]="currentUrl == nav.url">
+            <mat-icon [matBadge]="nav.badge" matBadgeColor="accent">{{ nav.icon }}</mat-icon>
+            <span class="nav-title">{{ nav.title }}</span>
+        </a>
+        <a mat-list-item (click)="logout()"><img src="assets/img/logout.png">
+          <span class="nav-title">Logout</span>
+        </a>
       </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" class="mat-elevation-z3">
       <button
         type="button"
+        class="nav-toggle"
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        <mat-icon [matBadge]="navs[0].badge" matBadgeColor="accent" aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Hall-3 Mess Automation</span>
+      <span>Hall 3 Mess Automation</span>
     </mat-toolbar>
-    <!-- Add Content Here -->
    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

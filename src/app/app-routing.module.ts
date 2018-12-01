@@ -64,7 +64,7 @@ const routes: Routes = [
             { path: 'notwell', component: NotwellComponent},
             { path: 'guestroom', component: GuestroomComponent},
             { path: 'changepassword', component: ChangepasskeyComponent},
-            { path: 'notification', component: NotificationComponent},
+            { path: 'notifications', component: NotificationComponent},
             { path: 'settings', component: SettingsComponent}
         ]
     },
