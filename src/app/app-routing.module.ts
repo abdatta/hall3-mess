@@ -14,7 +14,6 @@ import { MessComponent } from '@app/components/managercomponents/mess/mess.compo
 import { MesshomeComponent } from '@app/components/managercomponents/messhome/messhome.component';
 import { IssuetokenComponent } from '@app/components/managercomponents/issuetoken/issuetoken.component';
 import { EdititemComponent } from '@app/components/messsecycomponents/edititem/edititem.component';
-import { SettingsComponent } from '@app/components/residentcomponents/settings/settings.component';
 import { MakebillsComponent } from '@app/components/messsecycomponents/makebills/makebills.component';
 
 // App Components
@@ -30,7 +29,7 @@ import {
   ChangepasskeyComponent,
   GuestroomComponent,
   ForgotkeyComponent,
-  NotificationComponent,
+  NotificationComponent
 } from '@app/components/residentcomponents';
 
 import { AuthGuard, UnAuthGuard } from '@app/guards';
@@ -64,8 +63,7 @@ const routes: Routes = [
             { path: 'notwell', component: NotwellComponent},
             { path: 'guestroom', component: GuestroomComponent},
             { path: 'changepassword', component: ChangepasskeyComponent},
-            { path: 'notifications', component: NotificationComponent},
-            { path: 'settings', component: SettingsComponent}
+            { path: 'notifications', component: NotificationComponent}
         ]
     },
     {

@@ -17,6 +17,7 @@ export class HistoryComponent implements OnInit {
   dates = [];
   init_id: string;
   loading: boolean;
+  tab = 0;
 
   constructor(private tokensService: TokensService,
               private snackBar: MatSnackBar,
@@ -66,13 +67,7 @@ export class HistoryComponent implements OnInit {
     return cost;
   }
 
-  // TODO : Display seperate accordians for each date.
-
   format(date: string) {
-    if (moment(date).format('HHmm') <= '1045') {
-      return 'Breakfast';
-    } else if ((moment(date).format('HHmm') > '1045') && (moment(date).format('HHmm') <= '1700')) {
-      return 'Lunch';
-    } else {return 'Dinner'; }
+    return moment(date).format('HH:mm') + '\u00A0hrs';
   }
 }

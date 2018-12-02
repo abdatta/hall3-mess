@@ -1,8 +1,13 @@
-mat-tab-group {
+.mat-tab-group {
     width:100%;
-    max-width: 600px;
 }
-mat-accordion {
+
+:host >>> .mat-tab-body-content {
+    display: flex;
+    justify-content: center;
+}
+
+.mat-accordion {
     width: 90%;
     max-width: 600px;
     margin-bottom: 20px;
@@ -58,10 +63,11 @@ h4 {
     text-align: center;
 }
 
-mat-card-subtitle{
+.mat-card-subtitle{
     display: flex;
     justify-content: space-between;
     max-width: 350px;
+    line-height: 30px;
     margin: auto;
 }
 
@@ -70,13 +76,9 @@ span{
     text-align: center;
 }
 
-mat-card{
+.mat-card{
     padding-top: 16px;
     padding-bottom: 0px;
-}
-
-mat-card-subtitle{
-    line-height: 30px;
 }
 
 .dark{
