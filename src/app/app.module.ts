@@ -146,6 +146,7 @@ import { MakebillsComponent } from '@app/components/messsecycomponents/makebills
     DishesService,
     TokensService
   ],
+  entryComponents: [SettingsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
