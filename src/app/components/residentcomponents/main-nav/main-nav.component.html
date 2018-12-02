@@ -2,6 +2,7 @@
   <mat-sidenav
     #drawer
     class="sidenav"
+    [autoFocus]="false"
     fixedInViewport="true"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"

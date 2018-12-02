@@ -3,7 +3,6 @@
     max-width: 430px;
     margin-top: 10px;
     margin-bottom: 20px;
-
 }
 
 .passes > .mat-card > div {
@@ -24,7 +23,6 @@
 
 .mat-form-field {
     overflow: hidden;
-    text-align: center;
 }
 
 :host >>> .mat-form-field-infix {
@@ -38,20 +36,17 @@
     height: 3px;
 }
 
-@media (min-width:960px) {
-    .mobile{
-      display: none;
+@media(max-width: 450px) {
+    .mat-form-field {
+        width: 100%;
     }
-  }
-  
-  @media (max-width:960px) {
-    .laptop{
-      display: none;
+    .passes > .mat-card > div > span {
+        display: none;
     }
-  }
-  
-  @media (max-width:840px) {
-    .laptop{
-      display: none;
+}
+
+@media(min-width: 450px) {
+    mat-label {
+        display: none;
     }
-  }
+}

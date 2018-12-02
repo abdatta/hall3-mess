@@ -1,56 +1,29 @@
-<div class="container mobile">
-    <h2>Change Password</h2>
-    <div class="passes">
-        <mat-card > 
-            <mat-form-field>
-                <input  matInput #currpassm placeholder="Current Password"
-                        type="password" autofocus
-                        (keyup.enter)="newpassm.focus()">
-            </mat-form-field>
-            <mat-form-field>
-                <input  matInput #newpassm placeholder="New Password"
-                        type="password"
-                        (keyup.enter)="renewpassm.focus()">
-            </mat-form-field>
-            <mat-form-field>
-                <input  matInput #renewpassm placeholder="Retype New Password"
-                        type="password"
-                        (keyup.enter)="!submitting && changepassword(currpassm, newpassm, renewpassm)">
-            </mat-form-field>
-            <br>
-            <div class="container"  *ngIf="submitting">
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-            </div>
-            <button mat-raised-button *ngIf="!submitting" color="primary" type="button" (click)="changepassword(currpassm, newpassm, renewpassm)">
-                <b>Change</b>
-            </button>
-        </mat-card>
-    </div>
-</div>
-
-<div class="container laptop">
+<div class="container">
     <h2>Change Password</h2>
     <div class="passes">
         <mat-card> 
             <div>
-                Current Password: 
+                <span>Current Password: </span>
                 <mat-form-field>
+                    <mat-label>Current Password</mat-label>
                     <input  matInput #currpass
-                            type="password" autofocus
+                            type="password"
                             (keyup.enter)="newpass.focus()">
                 </mat-form-field>
             </div>
             <div>
-                New Password: 
+                <span>New Password: </span>
                 <mat-form-field>
+                    <mat-label>New Password</mat-label>
                     <input  matInput #newpass
                             type="password"
                             (keyup.enter)="renewpass.focus()">
                 </mat-form-field>
             </div>
             <div>
-                Retype New Password: 
+                <span>Retype New Password: </span>
                 <mat-form-field>
+                    <mat-label>Retype New Password</mat-label>
                     <input  matInput #renewpass
                             type="password"
                             (keyup.enter)="!submitting && changepassword(currpass, newpass, renewpass)">
