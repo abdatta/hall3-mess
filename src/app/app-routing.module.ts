@@ -15,7 +15,6 @@ import { MesshomeComponent } from '@app/components/managercomponents/messhome/me
 import { IssuetokenComponent } from '@app/components/managercomponents/issuetoken/issuetoken.component';
 import { EdititemComponent } from '@app/components/messsecycomponents/edititem/edititem.component';
 import { MakebillsComponent } from '@app/components/messsecycomponents/makebills/makebills.component';
-import { ItemslistComponent } from '@app/components/managercomponents/itemslist/itemslist.component';
 
 // App Components
 import {
@@ -84,7 +83,7 @@ const routes: Routes = [
             { path: '', redirectTo: 'issuetoken', pathMatch: 'full' },
             { path: 'issuetoken', component: IssuetokenComponent},
             { path: 'changepassword', component: ChangemanagerpasswordComponent},
-            { path: 'itemslist', component: ItemslistComponent},
+            { path: 'itemslist', component: BookComponent},
             { path: 'nonvegbookings', component: NonvegbookingsComponent},
 
         ]
