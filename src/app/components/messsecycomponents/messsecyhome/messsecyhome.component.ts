@@ -18,6 +18,34 @@ export class MesssecyhomeComponent implements OnInit {
       map(result => result.matches)
     );
 
+  navs = [
+    {
+      title: 'Notifications',
+      url: '/messsecyhome/notify',
+      icon: 'notifications',
+      badge: 3
+    },
+    {
+      title: 'Notify People',
+      url: '/messsecyhome/notify',
+      icon: 'notifications_active',
+    },
+    {
+      title: 'Edit items',
+      url: '/messsecyhome/edititem',
+      icon: 'settings',
+    },
+    {
+      title: 'Make Bills',
+      url: '/messsecyhome/makebills',
+      icon: 'account_balance_wallet',
+    },
+    {
+      title: 'Change Password',
+      url: '/messsecyhome/changepassword',
+      icon: 'vpn_key',
+    }
+  ];
   currentUrl: string;
   constructor(private breakpointObserver: BreakpointObserver,
     private authService: AuthService, private router: Router) {

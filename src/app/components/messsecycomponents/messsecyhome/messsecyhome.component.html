@@ -9,18 +9,28 @@
     <mat-toolbar color="primary"><mat-icon>account_circle</mat-icon>&nbsp; HEC</mat-toolbar>
     <mat-nav-list>
       <div class="mobile" (click)="drawer.toggle()">
-        <a mat-list-item routerLink="/messsecyhome/notify" [class.activated]="currentUrl == '/messsecyhome/notify'"><mat-icon>notifications_active</mat-icon> &nbsp;Notify People</a>
-        <a mat-list-item routerLink="/messsecyhome/edititem" [class.activated]="currentUrl == '/messsecyhome/edititem'"><mat-icon>settings</mat-icon> &nbsp;Edit items</a>
-        <a mat-list-item routerLink="/messsecyhome/makebills" [class.activated]="currentUrl == '/messsecyhome/makebills'"><mat-icon>account_balance_wallet</mat-icon> &nbsp;Make Bills</a>
-        <a mat-list-item routerLink="/messsecyhome/changepassword" [class.activated]="currentUrl == '/messsecyhome/changepassword'"><mat-icon>vpn_key</mat-icon> &nbsp;Change Password</a>
-        <a mat-list-item ><img src="assets/img/logout.png">  &nbsp;Logout</a>
+        <a *ngFor="let nav of navs"
+          mat-list-item
+          [routerLink]="nav.url"
+          [class.activated]="currentUrl == nav.url">
+          <mat-icon [matBadge]="nav.badge" matBadgeColor="accent">{{ nav.icon }}</mat-icon>
+          <span class="nav-title">&nbsp;{{ nav.title }}</span>
+        </a>
+        <a mat-list-item><img src="assets/img/logout.png">
+          <span class="nav-title">Logout</span>
+        </a>
       </div>
       <div class="laptop">
-        <a mat-list-item routerLink="/messsecyhome/notify" [class.activated]="currentUrl == '/messsecyhome/notify'"><mat-icon>notifications_active</mat-icon> &nbsp;Notify People</a>
-        <a mat-list-item routerLink="/messsecyhome/edititem" [class.activated]="currentUrl == '/messsecyhome/edititem'"><mat-icon>settings</mat-icon> &nbsp;Edit Items</a>
-        <a mat-list-item routerLink="/messsecyhome/makebills" [class.activated]="currentUrl == '/messsecyhome/makebills'"><mat-icon>account_balance_wallet</mat-icon> &nbsp;Make Bills</a>
-        <a mat-list-item routerLink="/messsecyhome/changepassword" [class.activated]="currentUrl == '/messsecyhome/changepassword'"><mat-icon>vpn_key</mat-icon> &nbsp;Change Password</a>
-        <a mat-list-item ><img src="assets/img/logout.png">  &nbsp;Logout</a>
+        <a  *ngFor="let nav of navs"
+          mat-list-item
+          [routerLink]="nav.url"
+          [class.activated]="currentUrl == nav.url">
+          <mat-icon [matBadge]="nav.badge" matBadgeColor="accent">{{ nav.icon }}</mat-icon>
+          <span class="nav-title">&nbsp;{{ nav.title }}</span>
+        </a>
+        <a mat-list-item><img src="assets/img/logout.png">
+          <span class="nav-title">Logout</span>
+        </a>
       </div>
     </mat-nav-list>
   </mat-sidenav>
@@ -32,11 +42,10 @@
         mat-icon-button
         (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        <mat-icon [matBadge]="navs[0].badge" matBadgeColor="accent" aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Mess Secy Portal</span>
     </mat-toolbar>
-    <!-- Add Content Here -->
    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

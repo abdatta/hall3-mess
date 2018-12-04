@@ -1,40 +1,53 @@
-<div>
-  <mat-card class="navbar">
-    <button mat-button [matMenuTriggerFor]="menu" class="menu"><mat-icon class="white">menu</mat-icon></button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="/messhome/issuetoken"><div class="menuelement">Issue Token</div></button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item>Current Session History</button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item>Last Week Summary</button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item>Non-Veg Summary</button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item routerLink="/messhome/nonvegbookings">View Non-Veg Booking</button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item>Delete Item</button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item>Notification History</button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item>Add Missing Item</button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item routerLink="/messhome/changepassword">Change Password</button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item>Logout</button>
-    </mat-menu>
-</mat-card>
-</div>
+<!--
+To implement:-
+      
+  1. Session History
+  2. Last Week Summary
+  3. Non-Veg Summary
+  4. Delete Item for wrongly booked or unavailable till u reach the counter
+  5. Notification History
+  6. Add Missing item in current session; for suddenly adding of new item or left item from previous session 
+  7. change session option in cae of brunch or something
+  8. Display slot and day on right-top
 
-<div class="slots">
-  <mat-card class="sideone  definer">
-    <h3>Last Login</h3>
-    <mat-divider></mat-divider>
-  </mat-card>
-  <mat-card class="alignmt">
-    <router-outlet></router-outlet>
-  </mat-card>
-  <mat-card class="sideone">
-    <h3>Notification</h3>
-    <mat-divider></mat-divider>
-  </mat-card>
-</div>
+-->
+
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      #drawer
+      class="sidenav"
+      fixedInViewport="true"
+      attr.role="dialog"
+      mode="over"
+      opened="false">
+      <mat-toolbar color="primary"><mat-icon>account_circle</mat-icon>&nbsp; Mess</mat-toolbar>
+      <mat-nav-list>
+        <div (click)="drawer.toggle()">
+          <a  *ngFor="let nav of navs"
+            mat-list-item
+            [routerLink]="nav.url"
+            [class.activated]="currentUrl == nav.url">
+            <mat-icon [matBadge]="nav.badge" matBadgeColor="accent">{{ nav.icon }}</mat-icon>
+            <span class="nav-title">&nbsp;{{ nav.title }}</span>
+          </a>
+          <a mat-list-item><img src="assets/img/logout.png">
+            <span class="nav-title">Logout</span>
+          </a>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()">
+          <mat-icon [matBadge]="navs[0].badge" matBadgeColor="accent" aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>Mess Automation Portal</span>
+      </mat-toolbar>
+     <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
