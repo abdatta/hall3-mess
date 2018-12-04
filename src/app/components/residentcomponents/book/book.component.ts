@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DishesService, TokensService } from '@app/services';
 import { DishModel } from '@app/models';
-import { Router, NavigationEnd  } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '@app/services';
 import * as moment from 'moment';
@@ -16,33 +16,35 @@ export class BookComponent implements OnInit {
   dishes: DishModel[];
   loading: boolean;
   submitting: boolean;
-  currentUrl: string;
   slot: ('Breakfast' | 'Lunch' | 'Dinner');
+  request_in: string;
 
   constructor(private router: Router,
               private snackBar: MatSnackBar,
               private dishesService: DishesService,
               private tokensService: TokensService,
-              private authService: AuthService) {
-                router.events.subscribe((_: NavigationEnd) => this.currentUrl = _.url);
-              }
+              private authService: AuthService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loading = true;
-    if (this.currentUrl === '/home') {
-      this.currentUrl = '/home/book';
-    }
+    this.route.queryParams
+          .subscribe(param => {
+            if (param.show) {
+              this.request_in = param.show;
+            }
+          });
     this.dishesService.getTodaysDishes()
       .subscribe(dishes => {
-        if (this.currentUrl === '/home/book') {
-          this.dishes = dishes.filter(dish => !dish.prebookable);
-        } else {
+        if (this.request_in === 'mess') {
           if (moment().format('HHmm') <= '1045') {
             this.slot = 'Breakfast';
           } else if ((moment().format('HHmm') > '1045') && (moment().format('HHmm') <= '1700')) {
             this.slot = 'Lunch';
           } else {this.slot = 'Dinner'; }
           this.dishes = dishes.filter(dish => dish.slot.includes(this.slot) && !dish.prebookable);
+        } else {
+          this.dishes = dishes.filter(dish => !dish.prebookable);
         }
         dishes.forEach(dish => {
           dish.quantity = 0;
@@ -70,17 +72,17 @@ export class BookComponent implements OnInit {
   book() {
     const dishes = this.dishes && this.dishes.filter(dish => dish['selected']);
     if (dishes && dishes.length) {
-      if(this.currentUrl === '/home/book') {
+      if (this.request_in !== 'mess') {
         this.submitting = true;
       } else {
         this.loading = true;
       }
       this.tokensService.bookToken(dishes)
         .subscribe(token => {
-          if (token && this.currentUrl === '/home/book') {
+          if (token && this.request_in !== 'mess') {
             this.router.navigateByUrl('/home/history?show=' + token._id);
-          } else if(token) {
-            this.authService.logout(this.currentUrl);
+          } else if (token) {
+            this.authService.logout(this.request_in);
           }
           this.submitting = false;
         },

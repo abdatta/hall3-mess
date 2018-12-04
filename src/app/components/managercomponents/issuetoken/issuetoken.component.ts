@@ -24,7 +24,7 @@ export class IssuetokenComponent implements OnInit {
       this.authService.logIn(rollno, password)
         .subscribe((s: number) => {
           if (s === 200) {
-            this.router.navigateByUrl('/messhome/itemslist');
+            this.router.navigateByUrl('/messhome/itemslist?show=mess');
           } else if (s === 401) {
             this.snackBar.open('Incorrect Username or Password');
           } else {
