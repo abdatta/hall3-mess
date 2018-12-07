@@ -49,7 +49,6 @@ import {
   LoginComponent,
   SignupComponent,
   HomeComponent,
-  MainNavComponent,
   BookComponent,
   PrebookComponent,
   ThisweekComponent,
@@ -76,6 +75,7 @@ import { IssuetokenComponent } from '@app/components/managercomponents/issuetoke
 import { EdititemComponent } from '@app/components/messsecycomponents/edititem/edititem.component';
 import { SettingsComponent } from '@app/components/residentcomponents/settings/settings.component';
 import { MakebillsComponent } from '@app/components/messsecycomponents/makebills/makebills.component';
+import { MainNavComponent } from '@app/components/sharedcomponents/main-nav/main-nav.component';
 
 @NgModule({
   declarations: [

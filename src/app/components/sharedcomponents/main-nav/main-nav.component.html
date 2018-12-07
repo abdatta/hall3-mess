@@ -4,12 +4,12 @@
     class="sidenav"
     [autoFocus]="false"
     fixedInViewport="true"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="!(isHandset$ | async)">
-    <mat-toolbar color="primary" class="mat-elevation-z3"><mat-icon>account_circle</mat-icon>&nbsp;{{ rollno }}</mat-toolbar>
+    [attr.role]="role === 'mess' ? 'dialog' : ((isHandset$ | async) ? 'dialog' : 'navigation')"
+    [mode]="role === 'mess' ? 'over' : (isHandset$ | async) ? 'over' : 'side'"
+    [opened]="role === 'mess' ? false : !(isHandset$ | async)">
+    <mat-toolbar color="primary" class="mat-elevation-z3"><mat-icon>account_circle</mat-icon>&nbsp;{{ navheader }}</mat-toolbar>
     <mat-nav-list>
-      <div class="mobile" (click)="drawer.toggle()">
+      <div [class.mobile]="role !== 'mess'" (click)="drawer.toggle()">
           <a  *ngFor="let nav of navs"
           mat-list-item
           [routerLink]="nav.url"
@@ -21,7 +21,7 @@
         <span class="nav-title">Logout</span>
       </a>
       </div>
-      <div class="laptop">
+      <div class="laptop" *ngIf="role !== 'mess'">
         <a  *ngFor="let nav of navs"
             mat-list-item
             [routerLink]="nav.url"
@@ -43,7 +43,7 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
+        *ngIf="role === 'mess' ? true : isHandset$ | async">
         <mat-icon [matBadge]="navs[0].badge" matBadgeColor="accent" aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Hall 3 Mess Automation</span>

@@ -11,7 +11,8 @@ import { Router, NavigationEnd } from '@angular/router';
 export class MesshomeComponent implements OnInit {
 
   currentUrl: string;
-  navs = [
+  role = 'mess';
+  nav = [
     {
       title: 'Notifications',
       url: '/messhome/issuetoken',

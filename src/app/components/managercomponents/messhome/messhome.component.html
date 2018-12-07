@@ -12,42 +12,6 @@ To implement:-
 
 -->
 
-<mat-sidenav-container class="sidenav-container">
-    <mat-sidenav
-      #drawer
-      class="sidenav"
-      fixedInViewport="true"
-      attr.role="dialog"
-      mode="over"
-      opened="false">
-      <mat-toolbar color="primary"><mat-icon>account_circle</mat-icon>&nbsp; Mess</mat-toolbar>
-      <mat-nav-list>
-        <div (click)="drawer.toggle()">
-          <a  *ngFor="let nav of navs"
-            mat-list-item
-            [routerLink]="nav.url"
-            [class.activated]="currentUrl == nav.url">
-            <mat-icon [matBadge]="nav.badge" matBadgeColor="accent">{{ nav.icon }}</mat-icon>
-            <span class="nav-title">&nbsp;{{ nav.title }}</span>
-          </a>
-          <a mat-list-item><img src="assets/img/logout.png">
-            <span class="nav-title">Logout</span>
-          </a>
-        </div>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <mat-toolbar color="primary">
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="drawer.toggle()">
-          <mat-icon [matBadge]="navs[0].badge" matBadgeColor="accent" aria-label="Side nav toggle icon">menu</mat-icon>
-        </button>
-        <span>Mess Automation Portal</span>
-      </mat-toolbar>
-     <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+<app-main-nav [navs]="nav" [role]="role"></app-main-nav>
+
   
