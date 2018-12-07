@@ -34,7 +34,7 @@ export class BookComponent implements OnInit {
               this.request_in = param.show;
             }
           });
-    this.dishesService.getTodaysDishes()
+    this.dishesService.getSomedaysDishes(moment().format('dddd'))
       .subscribe(dishes => {
         if (this.request_in === 'mess') {
           if (moment().format('HHmm') <= '1045') {

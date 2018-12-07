@@ -12,11 +12,6 @@ export class DishesService {
 
   constructor(private http: HttpClient) { }
 
-  getTodaysDishes(): Observable<DishModel[]> {
-    return this.http.get<DishModel[]>('/api/dishes/today')
-      .pipe(catchError(this.handleError));
-  }
-
   getSomedaysDishes(day: string): Observable<DishModel[]> {
     return this.http.get<DishModel[]>('/api/dishes/' + day.toLowerCase())
       .pipe(catchError(this.handleError));

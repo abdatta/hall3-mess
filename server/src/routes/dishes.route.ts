@@ -26,7 +26,6 @@ export class DishesRoute {
         const router: Router = Router();
 
         router
-            .get('/today', dishesCtrl.getTodaysDishes)
             .get('/:day((mon|tues|wednes|thurs|fri|satur|sun)day)', dishesCtrl.getSomedaysDishes)
             .post('/add', dishesCtrl.addDish)
             .put('/update/:id', dishesCtrl.updateDish)

@@ -44,24 +44,6 @@ export class DishesCtrl {
     }
 
     /**
-     * Get list of today's dishes
-     *
-     * @class DishesCtrl
-     * @method getTodaysDishes
-     */
-    public getTodaysDishes = (req: Request, res: Response) => {
-        const today = moment().format('ddd');
-        this.dishModel.find({ days: today }, '-days -__v',
-          (err: Error, dishes: DishModel[]) => {
-            if (err) {
-                this.internalServer(res, err);
-            } else {
-                res.status(200).json(dishes);
-            }
-          });
-    }
-
-    /**
      * Get list of someday's dishes
      *
      * @class DishesCtrl
