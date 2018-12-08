@@ -33,13 +33,13 @@ export class MainNavComponent implements OnInit {
               }
 
   ngOnInit() {
-    if (this.role === 'mess') {
-      this.navheader = 'MESS';
-    } else if (this.role === 'secy') {
-      this.navheader = 'HEC';
-    } else {
+    if (this.role === 'resident') {
       this.authService.getUser()
       .then(user => this.navheader = user.rollno);
+    } else if (this.role === 'mess') {
+      this.navheader = 'MESS';
+    } else {
+      this.navheader = 'HEC';
     }
   }
 
