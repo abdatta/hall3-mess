@@ -3,7 +3,11 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@app/*": ["app/*"]
+      "@app/*": ["app/*"],
+      "@control/*": ["app/modules/control/*"],
+      "@home/*": ["app/modules/home/*"],
+      "@mess/*": ["app/modules/mess/*"],
+      "@shared/*": ["app/modules/shared/*"]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

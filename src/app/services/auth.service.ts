@@ -71,7 +71,7 @@ export class AuthService {
       )
       .subscribe(_ => {
         if (request_in === 'mess') {
-          this.router.navigateByUrl('/messhome/issuetoken');
+          this.router.navigateByUrl('/mess/issuetoken');
         } else {
           this.router.navigateByUrl('/');
         }
