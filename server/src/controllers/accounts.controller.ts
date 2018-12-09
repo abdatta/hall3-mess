@@ -48,6 +48,19 @@ export class AccountCtrl {
     }
 
     /**
+     * Check authentication status
+     *
+     * @class AccountCtrl
+     * @method getAuthStatus
+     */
+    public getAuthStatus = (req: Request, res: Response, next: NextFunction) => {
+        res.status(200).json({
+            user: req.isAuthenticated() ? this.sanitize(req.user) : null,
+            mess: req.session ? req.session.mess : null
+        });
+    }
+
+    /**
      * Update a account of a user
      *
      * @class AccountCtrl
@@ -87,7 +100,7 @@ export class AccountCtrl {
      * @method fetchPhoto
      */
     public fetchPhoto = (req: Request, res: Response) => {
-        const url = 'https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/'+ req.params.roll +'_0.jpg';
+        const url = `https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/${req.params.roll}_0.jpg`;
         request.get(url).pipe(res);
     }
 
@@ -100,6 +113,60 @@ export class AccountCtrl {
      */
     public logout = (req: Request, res: Response) => {
         req.logout();
+        res.sendStatus(200);
+    }
+
+    /**
+     * Authenticate and start mess session
+     *
+     * @class AccountCtrl
+     * @method messIn
+     */
+    public messIn = (req: Request, res: Response) => {
+        if (req.session === undefined) {
+            this.internalServer(res, { err: 'Session not initialised'});
+            return;
+        }
+        this.userModel.findOne({
+            rollno: 'mess'
+        }, (err: Error, user: UserModel) => {
+            if (err) {
+                this.internalServer(res, err);
+            } else if (!user) {
+                res.sendStatus(401);  // Unauthorised, only mess login allowed
+            } else if (!user.validPassword(req.body.password)) {
+                res.sendStatus(403); // Wrong Password, forbidden
+            } else {
+                (req.session as Express.Session).mess = true;
+                res.sendStatus(200);
+            }
+        });
+    }
+
+    /**
+     * Check mess session authentication status
+     *
+     * @class AccountCtrl
+     * @method checkMessAuth
+     */
+    public checkMessAuth = (req: Request, res: Response, next: NextFunction) => {
+        if (req.session && req.session.mess === true) {
+            next();
+        } else {
+            res.sendStatus(401);  // Unauthorized
+        }
+    }
+
+    /**
+     * End mess session
+     *
+     * @class AccountCtrl
+     * @method messOut
+     */
+    public messOut = (req: Request, res: Response) => {
+        if (req.session) {
+            req.session.mess = undefined;
+        }
         res.sendStatus(200);
     }
 

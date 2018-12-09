@@ -27,12 +27,14 @@ export class AccountsRoute {
         const router: Router = Router();
 
         router
+            .get('/auth',  accountCtrl.getAuthStatus)
             .get('/photo/:roll.jpg', accountCtrl.fetchPhoto)
-            .get('/auth',  accountCtrl.checkAuth, (req, res) => res.json(accountCtrl.sanitize(req.user)))
-            .post('/login',  passport.authenticate('mess-signin'), (req, res) => res.json(accountCtrl.sanitize(req.user)))
-            .post('/signup', passport.authenticate('mess-signup'), accountCtrl.updateUser)
+            .post('/login',  passport.authenticate('signin'), (req, res) => res.json(accountCtrl.sanitize(req.user)))
+            .post('/signup', passport.authenticate('signup'), accountCtrl.updateUser)
             .patch('/update', accountCtrl.checkAuth, accountCtrl.updateUser)
-            .post('/logout', accountCtrl.checkAuth, accountCtrl.logout);
+            .post('/logout', accountCtrl.checkAuth, accountCtrl.logout)
+            .post('/messin', accountCtrl.messIn)
+            .post('/messout', accountCtrl.messOut);
 
         return router;
     }

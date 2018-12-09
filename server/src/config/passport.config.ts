@@ -72,8 +72,8 @@ export class PassportConfig {
       });
     };
 
-    passport.use('mess-signup', new Strategy(options, verifySignUp));
-    passport.use('mess-signin', new Strategy(options, verifySignIn));
+    passport.use('signup', new Strategy(options, verifySignUp));
+    passport.use('signin', new Strategy(options, verifySignIn));
 
   }
 }

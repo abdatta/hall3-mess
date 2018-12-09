@@ -15,8 +15,9 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private router: Router) {
-    this.currentUser = this.http.get<UserModel>('/api/account/auth')
+    this.currentUser = this.http.get<{user: UserModel, mess: boolean}>('/api/account/auth')
       .pipe(
+        map((response: {user: UserModel, mess: boolean}) => of(response.user)),
         catchError((err: any, caught) => of(null))
       ).toPromise();
   }
