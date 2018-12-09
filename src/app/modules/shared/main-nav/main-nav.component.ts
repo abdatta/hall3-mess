@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AuthService } from '@app/services';
-import { Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main-nav',
@@ -18,21 +18,21 @@ export class MainNavComponent implements OnInit {
       map(result => result.matches)
     );
 
-  currentUrl: string;
   navheader: string;
 
-  @Input()
   role = 'resident';
 
-  @Input()
-  navs: any;
+  navs: object[];
 
   constructor(private breakpointObserver: BreakpointObserver,
-              private authService: AuthService, private router: Router) {
-                router.events.subscribe((_: NavigationEnd) => this.currentUrl = _.url);
-              }
+              private authService: AuthService,
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.role = data.role;
+      this.navs = data.navs;
+    });
     if (this.role === 'resident') {
       this.authService.getUser()
       .then(user => this.navheader = user.rollno);
@@ -44,7 +44,7 @@ export class MainNavComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout(this.currentUrl);
+    this.authService.logout();
   }
 
 }

@@ -12,10 +12,22 @@ import { ChangepasskeyComponent } from '@home/changepasskey/changepasskey.compon
 import { GuestroomComponent } from '@home/guestroom/guestroom.component';
 import { NotificationComponent } from '@home/notification/notification.component';
 
+const navs = [
+  { title: 'Notifications', url: '/home/notifications', icon: 'notifications', badge: 3 },
+  { title: 'Book', url: '/home/book', icon: 'border_color' },
+  { title: 'Pre-book', url: '/home/prebook', icon: 'restaurant' },
+  { title: 'Menu This Week', url: '/home/thisweek', icon: 'restaurant_menu' },
+  { title: 'Bills and History', url: '/home/history', icon: 'calendar_today' },
+  { title: 'Not Well', url: '/home/notwell', icon: 'local_hospital' },
+  { title: 'Change Password', url: '/home/changepassword', icon: 'vpn_key' },
+  { title: 'Book Guestroom', url: '/home/guestroom', icon: 'hotel' }
+];
+
 const homeRoutes: Routes = [
     {
         path: '',
         component: NavComponent,
+        data: { role: 'resident', navs: navs },
         children : [
             { path: '', redirectTo: 'book', pathMatch: 'full' },
             { path: 'book', component: BookComponent },

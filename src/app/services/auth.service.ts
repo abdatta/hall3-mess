@@ -62,7 +62,7 @@ export class AuthService {
       );
   }
 
-  logout(request_in: string): void {
+  logout(): void {
     this.currentUser = Promise.resolve(null);
     // To execute observable, it is converted to a promise
     this.http.post('/api/account/logout', {})
@@ -70,11 +70,7 @@ export class AuthService {
         catchError(this.handleError)
       )
       .subscribe(_ => {
-        if (request_in === 'mess') {
-          this.router.navigateByUrl('/mess/issuetoken');
-        } else {
-          this.router.navigateByUrl('/');
-        }
+        this.router.navigateByUrl('/');
       });
   }
 

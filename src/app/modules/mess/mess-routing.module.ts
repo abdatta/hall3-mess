@@ -7,11 +7,18 @@ import { ChangemanagerpasswordComponent } from '@mess/changemanagerpassword/chan
 import { NonvegbookingsComponent } from '@mess/nonvegbookings/nonvegbookings.component';
 import { IssuetokenComponent } from '@mess/issuetoken/issuetoken.component';
 
+const navs = [
+  { title: 'Notifications', url: '/mess/issuetoken', icon: 'notifications', badge: 3 },
+  { title: 'Issue Token', url: '/mess/issuetoken', icon: 'monetization_on' },
+  { title: 'Non-Veg Booking', url: '/mess/nonvegbookings', icon: 'restaurant' },
+  { title: 'Change Password', url: '/mess/changepassword', icon: 'vpn_key' }
+];
 
 const messRoutes: Routes = [
     {
         path: '',
         component : NavComponent,
+        data: { role: 'mess', navs: navs },
         children : [
             { path: '', redirectTo: 'issuetoken', pathMatch: 'full' },
             { path: 'issuetoken', component: IssuetokenComponent},

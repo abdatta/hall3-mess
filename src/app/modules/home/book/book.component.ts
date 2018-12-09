@@ -17,35 +17,17 @@ export class BookComponent implements OnInit {
   loading: boolean;
   submitting: boolean;
   slot: ('Breakfast' | 'Lunch' | 'Dinner');
-  request_in: string;
 
   constructor(private router: Router,
               private snackBar: MatSnackBar,
               private dishesService: DishesService,
-              private tokensService: TokensService,
-              private authService: AuthService,
-              private route: ActivatedRoute) { }
+              private tokensService: TokensService) { }
 
   ngOnInit() {
     this.loading = true;
-    this.route.queryParams
-          .subscribe(param => {
-            if (param.show) {
-              this.request_in = param.show;
-            }
-          });
     this.dishesService.getSomedaysDishes(moment().format('dddd'))
       .subscribe(dishes => {
-        if (this.request_in === 'mess') {
-          if (moment().format('HHmm') <= '1045') {
-            this.slot = 'Breakfast';
-          } else if ((moment().format('HHmm') > '1045') && (moment().format('HHmm') <= '1700')) {
-            this.slot = 'Lunch';
-          } else {this.slot = 'Dinner'; }
-          this.dishes = dishes.filter(dish => dish.slot.includes(this.slot) && !dish.prebookable);
-        } else {
-          this.dishes = dishes.filter(dish => !dish.prebookable);
-        }
+        this.dishes = dishes.filter(dish => !dish.prebookable);
         dishes.forEach(dish => {
           dish.quantity = 0;
           dish['selected'] = false;
@@ -72,18 +54,10 @@ export class BookComponent implements OnInit {
   book() {
     const dishes = this.dishes && this.dishes.filter(dish => dish['selected']);
     if (dishes && dishes.length) {
-      if (this.request_in !== 'mess') {
-        this.submitting = true;
-      } else {
-        this.loading = true;
-      }
+      this.submitting = true;
       this.tokensService.bookToken(dishes)
         .subscribe(token => {
-          if (token && this.request_in !== 'mess') {
-            this.router.navigateByUrl('/home/history?show=' + token._id);
-          } else if (token) {
-            this.authService.logout(this.request_in);
-          }
+          this.router.navigateByUrl('/home/history?show=' + token._id);
           this.submitting = false;
         },
         error => {
