@@ -37,27 +37,12 @@ export class BookComponent implements OnInit {
     this.dishesService.getSomedaysDishes(moment().format('dddd'))
       .subscribe(dishes => {
         this.dishes = dishes.filter(dish => !dish.prebookable);
-        dishes.forEach(dish => {
-          dish.quantity = 0;
-          dish['selected'] = false;
-        });
         this.loading = false;
       },
       error => {
         this.snackBar.open('Oops! Some error occured. Please refresh the page.');
         this.loading = false;
       });
-  }
-
-  changeQuantity(i: number, q: number) {
-    this.dishes[i].quantity += q;
-    if (this.dishes[i].quantity < 1) {
-      this.dishes[i].quantity = 1;
-    }
-  }
-
-  resetQuantity(i: number) {
-    this.dishes[i].quantity = 1;
   }
 
   book() {
@@ -85,11 +70,12 @@ export class BookComponent implements OnInit {
     }
   }
 
-  showQR() {
-    const dishes = this.dishes && this.dishes.filter(dish => dish['selected']);
+  showQR(selected: boolean[]) {
+    const dishes = this.dishes && this.dishes.filter((_, i) => selected[i]);
 
     if (dishes && dishes.length) {
-      const qrdata = [this.user, ...dishes.map(dish => `${dish.short_id}\u200B${dish.quantity}`)].join('\u200B');
+      const qrdata =
+        [this.user, ...dishes.map(dish => `${dish.short_id}\u200B${dish.quantity}`)].join('\u200B');
 
       this.qrdialog.open(QRDialogComponent, {
         width: '95%',

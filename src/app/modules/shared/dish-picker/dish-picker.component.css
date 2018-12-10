@@ -1,0 +1,47 @@
+h2 {
+    text-align: center;
+}
+
+mat-checkbox {
+    padding-left: 10px;
+}
+
+.disher {
+    width: 90%;
+    max-width: 600px;
+    margin: 10px 0;
+}
+
+.mat-progress-bar {
+    margin: 17px 0;
+    width: 45%;
+    max-width: 300px;
+    height: 3px;
+}
+
+.dish-item {
+    padding: 10px;
+    margin: 5px 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.dish-button {
+    flex-grow: 1;
+    margin: 0 10px;
+    height: 40px;
+    overflow: hidden;
+}
+
+.no-shrink {
+    flex: none;
+}
+
+.spinner{
+    margin-top:60px;
+}
+
+.mat-raised-button {
+    margin: 10px;
+}

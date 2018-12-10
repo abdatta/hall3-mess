@@ -1,0 +1,23 @@
+h3 {
+    text-align: center;
+}
+
+@media(max-width: 400px) {
+    h3 {
+        margin-top: 0;
+    }
+    p {
+        margin-bottom: 0;
+    }
+}
+
+:host >>> .qr {
+    display: flex;
+    justify-content: center;
+}
+
+:host >>> .qr > img {
+    max-width: 330px;
+    width: 100% !important;
+    height: 100% !important;
+}

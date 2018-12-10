@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRouterModule } from '@home/home-routing.module';
 import { MaterialModule } from '@shared/material';
 import { MainNavModule } from '@shared/main-nav';
+import { DishPickerModule } from '@shared/dish-picker';
 import { NgxKjuaModule } from 'ngx-kjua';
 
 // Components
@@ -25,7 +26,8 @@ import { QRDialogComponent } from './qr-dialog/qr-dialog.component';
     HomeRouterModule,
     MaterialModule,
     MainNavModule,
-    NgxKjuaModule
+    NgxKjuaModule,
+    DishPickerModule
   ],
   declarations: [
     NavComponent,
