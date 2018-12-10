@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '@app/services';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 
 @Component({
   selector: 'app-mess-login',
@@ -10,6 +11,9 @@ import { MatSnackBar } from '@angular/material';
 })
 export class MessLoginComponent implements OnInit {
 
+  @ViewChild('scanner')
+  scanner: ZXingScannerComponent;
+
   submitting: boolean;
 
   constructor(private authService: AuthService,
@@ -17,6 +21,13 @@ export class MessLoginComponent implements OnInit {
               public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.scanner.camerasFound.subscribe((devices: MediaDeviceInfo[]) => {
+      if (devices.length > 0) {
+        this.scanner.changeDevice(devices[0]);
+      } else {
+        this.snackBar.open('No cameras found in this device.');
+      }
+    });
   }
 
   logIn(rollno: string, password: string) {
@@ -37,6 +48,10 @@ export class MessLoginComponent implements OnInit {
     } else {
       this.snackBar.open('Please fill all the fields.');
     }
+  }
+
+  handleQRdata(data: string) {
+    this.snackBar.open(data);
   }
 
 }

@@ -1,20 +1,38 @@
 <div class="container">
   <h2>Mess Login</h2>
   <div class="passes">
-      <mat-card > 
+    <mat-card>
+      <div class="qr-login">
+        <h4>Scan QR Code</h4>
+        <zxing-scanner #scanner start="true" (scanSuccess)="handleQRdata($event)"></zxing-scanner>
+      </div>
+      <mat-divider [vertical]="true"></mat-divider>
+      <div class="qr-login">
+        <h4>Or Login</h4>
+        <div class="qr-login">
           <mat-form-field>
-              <input matInput placeholder="Roll No." type="text" autofocus (keyup.enter)="pass.focus()" autocomplete="new-password" autocomplete="off" #roll>
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Password" type="password" autofocus (keyup.enter)="pass.focus()" autocomplete="off" (keyup.enter)="pass.blur(); !submitting && logIn(roll.value, pass.value);" #pass>
-            </mat-form-field>
-          <br>
-          <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
-  
-  <button mat-raised-button *ngIf="!submitting" color="primary" type="button" (click)="logIn(roll.value, pass.value)">
-    <b>Login</b>
-  </button>
-      </mat-card>
+              <input matInput autofocus #roll
+                     placeholder="Roll No."
+                     type="text"
+                     (keyup.enter)="pass.focus()"
+                     autocomplete="new-password"
+                     autocomplete="off">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput #pass
+                   placeholder="Password"
+                   type="password"
+                   (keyup.enter)="pass.focus()"
+                   autocomplete="off"
+                   (keyup.enter)="pass.blur(); !submitting && logIn(roll.value, pass.value);" >
+          </mat-form-field>
+        </div>
+        <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
+        <button mat-raised-button *ngIf="!submitting" color="primary" type="button" (click)="logIn(roll.value, pass.value)">
+          <b>Login</b>
+        </button>
+        <br>
+      </div>
+    </mat-card>
   </div>
 </div>
-

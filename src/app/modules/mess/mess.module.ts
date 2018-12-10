@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { MessRouterModule } from '@mess/mess-routing.module';
 import { MaterialModule } from '@shared/material';
 import { MainNavModule } from '@shared/main-nav';
@@ -15,6 +16,7 @@ import { MessLoginComponent } from '@mess/mess-login/mess-login.component';
 @NgModule({
   imports: [
     CommonModule,
+    ZXingScannerModule,
     MessRouterModule,
     MaterialModule,
     MainNavModule,

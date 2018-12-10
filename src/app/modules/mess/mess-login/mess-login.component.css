@@ -1,6 +1,6 @@
 .passes {
-    width: 60%;
-    max-width: 430px;
+    width: 90%;
+    max-width: 800px;
     margin-top: 10px;
     margin-bottom: 20px;
 
@@ -11,15 +11,20 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 350px;
+    max-width: 400px;
     text-align: center;
 }
 
 .mat-card {
     padding: 30px;
     display: flex;
-    flex-flow: column;
-    align-items: center;
+    flex-flow: row;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.mat-divider {
+    margin-left: 30px;
 }
 
 .mat-form-field {
@@ -30,6 +35,15 @@
 :host >>> .mat-form-field-infix {
     padding: .4375em 0;
     padding-left: 5px;
+}
+
+.qr-login {
+    display: flex;
+    flex-flow: column;
+}
+
+zxing-scanner {
+    padding-bottom: 10px;
 }
 
 .mat-progress-bar {
