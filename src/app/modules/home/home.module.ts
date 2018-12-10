@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRouterModule } from '@home/home-routing.module';
 import { MaterialModule } from '@shared/material';
 import { MainNavModule } from '@shared/main-nav';
+import { NgxKjuaModule } from 'ngx-kjua';
 
 // Components
 import { NavComponent } from '@home/nav/nav.component';
@@ -15,6 +16,7 @@ import { NotwellComponent } from '@home/notwell/notwell.component';
 import { ChangepasskeyComponent } from '@home/changepasskey/changepasskey.component';
 import { GuestroomComponent } from '@home/guestroom/guestroom.component';
 import { NotificationComponent } from '@home/notification/notification.component';
+import { QRDialogComponent } from './qr-dialog/qr-dialog.component';
 
 @NgModule({
   imports: [
@@ -22,7 +24,8 @@ import { NotificationComponent } from '@home/notification/notification.component
     FormsModule,
     HomeRouterModule,
     MaterialModule,
-    MainNavModule
+    MainNavModule,
+    NgxKjuaModule
   ],
   declarations: [
     NavComponent,
@@ -33,7 +36,9 @@ import { NotificationComponent } from '@home/notification/notification.component
     NotwellComponent,
     ChangepasskeyComponent,
     GuestroomComponent,
-    NotificationComponent
-  ]
+    NotificationComponent,
+    QRDialogComponent
+  ],
+  entryComponents: [QRDialogComponent]
 })
 export class HomeModule { }

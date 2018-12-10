@@ -19,5 +19,6 @@
     </mat-card>
   </div>
   <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
-  <button *ngIf="!loading && !submitting" mat-raised-button color="primary" (click)="book()"><b>Submit</b></button>
+  <!--button *ngIf="!loading && !submitting" mat-raised-button color="primary" (click)="book()"><b>Submit</b></button-->
+  <button *ngIf="!loading && !submitting" mat-raised-button color="primary" (click)="showQR()"><b>Get QR Code</b></button>
 </div>
