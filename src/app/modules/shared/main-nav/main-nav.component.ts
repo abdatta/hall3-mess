@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AuthService } from '@app/services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-main-nav',
@@ -19,14 +19,17 @@ export class MainNavComponent implements OnInit {
     );
 
   navheader: string;
-
+  currentUrl: string;
   role = 'resident';
 
   navs: object[];
 
   constructor(private breakpointObserver: BreakpointObserver,
               private authService: AuthService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private router: Router) {
+                router.events.subscribe((_: NavigationEnd) => this.currentUrl = _.url);
+              }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
