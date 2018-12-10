@@ -21,9 +21,9 @@ const routes: Routes = [
 
     { path: 'forgotpassword', component: ForgotkeyComponent, canActivate: [UnAuthGuard] },
 
-    { path: 'mess', component : MessComponent, canActivate: [UnAuthGuard] },
+    { path: 'mess', component : MessComponent },
 
-    { path: 'control', component: ControlComponent, canActivate: [UnAuthGuard] },
+    { path: 'control', component: ControlComponent },
 
     { path: 'home', canActivate: [AuthGuard], loadChildren: '@home/home.module#HomeModule' },
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IssuetokenComponent } from './issuetoken.component';
+import { MessLoginComponent } from './mess-login.component';
 
-describe('IssuetokenComponent', () => {
-  let component: IssuetokenComponent;
-  let fixture: ComponentFixture<IssuetokenComponent>;
+describe('MessLoginComponent', () => {
+  let component: MessLoginComponent;
+  let fixture: ComponentFixture<MessLoginComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IssuetokenComponent ]
+      declarations: [ MessLoginComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IssuetokenComponent);
+    fixture = TestBed.createComponent(MessLoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,26 +3,30 @@ import { CommonModule } from '@angular/common';
 import { MessRouterModule } from '@mess/mess-routing.module';
 import { MaterialModule } from '@shared/material';
 import { MainNavModule } from '@shared/main-nav';
+import { DishPickerModule } from '@shared/dish-picker';
 
 // Components
 import { NavComponent } from '@mess/nav/nav.component';
 import { ChangemanagerpasswordComponent } from '@mess/changemanagerpassword/changemanagerpassword.component';
 import { NonvegbookingsComponent } from '@mess/nonvegbookings/nonvegbookings.component';
-import { IssuetokenComponent } from '@mess/issuetoken/issuetoken.component';
+import { BookComponent } from '@mess/book/book.component';
+import { MessLoginComponent } from '@mess/mess-login/mess-login.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MessRouterModule,
     MaterialModule,
-    MainNavModule
+    MainNavModule,
+    DishPickerModule
   ],
   declarations: [
     NavComponent,
     ChangemanagerpasswordComponent,
     NonvegbookingsComponent,
-    IssuetokenComponent,
-    NavComponent
+    NavComponent,
+    BookComponent,
+    MessLoginComponent
   ]
 })
 export class MessModule { }
