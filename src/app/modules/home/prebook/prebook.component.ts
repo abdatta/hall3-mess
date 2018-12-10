@@ -26,10 +26,6 @@ export class PrebookComponent implements OnInit {
     this.dishesService.getSomedaysDishes(moment().add(1, 'd').format('dddd'))
       .subscribe(dishes => {
         this.dishes = dishes.filter(dish => dish.prebookable);
-        dishes.forEach(dish => {
-          dish.quantity = 0;
-          dish['selected'] = false;
-        });
         this.loading = false;
       },
       error => {
@@ -38,19 +34,8 @@ export class PrebookComponent implements OnInit {
       });
   }
 
-  changeQuantity(i: number, q: number) {
-    this.dishes[i].quantity += q;
-    if (this.dishes[i].quantity < 1) {
-      this.dishes[i].quantity = 1;
-    }
-  }
-
-  resetQuantity(i: number) {
-    this.dishes[i].quantity = 1;
-  }
-
-  prebook() {
-    const dishes = this.dishes && this.dishes.filter(dish => dish['selected']);
+  prebook(selected: boolean[]) {
+    const dishes = this.dishes && this.dishes.filter((_, i) => selected[i]);
     if (dishes && dishes.length) {
       this.submitting = true;
       this.tokensService
@@ -66,7 +51,7 @@ export class PrebookComponent implements OnInit {
             this.snackBar.open('Invalid Request');
           } else {
             this.snackBar.open('Oops! Some error occured', 'Retry')
-              .onAction().subscribe(_ => this.prebook());
+              .onAction().subscribe(_ => this.prebook(selected));
           }
           this.submitting = false;
         });
