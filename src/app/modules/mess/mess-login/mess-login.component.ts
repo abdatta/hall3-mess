@@ -55,6 +55,9 @@ export class MessLoginComponent implements OnInit {
   }
 
   handleQRdata(data: string) {
+    if (this.qrbooking) {
+      return ;
+    }
     this.qrbooking = true;
     const dialogRef = this.qrbook.open(QRBookComponent, {
       width: '500px',

@@ -4,7 +4,7 @@
     <mat-card>
       <div class="qr-login">
         <h4>Scan QR Code</h4>
-        <zxing-scanner #scanner start="true" [scannerEnabled]="!qrbooking" (scanSuccess)="handleQRdata($event)"></zxing-scanner>
+        <zxing-scanner #scanner start="true" (scanSuccess)="handleQRdata($event)"></zxing-scanner>
       </div>
       <mat-divider [vertical]="true"></mat-divider>
       <div class="qr-login">
