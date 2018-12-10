@@ -55,6 +55,17 @@
       </button>
       <span>Hall 3 Mess Automation</span>
     </mat-toolbar>
-   <router-outlet></router-outlet>
+
+    <div class="totalwidth" *ngIf="role === 'mess'">
+    <div class="routerpart">
+      <router-outlet *ngIf="role === 'mess'"></router-outlet>
+    </div>
+    <div class="recentpart">
+      <app-recents></app-recents>
+    </div>
+    </div>
+
+   <router-outlet *ngIf="role !== 'mess'"></router-outlet>
+
   </mat-sidenav-content>
 </mat-sidenav-container>
