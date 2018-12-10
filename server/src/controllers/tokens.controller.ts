@@ -158,10 +158,10 @@ export class TokensCtrl {
      */
     private getUniqueId(cb: (err: Error | any, id: string | any) => void) {
         const id = TokensCtrl.sid(Math.floor((Math.random() * 15 + 1) * Math.pow(16, 5)).toString(16));
-        this.dishModel.findById(id, (err: Error, dish: DishModel) => {
+        this.tokenModel.findById(id, (err: Error, token: TokenModel) => {
             if (err) {
                 cb(err, null);
-            } else if (dish) {
+            } else if (token) {
                 this.getUniqueId(cb);
             } else {
                 cb(null, id);

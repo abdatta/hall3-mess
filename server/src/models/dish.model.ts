@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
  * @interface DishModel
  */
 export interface DishModel extends Document {
-    _id: string;
+    short_id: string;
     name: string;
     price: number;
     days: ('Sun' | 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat')[];
