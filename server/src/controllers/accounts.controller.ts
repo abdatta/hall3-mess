@@ -138,7 +138,7 @@ export class AccountCtrl {
                 res.sendStatus(403); // Wrong Password, forbidden
             } else {
                 (req.session as Express.Session).mess = true;
-                res.sendStatus(200);
+                res.status(200).send({ mess: true });
             }
         });
     }

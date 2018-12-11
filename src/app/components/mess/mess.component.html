@@ -1,14 +1,15 @@
 <div class="container">
   <form autocomplete="new-password" autocomplete="off">
-    <h3>Mess Manager Login</h3>
+    <h3>Enter Mess Session</h3>
     <mat-form-field>
-      <input matInput placeholder="User Name" type="text" autofocus (keyup.enter)="pass.focus()" autocomplete="new-password" autocomplete="off" #roll>
+      <input matInput autofocus #pass
+             placeholder="Password"
+             type="password"
+             autocomplete="off"
+             (keyup.enter)="messIn(pass.value)">
     </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Password" type="password" autofocus (keyup.enter)="pass.focus()" autocomplete="off" #pass>
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="button" routerLink="/mess/login">
-      <b>Login</b>
+    <button mat-raised-button color="primary" type="button" (click)="messIn(pass.value)">
+      <b>Enter</b>
     </button>
     <div class="links">
       <p>Never share your password</p>

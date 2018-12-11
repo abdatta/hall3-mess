@@ -19,7 +19,7 @@ export class AuthService {
     const authStatus = this.http.get<{user: UserModel, mess: boolean}>('/api/account/auth')
                            .pipe(catchError((err: any, caught) => of(null))).toPromise();
     this.currentUser = authStatus.then(auth => auth.user);
-    this.isInMess = authStatus.then(auth => /*auth.mess ===*/ true);
+    this.isInMess = authStatus.then(auth => auth.mess === true);
   }
 
   checkMess = (): Promise<boolean> => this.isInMess;
@@ -72,6 +72,29 @@ export class AuthService {
         this.isInMess.then(mess => {
           this.router.navigateByUrl(mess ? '/mess/login' : '/');
         });
+      });
+  }
+
+  messIn(pass: string): Observable<number> {
+    return this.http.post<{mess: boolean}>('/api/account/messin', {password: pass})
+      .pipe(
+        map((res: {mess: boolean}) => {
+          this.isInMess = Promise.resolve(res.mess);
+          return 200;
+        }),
+        catchError(this.handleError)
+      );
+  }
+
+  messOut(): void {
+    this.isInMess = Promise.resolve(false);
+    // To execute observable, it is converted to a promise
+    this.http.post('/api/account/messout', {})
+      .pipe(
+        catchError(this.handleError)
+      )
+      .subscribe(_ => {
+        this.router.navigateByUrl('/mess');
       });
   }
 

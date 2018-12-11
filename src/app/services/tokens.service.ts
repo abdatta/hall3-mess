@@ -4,7 +4,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { TokenModel, DishModel } from '@app/models';
-import { AuthService } from '@app/services';
+import { AuthService } from '@app/services/auth.service';
 
 @Injectable({
   providedIn: 'root'

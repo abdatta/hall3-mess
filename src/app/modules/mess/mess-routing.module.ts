@@ -13,7 +13,8 @@ const navs = [
   { title: 'Book', url: '/mess/book', icon: 'border_color' },
   { title: 'Mess Login', url: '/mess/login', icon: 'input' },
   { title: 'Non-Veg Booking', url: '/mess/nonvegbookings', icon: 'restaurant' },
-  { title: 'Change Password', url: '/mess/changepassword', icon: 'vpn_key' }
+  { title: 'Change Password', url: '/mess/changepassword', icon: 'vpn_key' },
+  { title: 'End Mess Session', url: '/mess', icon: 'lock_open' }
 ];
 
 const messRoutes: Routes = [
