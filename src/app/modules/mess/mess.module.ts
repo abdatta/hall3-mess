@@ -12,6 +12,7 @@ import { ChangemanagerpasswordComponent } from '@mess/changemanagerpassword/chan
 import { NonvegbookingsComponent } from '@mess/nonvegbookings/nonvegbookings.component';
 import { BookComponent } from '@mess/book/book.component';
 import { MessLoginComponent } from '@mess/mess-login/mess-login.component';
+import { QRBookComponent } from '@mess/qr-book/qr-book.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,9 @@ import { MessLoginComponent } from '@mess/mess-login/mess-login.component';
     NonvegbookingsComponent,
     NavComponent,
     BookComponent,
-    MessLoginComponent
-  ]
+    MessLoginComponent,
+    QRBookComponent
+  ],
+  entryComponents: [QRBookComponent]
 })
 export class MessModule { }

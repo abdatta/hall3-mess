@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '@app/services';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { QRBookComponent } from '@mess/qr-book/qr-book.component';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 
 @Component({
@@ -15,9 +17,11 @@ export class MessLoginComponent implements OnInit {
   scanner: ZXingScannerComponent;
 
   submitting: boolean;
+  qrbooking: boolean;
 
   constructor(private authService: AuthService,
               private router: Router,
+              private qrbook: MatDialog,
               public snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -51,7 +55,12 @@ export class MessLoginComponent implements OnInit {
   }
 
   handleQRdata(data: string) {
-    this.snackBar.open(data);
+    this.qrbooking = true;
+    const dialogRef = this.qrbook.open(QRBookComponent, {
+      width: '500px',
+      data: data
+    });
+    dialogRef.afterClosed().subscribe(_ => this.qrbooking = false);
   }
 
 }

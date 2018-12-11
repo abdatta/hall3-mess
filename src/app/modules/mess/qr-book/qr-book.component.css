@@ -1,0 +1,20 @@
+p {
+    margin: 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.mat-input-element:disabled {
+    color: rgb(0,0,0);
+}
+
+.mat-table {
+    width: 80%;
+    margin: 15px 0;
+}
+
+.mat-progress-spinner {
+    margin: 30px;
+}
