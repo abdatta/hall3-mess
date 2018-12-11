@@ -12,23 +12,21 @@ import { UserModel } from '@app/models';
 export class AuthService {
 
   private currentUser: Promise<UserModel>;
+  private isInMess: Promise<boolean>;
 
   constructor(private http: HttpClient,
               private router: Router) {
-    this.currentUser = this.http.get<{user: UserModel, mess: boolean}>('/api/account/auth')
-      .pipe(
-        map((response: {user: UserModel, mess: boolean}) => response.user),
-        catchError((err: any, caught) => of(null))
-      ).toPromise();
+    const authStatus = this.http.get<{user: UserModel, mess: boolean}>('/api/account/auth')
+                           .pipe(catchError((err: any, caught) => of(null))).toPromise();
+    this.currentUser = authStatus.then(auth => auth.user);
+    this.isInMess = authStatus.then(auth => /*auth.mess ===*/ true);
   }
+
+  checkMess = (): Promise<boolean> => this.isInMess;
 
   getUser = (): Promise<UserModel> => this.currentUser;
 
-  check(): Promise<boolean> {
-    return this.currentUser.then((user: UserModel) => {
-      return user != null;
-    });
-  }
+  check = (): Promise<boolean> => this.currentUser.then((user: UserModel) => user != null);
 
   logIn(roll: string, pass: string): Observable<number> {
     return this.http.post<UserModel>('/api/account/login', { rollno: roll, password: pass})
@@ -71,7 +69,9 @@ export class AuthService {
         catchError(this.handleError)
       )
       .subscribe(_ => {
-        this.router.navigateByUrl('/');
+        this.isInMess.then(mess => {
+          this.router.navigateByUrl(mess ? '/mess/login' : '/');
+        });
       });
   }
 
