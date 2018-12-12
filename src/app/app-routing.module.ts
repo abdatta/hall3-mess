@@ -10,24 +10,30 @@ import {
   ControlComponent
 } from '@app/components';
 
-import { AuthGuard, UnAuthGuard } from '@app/guards';
+// App Guards
+import {
+  AuthGuard,
+  UnAuthGuard,
+  MessAuthGuard,
+  MessUnAuthGuard
+} from '@app/guards';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-    { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard] },
+    { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard, MessUnAuthGuard] },
 
-    { path: 'signup', component: SignupComponent, canActivate: [UnAuthGuard] },
+    { path: 'signup', component: SignupComponent, canActivate: [UnAuthGuard, MessUnAuthGuard] },
 
-    { path: 'forgotpassword', component: ForgotkeyComponent, canActivate: [UnAuthGuard] },
+    { path: 'forgotpassword', component: ForgotkeyComponent, canActivate: [UnAuthGuard, MessUnAuthGuard] },
 
-    { path: 'mess', component : MessComponent },
+    { path: 'mess', component : MessComponent, canActivate: [MessUnAuthGuard] },
 
     { path: 'control', component: ControlComponent },
 
-    { path: 'home', canActivate: [AuthGuard], loadChildren: '@home/home.module#HomeModule' },
+    { path: 'home', canActivate: [AuthGuard, MessUnAuthGuard], loadChildren: '@home/home.module#HomeModule' },
 
-    { path: 'mess', loadChildren: '@mess/mess.module#MessModule' },
+    { path: 'mess', canActivate: [MessAuthGuard], loadChildren: '@mess/mess.module#MessModule' },
 
     { path: 'control', loadChildren: '@control/control.module#ControlModule' },
 ];

@@ -9,15 +9,13 @@ import { BookComponent } from '@mess/book/book.component';
 import { MessLoginComponent } from './mess-login/mess-login.component';
 
 // Guards
-import { MessAuthGuard } from '@app/guards';
+import { AuthGuard, UnAuthGuard } from '@app/guards';
 
 const navs = [
   { title: 'Notifications', url: '/mess/login', icon: 'notifications', badge: 3 },
   { title: 'Book', url: '/mess/book', icon: 'border_color' },
-  { title: 'Mess Login', url: '/mess/login', icon: 'input' },
   { title: 'Non-Veg Booking', url: '/mess/nonvegbookings', icon: 'restaurant' },
-  { title: 'Change Password', url: '/mess/changepassword', icon: 'vpn_key' },
-  { title: 'End Mess Session', url: '/mess', icon: 'lock_open' }
+  { title: 'Change Password', url: '/mess/changepassword', icon: 'vpn_key' }
 ];
 
 const messRoutes: Routes = [
@@ -25,11 +23,10 @@ const messRoutes: Routes = [
         path: '',
         component : NavComponent,
         data: { role: 'mess', navs: navs },
-        canActivate: [MessAuthGuard],
         children : [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
-            { path: 'login', component: MessLoginComponent },
-            { path: 'book', component: BookComponent },
+            { path: 'login', component: MessLoginComponent, canActivate: [UnAuthGuard] },
+            { path: 'book', component: BookComponent, canActivate: [AuthGuard] },
             { path: 'changepassword', component: ChangemanagerpasswordComponent },
             { path: 'nonvegbookings', component: NonvegbookingsComponent },
         ]

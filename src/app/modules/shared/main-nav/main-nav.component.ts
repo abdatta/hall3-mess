@@ -43,6 +43,10 @@ export class MainNavComponent implements OnInit {
     }
   }
 
+  messOut() {
+    this.authService.messOut();
+  }
+
   logout() {
     this.authService.logout();
   }

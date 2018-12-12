@@ -17,7 +17,6 @@ export class MessComponent implements OnInit {
               public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.authService.messOut();
   }
 
   messIn(password: string) {

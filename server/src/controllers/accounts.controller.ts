@@ -167,6 +167,7 @@ export class AccountCtrl {
         if (req.session) {
             req.session.mess = undefined;
         }
+        req.logOut();
         res.sendStatus(200);
     }
 

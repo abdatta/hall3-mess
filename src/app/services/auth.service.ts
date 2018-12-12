@@ -88,6 +88,8 @@ export class AuthService {
 
   messOut(): void {
     this.isInMess = Promise.resolve(false);
+    this.currentUser = Promise.resolve(null);
+
     // To execute observable, it is converted to a promise
     this.http.post('/api/account/messout', {})
       .pipe(
