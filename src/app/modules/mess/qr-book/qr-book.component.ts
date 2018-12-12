@@ -29,13 +29,21 @@ export class QRBookComponent implements OnInit {
     this.loading = true;
     this.dishesService.getSomedaysDishes(moment().format('dddd'))
         .subscribe(dishes => {
+          const data_ids = data.map(d => d.slice(0, -1));
+          const data_qty = data.map(d => +d.slice(-1));
+
           this.dishes = dishes.filter(dish => {
-            if (data.includes(dish.short_id)) {
-              dish.quantity = +data[data.indexOf(dish.short_id) + 1];
+            if (data_ids.includes(dish.short_id)) {
+              dish.quantity = data_qty[data_ids.indexOf(dish.short_id)];
               return true;
             }
             return false;
           });
+          if (this.dishes.length === 0) {
+            // TODO: Differentiate an actual invalid QR with one having no today's dishes
+            this.snackBar.open('Invalid QR Code.');
+            this.dialogRef.close();
+          }
           this.loading = false;
         });
   }

@@ -17,7 +17,6 @@ h3 {
 }
 
 :host >>> .qr > img {
-    max-width: 330px;
-    width: 100% !important;
-    height: 100% !important;
+    width: 92% !important;
+    height: 92% !important;
 }

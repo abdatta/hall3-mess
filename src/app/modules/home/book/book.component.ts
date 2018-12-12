@@ -47,7 +47,7 @@ export class BookComponent implements OnInit {
 
     if (dishes && dishes.length) {
       const qrdata =
-        [this.user, ...dishes.map(dish => `${dish.short_id}\u200B${dish.quantity}`)].join('\u200B');
+        [this.user, ...dishes.map(dish => dish.short_id + dish.quantity)].join('\u200B');
 
       this.qrdialog.open(QRDialogComponent, {
         width: '95%',
