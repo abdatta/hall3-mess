@@ -51,3 +51,7 @@ zxing-scanner {
     width: 50%;
     height: 3px;
 }
+
+.mat-card{
+    height: 350px;
+}
