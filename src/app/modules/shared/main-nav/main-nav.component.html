@@ -22,13 +22,15 @@
       </a>
       </div>
       <div class="laptop" *ngIf="role !== 'mess'">
-        <a  *ngFor="let nav of navs"
-            mat-list-item
+        <ng-container *ngFor="let nav of navs">
+        <a  mat-list-item
             [routerLink]="nav.url"
-            [class.activated]="currentUrl == nav.url">
+            [class.activated]="currentUrl == nav.url"
+            *ngIf="(role ==='resident') && (nav.title !== 'Book')">
             <mat-icon [matBadge]="nav.badge" matBadgeColor="accent">{{ nav.icon }}</mat-icon>
             <span class="nav-title">{{ nav.title }}</span>
         </a>
+        </ng-container>
         <a mat-list-item (click)="logout()"><img src="assets/img/logout.png">
           <span class="nav-title">Logout</span>
         </a>
