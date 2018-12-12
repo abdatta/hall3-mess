@@ -29,8 +29,8 @@ export class QRBookComponent implements OnInit {
     this.loading = true;
     this.dishesService.getSomedaysDishes(moment().format('dddd'))
         .subscribe(dishes => {
-          const data_ids = data.map(d => d.slice(0, -1));
-          const data_qty = data.map(d => +d.slice(-1));
+          const data_ids = data.map(d => d.slice(0, 2));
+          const data_qty = data.map(d => +d.slice(2));
 
           this.dishes = dishes.filter(dish => {
             if (data_ids.includes(dish.short_id)) {
