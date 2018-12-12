@@ -8,6 +8,9 @@ import { NonvegbookingsComponent } from '@mess/nonvegbookings/nonvegbookings.com
 import { BookComponent } from '@mess/book/book.component';
 import { MessLoginComponent } from './mess-login/mess-login.component';
 
+// Guards
+import { MessAuthGuard } from '@app/guards';
+
 const navs = [
   { title: 'Notifications', url: '/mess/login', icon: 'notifications', badge: 3 },
   { title: 'Book', url: '/mess/book', icon: 'border_color' },
@@ -22,13 +25,13 @@ const messRoutes: Routes = [
         path: '',
         component : NavComponent,
         data: { role: 'mess', navs: navs },
+        canActivate: [MessAuthGuard],
         children : [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
-            { path: 'login', component: MessLoginComponent},
+            { path: 'login', component: MessLoginComponent },
             { path: 'book', component: BookComponent },
-            { path: 'changepassword', component: ChangemanagerpasswordComponent},
-            { path: 'nonvegbookings', component: NonvegbookingsComponent},
-
+            { path: 'changepassword', component: ChangemanagerpasswordComponent },
+            { path: 'nonvegbookings', component: NonvegbookingsComponent },
         ]
     }
 ];
