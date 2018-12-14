@@ -101,7 +101,7 @@ export class AccountCtrl {
      */
     public fetchPhoto = (req: Request, res: Response) => {
         const url = `https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/${req.params.roll}_0.jpg`;
-        request.get(url).pipe(res);
+        request.get(url).on('error', () => res.sendStatus(404)).pipe(res);
     }
 
 
