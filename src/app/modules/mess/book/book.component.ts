@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DishesService, TokensService } from '@app/services';
+import { DishesService, TokensService, AuthService } from '@app/services';
 import { DishModel } from '@app/models';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
@@ -20,7 +20,8 @@ export class BookComponent implements OnInit {
   constructor(private router: Router,
               private snackBar: MatSnackBar,
               private dishesService: DishesService,
-              private tokensService: TokensService) { }
+              private tokensService: TokensService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.loading = true;
@@ -43,6 +44,7 @@ export class BookComponent implements OnInit {
       this.submitting = true;
       this.tokensService.bookToken(dishes)
         .subscribe(_ => {
+          this.snackBar.open('Dishes booked successfully');
           this.router.navigateByUrl('/mess/login');
           this.submitting = false;
         },
@@ -60,5 +62,10 @@ export class BookComponent implements OnInit {
     } else {
         this.snackBar.open('No dish is selected.');
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.snackBar.open('No dishes booked');
   }
 }

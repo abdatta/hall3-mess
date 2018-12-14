@@ -5,3 +5,6 @@
                  submitText="Book"
                  (submit)="book($event)">
 </app-dish-picker>
+<div class="btm">
+<button *ngIf="!loading && !submitting" mat-raised-button color="accent" (click)="logout()"><b>Logout</b></button>
+</div>
