@@ -21,7 +21,7 @@
           <mat-icon>lock_open</mat-icon>
           <span class="nav-title">End Mess Session</span>
       </a>
-      <a mat-list-item (click)="logout()"><img src="assets/img/logout.png">
+      <a mat-list-item (click)="logout()" *ngIf="role !== 'mess'"><img src="assets/img/logout.png">
         <span class="nav-title">Logout</span>
       </a>
       </div>

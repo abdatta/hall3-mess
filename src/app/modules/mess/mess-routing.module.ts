@@ -13,9 +13,7 @@ import { AuthGuard, UnAuthGuard } from '@app/guards';
 
 const navs = [
   { title: 'Notifications', url: '/mess/login', icon: 'notifications', badge: 3 },
-  { title: 'Book', url: '/mess/book', icon: 'border_color' },
-  { title: 'Non-Veg Booking', url: '/mess/nonvegbookings', icon: 'restaurant' },
-  { title: 'Change Password', url: '/mess/changepassword', icon: 'vpn_key' }
+  { title: 'Book', url: '/mess/book', icon: 'border_color' }
 ];
 
 const messRoutes: Routes = [
