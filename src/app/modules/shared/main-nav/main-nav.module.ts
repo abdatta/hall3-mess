@@ -5,8 +5,6 @@ import { MaterialModule } from '@shared/material';
 
 import { MainNavComponent } from '@shared/main-nav/main-nav.component';
 
-import { RecentsComponent } from '@shared/main-nav/recents/recents.component';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -14,8 +12,7 @@ import { RecentsComponent } from '@shared/main-nav/recents/recents.component';
     MaterialModule,
   ],
   declarations: [
-    MainNavComponent,
-    RecentsComponent
+    MainNavComponent
   ],
   exports: [
     MainNavComponent

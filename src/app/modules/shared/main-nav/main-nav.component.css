@@ -53,18 +53,3 @@
     height: calc(100vh - 56px);
   }
 }
-
-.totalwidth{
-  display: flex;
-}
-
-.routerpart{
-  width:70%;
-}
-
-.recentpart{
-  width:30%;
-  border-left: 5px solid black;
-  height:100vh;
-  overflow-y: scroll;
-}

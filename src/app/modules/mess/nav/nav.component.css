@@ -1,0 +1,76 @@
+.container{
+    display: flex;
+    flex-direction: row ;
+    height: 100vh;
+}
+.main{
+    width: 70%;
+    height: 100%;
+}
+
+.recents{
+    width: 30%;
+    height: 100%;
+    border: 2px solid black;
+}
+
+.settings {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: rgba(0,0,0,0.6);
+    font-size: 12px;
+}
+
+.mat-accordion {
+    width: 90%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+:host >>> .mat-expansion-panel-body {
+    font-size: 13px;
+}
+
+.mat-expansion-panel-spacing {
+    margin: 2px 0;
+}
+
+.mat-expansion-panel-header-description {
+    flex-grow: 0;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.mat-expansion-panel-header-title {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+    margin-bottom: -12px;
+}
+
+.unread {
+    margin: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+img{
+    width:120px;
+    height:150px;
+
+}
+
+.tokenlist {
+    display: flex;
+}
+
+.space {
+    width: 70px;
+}
+
+.leftpad{
+    padding-left: 18px;
+}
