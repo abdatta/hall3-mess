@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { QRBookComponent } from '@mess/qr-book/qr-book.component';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
+import { BookComponent } from '@mess/book/book.component';
 
 @Component({
   selector: 'app-mess-login',
@@ -17,14 +18,19 @@ export class MessLoginComponent implements OnInit {
   scanner: ZXingScannerComponent;
 
   submitting: boolean;
-  qrbooking: boolean;
+  dialog_open: boolean;
 
   constructor(private authService: AuthService,
-              private router: Router,
-              private qrbook: MatDialog,
+              private dialog: MatDialog,
               public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.authService.check().then(user => {
+      if (user) {
+        this.authService.logout();
+      }
+    });
+
     this.scanner.camerasFound.subscribe((devices: MediaDeviceInfo[]) => {
       if (devices.length > 0) {
         this.scanner.changeDevice(devices[0]);
@@ -34,13 +40,26 @@ export class MessLoginComponent implements OnInit {
     });
   }
 
-  logIn(rollno: string, password: string) {
+  logIn(roll, pass) {
+    const rollno = roll.value;
+    const password = pass.value;
+
     if (rollno && password) {
       this.submitting = true;
       this.authService.logIn(rollno, password)
         .subscribe((s: number) => {
           if (s === 200) {
-            this.router.navigateByUrl('/mess/book');
+            roll.value = pass.value = '';
+            this.dialog_open = true;
+
+            const dialogRef = this.dialog.open(BookComponent, {
+              disableClose: true,
+              width: '95%',
+              maxWidth: '720px'
+            });
+            dialogRef.afterClosed()
+                .subscribe(_ => this.dialog_open = false);
+
           } else if (s === 401) {
             this.snackBar.open('Incorrect Username or Password');
           } else {
@@ -55,15 +74,16 @@ export class MessLoginComponent implements OnInit {
   }
 
   handleQRdata(data: string) {
-    if (this.qrbooking) {
-      return ;
+    if (this.dialog_open) {
+      return;
     }
-    this.qrbooking = true;
-    const dialogRef = this.qrbook.open(QRBookComponent, {
+    this.dialog_open = true;
+    const dialogRef = this.dialog.open(QRBookComponent, {
       width: '500px',
       data: data
     });
-    dialogRef.afterClosed().subscribe(_ => this.qrbooking = false);
+    dialogRef.afterClosed()
+        .subscribe(_ => this.dialog_open = false);
   }
 
 }

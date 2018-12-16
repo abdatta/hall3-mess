@@ -5,15 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { NavComponent } from '@mess/nav/nav.component';
 import { ChangemanagerpasswordComponent } from '@mess/changemanagerpassword/changemanagerpassword.component';
 import { NonvegbookingsComponent } from '@mess/nonvegbookings/nonvegbookings.component';
-import { BookComponent } from '@mess/book/book.component';
 import { MessLoginComponent } from './mess-login/mess-login.component';
-
-// Guards
-import { AuthGuard, UnAuthGuard } from '@app/guards';
 
 const navs = [
   { title: 'Notifications', url: '/mess/login', icon: 'notifications', badge: 3 },
-  { title: 'Book', url: '/mess/book', icon: 'border_color' }
+  { title: 'Book', url: '/mess/login', icon: 'border_color' }
 ];
 
 const messRoutes: Routes = [
@@ -23,8 +19,7 @@ const messRoutes: Routes = [
         data: { role: 'mess', navs: navs },
         children : [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
-            { path: 'login', component: MessLoginComponent, canActivate: [UnAuthGuard] },
-            { path: 'book', component: BookComponent, canActivate: [AuthGuard] },
+            { path: 'login', component: MessLoginComponent },
             { path: 'changepassword', component: ChangemanagerpasswordComponent },
             { path: 'nonvegbookings', component: NonvegbookingsComponent },
         ]

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DishesService, TokensService, AuthService } from '@app/services';
 import { DishModel } from '@app/models';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialogRef } from '@angular/material';
 import * as moment from 'moment';
 
 @Component({
@@ -19,6 +19,7 @@ export class BookComponent implements OnInit {
 
   constructor(private router: Router,
               private snackBar: MatSnackBar,
+              private dialogRef: MatDialogRef<BookComponent>,
               private dishesService: DishesService,
               private tokensService: TokensService,
               private authService: AuthService) { }
@@ -47,6 +48,7 @@ export class BookComponent implements OnInit {
           this.snackBar.open('Dishes booked successfully');
           this.router.navigateByUrl('/mess/login');
           this.submitting = false;
+          this.dialogRef.close();
         },
         error => {
           if (error === 400) {
@@ -66,6 +68,7 @@ export class BookComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.dialogRef.close();
     this.snackBar.open('No dishes booked');
   }
 }

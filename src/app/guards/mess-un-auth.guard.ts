@@ -15,8 +15,7 @@ export class MessUnAuthGuard implements CanActivate {
     return this.authService.checkMess()
       .then((result: boolean) => {
         if (result) {
-          this.authService.check().then(user =>
-            this.router.navigateByUrl(user ? '/mess/book' : '/mess/login'));
+          this.router.navigateByUrl('/mess/login');
         }
         return !result;
       });

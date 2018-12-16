@@ -32,6 +32,6 @@ import { QRBookComponent } from '@mess/qr-book/qr-book.component';
     MessLoginComponent,
     QRBookComponent
   ],
-  entryComponents: [QRBookComponent]
+  entryComponents: [QRBookComponent, BookComponent]
 })
 export class MessModule { }

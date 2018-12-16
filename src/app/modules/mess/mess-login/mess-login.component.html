@@ -24,11 +24,11 @@
                    type="password"
                    (keyup.enter)="pass.focus()"
                    autocomplete="off"
-                   (keyup.enter)="pass.blur(); !submitting && logIn(roll.value, pass.value);" >
+                   (keyup.enter)="pass.blur(); !submitting && logIn(roll, pass);" >
           </mat-form-field>
         </div>
         <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
-        <button mat-raised-button *ngIf="!submitting" color="primary" type="button" (click)="logIn(roll.value, pass.value)">
+        <button mat-raised-button *ngIf="!submitting" color="primary" type="button" (click)="logIn(roll, pass)">
           <b>Login</b>
         </button>
         <br>

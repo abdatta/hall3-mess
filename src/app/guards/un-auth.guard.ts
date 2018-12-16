@@ -16,7 +16,7 @@ export class UnAuthGuard implements CanActivate {
       .then((user: boolean) => {
         if (user) {
           this.authService.checkMess().then(mess => {
-            this.router.navigateByUrl(mess ? user ? '/mess/book' : '/mess/login' : '/home');
+            this.router.navigateByUrl(mess ? '/mess' : '/home');
           });
         }
         return !user;

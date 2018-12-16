@@ -29,10 +29,10 @@ export class QRBookComponent implements OnInit {
     this.loading = true;
     this.dishesService.getSomedaysDishes(moment().format('dddd'))
         .subscribe(dishes => {
-          const data_ids = data.map(d => d.slice(0, 2));
+          const data_ids = data.map(d => d.slice(0, 2)); console.log(data_ids);
           const data_qty = data.map(d => +d.slice(2));
 
-          this.dishes = dishes.filter(dish => {
+          this.dishes = dishes.filter(dish => {console.log(dish.name, dish.short_id);
             if (data_ids.includes(dish.short_id)) {
               dish.quantity = data_qty[data_ids.indexOf(dish.short_id)];
               return true;
