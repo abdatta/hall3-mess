@@ -1,22 +1,28 @@
-<div class="container">
+<div class="mastercontainer">
     <div class="main">
         <app-main-nav></app-main-nav>
     </div>
+    <mat-divider [vertical]="true"></mat-divider>
     <div class="recents">
         <mat-toolbar color="primary" class="mat-elevation-z3"></mat-toolbar>
         <div class="container">
+            <h2>Recents</h2>
                 <mat-accordion multi="true">
                     <mat-expansion-panel *ngFor="let person of loginactivity" [expanded]="person.detail.rollno === loginactivity[0].detail.rollno">
                       <mat-expansion-panel-header>
                         <mat-panel-title><span class="space">{{ person.detail.rollno }}</span> {{ person.detail.name }}</mat-panel-title>
                         <mat-panel-description>{{ person.time }}</mat-panel-description>
                       </mat-expansion-panel-header>
+                      <mat-divider></mat-divider>
+                      <mat-card class="inside">
                       <div class="tokenlist">
                         <img src="http://localhost:8000/api/account/photo/{{ person.detail.rollno }}.jpg">
+                        <mat-divider [vertical]="true" class="inner"></mat-divider>
                         <div class="leftpad">
-                            <div><span>Paneer Bhujia 1</span><br></div>    
+                            <span class="eighty">Paneer Bhujia</span><span class="twenty">1</span>  
                         </div>
                       </div>
+                      </mat-card>
                     </mat-expansion-panel>
                   </mat-accordion>
               </div>
