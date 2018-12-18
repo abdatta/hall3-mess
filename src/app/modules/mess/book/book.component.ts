@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DishesService, TokensService, AuthService } from '@app/services';
 import { DishModel } from '@app/models';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import * as moment from 'moment';
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.css']
 })
-export class BookComponent implements OnInit {
+export class BookComponent implements OnInit, OnDestroy {
 
   dishes: DishModel[];
   loading: boolean;
@@ -70,5 +70,9 @@ export class BookComponent implements OnInit {
     this.authService.logout();
     this.dialogRef.close();
     this.snackBar.open('No dishes booked');
+  }
+
+  ngOnDestroy() {
+    this.authService.logout();
   }
 }
