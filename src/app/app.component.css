@@ -1,0 +1,13 @@
+.updater {
+    color: white;
+    background: #323232;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+}
+
+span:nth-child(2) {
+    cursor: pointer;
+    color: #ff4081;
+}
