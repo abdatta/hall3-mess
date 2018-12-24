@@ -24,7 +24,11 @@ export class LoginComponent implements OnInit {
       this.authService.logIn(rollno, password)
         .subscribe((s: number) => {
           if (s === 200) {
-            this.router.navigateByUrl('/home');
+            if ( rollno === 'messmanager' || rollno === 'messsecy' || rollno === 'admin') {
+              this.router.navigateByUrl('/control');
+            } else {
+              this.router.navigateByUrl('/home');
+            }
           } else if (s === 401) {
             this.snackBar.open('Incorrect Username or Password');
           } else {
