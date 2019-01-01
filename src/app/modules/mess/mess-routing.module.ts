@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Components
 import { NavComponent } from '@mess/nav/nav.component';
-import { ChangemanagerpasswordComponent } from '@mess/changemanagerpassword/changemanagerpassword.component';
 import { NonvegbookingsComponent } from '@mess/nonvegbookings/nonvegbookings.component';
 import { MessLoginComponent } from './mess-login/mess-login.component';
 
@@ -20,7 +19,6 @@ const messRoutes: Routes = [
         children : [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
             { path: 'login', component: MessLoginComponent },
-            { path: 'changepassword', component: ChangemanagerpasswordComponent },
             { path: 'nonvegbookings', component: NonvegbookingsComponent },
         ]
     }

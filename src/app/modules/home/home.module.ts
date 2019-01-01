@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRouterModule } from '@home/home-routing.module';
 import { MaterialModule } from '@shared/material';
 import { MainNavModule } from '@shared/main-nav';
+import { ChangepasskeyModule } from '@shared/changepasskey';
 import { DishPickerModule } from '@shared/dish-picker';
 import { NgxKjuaModule } from 'ngx-kjua';
 
@@ -14,7 +15,6 @@ import { PrebookComponent } from '@home/prebook/prebook.component';
 import { ThisweekComponent } from '@home/thisweek/thisweek.component';
 import { HistoryComponent } from '@home/history/history.component';
 import { NotwellComponent } from '@home/notwell/notwell.component';
-import { ChangepasskeyComponent } from '@home/changepasskey/changepasskey.component';
 import { GuestroomComponent } from '@home/guestroom/guestroom.component';
 import { NotificationComponent } from '@home/notification/notification.component';
 import { QRDialogComponent } from './qr-dialog/qr-dialog.component';
@@ -27,7 +27,8 @@ import { QRDialogComponent } from './qr-dialog/qr-dialog.component';
     MaterialModule,
     MainNavModule,
     NgxKjuaModule,
-    DishPickerModule
+    DishPickerModule,
+    ChangepasskeyModule
   ],
   declarations: [
     NavComponent,
@@ -36,7 +37,6 @@ import { QRDialogComponent } from './qr-dialog/qr-dialog.component';
     ThisweekComponent,
     HistoryComponent,
     NotwellComponent,
-    ChangepasskeyComponent,
     GuestroomComponent,
     NotificationComponent,
     QRDialogComponent

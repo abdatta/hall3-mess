@@ -8,9 +8,9 @@ import { PrebookComponent } from '@home/prebook/prebook.component';
 import { ThisweekComponent } from '@home/thisweek/thisweek.component';
 import { HistoryComponent } from '@home/history/history.component';
 import { NotwellComponent } from '@home/notwell/notwell.component';
-import { ChangepasskeyComponent } from '@home/changepasskey/changepasskey.component';
 import { GuestroomComponent } from '@home/guestroom/guestroom.component';
 import { NotificationComponent } from '@home/notification/notification.component';
+import { ChangepasskeyComponent } from '@shared/changepasskey/changepasskey.component';
 
 const navs = [
   { title: 'Notifications', url: '/home/notifications', icon: 'notifications', badge: 3 },

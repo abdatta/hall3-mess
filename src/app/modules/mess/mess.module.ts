@@ -8,7 +8,6 @@ import { DishPickerModule } from '@shared/dish-picker';
 
 // Components
 import { NavComponent } from '@mess/nav/nav.component';
-import { ChangemanagerpasswordComponent } from '@mess/changemanagerpassword/changemanagerpassword.component';
 import { NonvegbookingsComponent } from '@mess/nonvegbookings/nonvegbookings.component';
 import { BookComponent } from '@mess/book/book.component';
 import { MessLoginComponent } from '@mess/mess-login/mess-login.component';
@@ -25,7 +24,6 @@ import { QRBookComponent } from '@mess/qr-book/qr-book.component';
   ],
   declarations: [
     NavComponent,
-    ChangemanagerpasswordComponent,
     NonvegbookingsComponent,
     NavComponent,
     BookComponent,

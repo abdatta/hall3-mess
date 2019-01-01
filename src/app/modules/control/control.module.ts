@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ControlRouterModule } from '@control/control-routing.module';
 import { MaterialModule } from '@shared/material';
 import { MainNavModule } from '@shared/main-nav';
+import { ChangepasskeyModule } from '@shared/changepasskey';
 
 // Components
 import { NavComponent } from '@control/nav/nav.component';
 import { NotifyComponent } from '@control/notify/notify.component';
-import { ChangemesssecypasswordComponent } from '@control/changemesssecypassword/changemesssecypassword.component';
 import { EdititemComponent } from '@control/edititem/edititem.component';
 import { MakebillsComponent } from '@control/makebills/makebills.component';
 
@@ -16,12 +16,12 @@ import { MakebillsComponent } from '@control/makebills/makebills.component';
     CommonModule,
     ControlRouterModule,
     MaterialModule,
-    MainNavModule
+    MainNavModule,
+    ChangepasskeyModule
   ],
   declarations: [
     NavComponent,
     NotifyComponent,
-    ChangemesssecypasswordComponent,
     EdititemComponent,
     MakebillsComponent
   ]

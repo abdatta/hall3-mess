@@ -14,6 +14,7 @@ import { AppRoutingModule } from '@app/app-routing.module';
 // App Modules
 import { MaterialModule } from '@shared/material';
 import { MainNavModule } from '@shared/main-nav';
+import { ChangepasskeyModule } from '@shared/changepasskey';
 
 // App Services
 import {
@@ -56,7 +57,8 @@ import { PWAPromptComponent } from './components/pwa-prompt/pwa-prompt.component
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     LayoutModule,
     MaterialModule,
-    MainNavModule
+    MainNavModule,
+    ChangepasskeyModule
   ],
   providers: [
     AuthService,
