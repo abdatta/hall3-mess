@@ -7,7 +7,8 @@
     "build": "tsc && copyfiles package.json package-lock.json ../mess-build && cd ../mess-build && npm install --production",
     "start": "nodemon",
     "tsc": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "keys": "web-push generate-vapid-keys --json"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "passport-local": "^1.0.0",
     "request": "^2.88.0",
     "typescript": "^3.0.3",
+    "web-push": "^3.3.3",
     "winston": "^3.0.0"
   },
   "devDependencies": {
@@ -36,6 +38,7 @@
     "@types/passport": "^0.4.6",
     "@types/passport-local": "^1.0.33",
     "@types/request": "^2.48.1",
+    "@types/web-push": "^3.3.0",
     "copyfiles": "^2.1.0",
     "nodemon": "^1.18.4",
     "ts-node": "^7.0.1"

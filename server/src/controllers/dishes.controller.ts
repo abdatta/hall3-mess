@@ -49,7 +49,7 @@ export class DishesCtrl {
                     }
                 });
             }
-        })
+        });
 
     }
 
@@ -155,11 +155,11 @@ export class DishesCtrl {
             } else {
                 dishes.forEach(dish => {
                     if (!dish.short_id) {
-                        this.getUniqueShortId((err, short_id) => {
-                            if(err || !short_id) {
-                                console.log('Error: ', err);
+                        this.getUniqueShortId((error, short_id) => {
+                            if (error || !short_id) {
+                                console.log('Error: ', error);
                             } else {
-                                console.log('Generated short_id: '+short_id);
+                                console.log('Generated short_id: ' + short_id);
                                 dish.short_id = short_id;
                                 dish.save();
                             }

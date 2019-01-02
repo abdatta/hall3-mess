@@ -5,6 +5,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { UserModel } from '@app/models';
+import { NotificationsService } from '@app/services/notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService {
   private isInMess: Promise<boolean>;
 
   constructor(private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private notificationsService: NotificationsService) {
     const authStatus = this.http.get<{user: UserModel, mess: boolean}>('/api/account/auth')
                            .pipe(catchError((err: any, caught) => of(null))).toPromise();
     this.currentUser = authStatus.then(auth => auth.user);
@@ -33,6 +35,7 @@ export class AuthService {
       .pipe(
         map((response: UserModel) => {
           this.currentUser = Promise.resolve(response);
+          this.isInMess.then(mess => mess ? null : this.notificationsService.subscribeToNotifications());
           return 200;
         }),
         catchError(this.handleError)
