@@ -1,9 +1,7 @@
 import { Router } from 'express';
-import { Model } from 'mongoose';
 import { PassportStatic } from 'passport';
 
 import { AccountCtrl } from '../controllers/accounts.controller';
-import { UserModel } from '../models/user.model';
 
 /**
  * For authentication purposes
@@ -20,9 +18,7 @@ export class AccountsRoute {
      * @return {Router} the router for this route
      * @static
      */
-    public static create(userModel: Model<UserModel>, passport: PassportStatic): Router {
-
-        const accountCtrl: AccountCtrl = new AccountCtrl(userModel);
+    public static create(accountCtrl: AccountCtrl, passport: PassportStatic): Router {
 
         const router: Router = Router();
 

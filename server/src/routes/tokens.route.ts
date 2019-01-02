@@ -23,11 +23,7 @@ export class TokensRoute {
      * @return {Router} the router for this route
      * @static
      */
-    public static create(tokenModel: Model<TokenModel>,
-        dishModel: Model<DishModel>, userModel: Model<UserModel>): Router {
-
-        const accountCtrl: AccountCtrl = new AccountCtrl(userModel);
-        const tokenCtrl: TokensCtrl = new TokensCtrl(tokenModel, dishModel, userModel);
+    public static create(tokenCtrl: TokensCtrl, accountCtrl: AccountCtrl): Router {
 
         const router: Router = Router();
 

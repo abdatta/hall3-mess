@@ -12,16 +12,25 @@ import passport from 'passport';
 import { AccountsRoute } from './routes/accounts.route';
 import { DishesRoute } from './routes/dishes.route';
 import { TokensRoute } from './routes/tokens.route';
+import { NotificationsRoute } from './routes/notifications.route';
+
+// Controllers
+import { AccountCtrl } from './controllers/accounts.controller';
+import { DishesCtrl } from './controllers/dishes.controller';
+import { TokensCtrl } from './controllers/tokens.controller';
+import { NotificationsCtrl } from './controllers/notifications.controller';
 
 // Models
 import { UserModel } from './models/user.model';
 import { DishModel } from './models/dish.model';
 import { TokenModel } from './models/token.model';
+import { SubscriptionModel } from './models/subscription.model';
 
 // Schema
 import { UserSchema } from './schemas/user.schema';
 import { DishSchema } from './schemas/dish.schema';
 import { TokenSchema } from './schemas/token.schema';
+import { SubscriptionSchema } from './schemas/subscription.schema';
 
 // Config
 import { LocalConfig } from './config/local.config';
@@ -40,9 +49,17 @@ export class Server {
   // The mongoose Connection
   private connection!: mongoose.Connection;
 
+  // Global instances of models for dependency injection
   private userModel!: mongoose.Model<UserModel>; // an instance of UserModel
   private dishModel!: mongoose.Model<DishModel>; // an instance of DishModel
   private tokenModel!: mongoose.Model<TokenModel>; // an instance of TokenModel
+  private subscriptionModel!: mongoose.Model<SubscriptionModel>; // an instance of SubscriptionModel
+
+  // Global instances of controllers for dependency injection
+  private accountCtrl!: AccountCtrl; // an instance of AccountCtrl
+  private dishesCtrl!: DishesCtrl; // an instance of DishesCtrl
+  private tokensCtrl!: TokensCtrl; // an instance of TokensCtrl
+  private notificationCtrl!: NotificationsCtrl; // an instance of NotificationCtrl
 
   /**
    * Bootstrap the application
@@ -67,8 +84,10 @@ export class Server {
     // create expressjs application
     this.app = express();
 
-    // configure application
+    // configure application (the order of calls is very important)
     this.config();
+    this.models();
+    this.controllers();
     this.routes();
 
   }
@@ -86,8 +105,12 @@ export class Server {
     const dbport: string = process.env.MONGO_PORT_27017_TCP_PORT || '27017';
     const MONGODB_CONNECTION = `mongodb://${ dbaddr }:${ dbport }/${ LocalConfig.dbname }`;
 
-    httpLogger.token('date', (req: express.Request, res: express.Response) =>
-      moment().format('DD MMM\'YY HH:mm:ss'));
+    const getDate = () => moment().format('DD MMM\'YY HH:mm:ss');
+
+    const log = console.log;
+    console.log = (...args) => log(`[${getDate()}]`, ...args);
+
+    httpLogger.token('date', getDate);
 
     httpLogger.token('post', (req: express.Request, res: express.Response) => {
         if (req.method === 'POST') {
@@ -98,7 +121,7 @@ export class Server {
         }
     });
 
-    this.app.use(httpLogger(':method :url (:status) :post'));
+    this.app.use(httpLogger('[:date] :method :url (:status) :post'));
 
     // use json bodyparser
     this.app.use(bodyParser.json());
@@ -109,18 +132,12 @@ export class Server {
     }));
 
     // connect to mongoose
-
     require('mongoose').Promise = global.Promise;
 
     mongoose.set('useNewUrlParser', true);
     mongoose.set('useCreateIndex', true);
     const connection: mongoose.Connection = mongoose.createConnection(MONGODB_CONNECTION);
     this.connection = connection;
-
-    // create models
-    this.userModel = connection.model<UserModel>('User', UserSchema);
-    this.dishModel = connection.model<DishModel>('Dish', DishSchema);
-    this.tokenModel = connection.model<TokenModel>('Token', TokenSchema);
 
     // create MongoStore
     const MongoStore = connectMongo(session);
@@ -129,7 +146,7 @@ export class Server {
     const esession = session({
       secret: LocalConfig.session_secret,
       saveUninitialized: false,
-      resave: false,
+      resave: true,
       store: new MongoStore({
         mongooseConnection: connection
       }),
@@ -142,11 +159,38 @@ export class Server {
     // use session
     this.app.use(esession);
 
+  }
+
+  /**
+   * Create models
+   *
+   * @class Server
+   * @method models
+   */
+  public models = () => {
+    this.userModel = this.connection.model<UserModel>('User', UserSchema);
+    this.dishModel = this.connection.model<DishModel>('Dish', DishSchema);
+    this.tokenModel = this.connection.model<TokenModel>('Token', TokenSchema);
+    this.subscriptionModel = this.connection.model<SubscriptionModel>('Subscription', SubscriptionSchema);
+  }
+
+  /**
+   * Create controllers
+   *
+   * @class Server
+   * @method controllers
+   */
+  public controllers = () => {
     // Set up passport
     PassportConfig.setup(passport, this.userModel);
     this.app.use(passport.initialize());
     this.app.use(passport.session()); // persistent login sessions
 
+    // Set up controllers
+    this.accountCtrl = new AccountCtrl(this.userModel);
+    this.dishesCtrl = new DishesCtrl(this.dishModel);
+    this.tokensCtrl = new TokensCtrl(this.tokenModel, this.dishModel, this.userModel);
+    this.notificationCtrl = new NotificationsCtrl(this.subscriptionModel);
   }
 
   /**
@@ -158,9 +202,10 @@ export class Server {
   public routes = () => {
 
     // API Routes
-    this.app.use('/api/account', AccountsRoute.create(this.userModel, passport));
-    this.app.use('/api/dishes', DishesRoute.create(this.dishModel));
-    this.app.use('/api/tokens', TokensRoute.create(this.tokenModel, this.dishModel, this.userModel));
+    this.app.use('/api/account', AccountsRoute.create(this.accountCtrl, passport));
+    this.app.use('/api/notifications', NotificationsRoute.create(this.notificationCtrl, this.accountCtrl));
+    this.app.use('/api/dishes', DishesRoute.create(this.dishesCtrl));
+    this.app.use('/api/tokens', TokensRoute.create(this.tokensCtrl, this.accountCtrl));
 
     // Public Routes
     this.app.use('/', express.static(path.join(__dirname, '../public')));

@@ -1,8 +1,6 @@
 import { Router } from 'express';
-import { Model } from 'mongoose';
 
 import { DishesCtrl } from '../controllers/dishes.controller';
-import { DishModel } from '../models/dish.model';
 
 /**
  * For the various dishes in extras
@@ -19,9 +17,7 @@ export class DishesRoute {
      * @return {Router} the router for this route
      * @static
      */
-    public static create(dishModel: Model<DishModel>): Router {
-
-        const dishesCtrl: DishesCtrl = new DishesCtrl(dishModel);
+    public static create(dishesCtrl: DishesCtrl): Router {
 
         const router: Router = Router();
 
