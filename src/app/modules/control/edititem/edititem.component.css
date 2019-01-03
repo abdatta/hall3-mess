@@ -1,0 +1,67 @@
+h2, h4 {
+    text-align: center;
+}
+
+.mat-progress-spinner {
+    margin-top: 60px;
+}
+
+:host >>> .mat-tab-body-wrapper {
+    height: 100%;
+}
+
+:host >>> .mat-tab-label-active {
+    opacity: 1;
+}
+
+:host >>> .mat-tab-label:focus:not(.mat-tab-label-active) {
+    opacity: 0.6;
+}
+
+.slots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.alignmt{
+    width: 90%;
+    max-width: 330px;
+    margin: 10px 20px 20px;
+}
+
+.mat-list .mat-list-item {
+    height: 60px;
+}
+
+.mat-list .mat-list-item .mat-line:nth-child(n+2) {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.mat-subheader {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.floatleft {
+    width: 220px;
+}
+
+.floatright {
+    width: 50px;
+}
+
+.eachitem {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.add {
+    text-align: center;
+}
+
+.flow {
+    display: flex;
+    justify-content: space-between;
+}

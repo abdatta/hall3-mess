@@ -1,3 +1,94 @@
-<p>
-  edititem works!
-</p>
+<mat-tab-group mat-stretch-tabs [(selectedIndex)]="active">
+    <mat-tab *ngFor="let day of days;" label="{{ day }}">
+        <div (swipeleft)="nextday()"
+             (swiperight)="prevday()"
+             [style.touch-action]="'pan-y'"
+             [style.user-select]="'text'">
+            <h2>{{ day }} Menu</h2>
+            <div class="slots" *ngIf="!menu[day]">
+                <mat-spinner></mat-spinner>
+            </div>
+            <div class="slots" *ngIf="menu[day]">
+                <mat-card class="alignmt" *ngFor="let slot of ['Breakfast', 'Lunch', 'Dinner']">
+                    <h4>{{ slot }}</h4>
+                    <mat-divider></mat-divider>
+                    <mat-list role="list">
+                        <mat-list-item class="eachitem" 
+                                       role="listitem"
+                                       *ngFor="let dish of menu[day][slot].notpre; let i=index;">
+                                <div class="floatleft">
+                                    <span mat-line *ngIf="!selected[i]">{{ dish.name }}</span>
+                                    <input mat-line type="text" value="{{ dish.name }}" *ngIf="selected[i]">
+                                    <span mat-line *ngIf="!selected[i]">Price: &#8377;{{ dish.price }} </span>
+                                    <div mat-line *ngIf="selected[i]">
+                                    <span matPrefix>Price: &#8377; &nbsp;</span>
+                                    <input type="text" style="width:50px;" value="{{ dish.price }}">
+                                    </div>
+                                </div>
+                                <div class="floatright"  *ngIf="!selected[i]">
+                                    <button mat-icon-button type="button" disabled>
+                                    </button>
+                                </div>
+                                <div class="floatright"  *ngIf="!selected[i]">
+                                    <button mat-icon-button
+                                            (click)="selected[i] = !selected[i];">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="floatright flow"  *ngIf="selected[i]">
+                                    <button mat-icon-button
+                                            (click)="selected[i] = !selected[i];">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                                    </button>
+                                    <button mat-icon-button
+                                            (click)="selected[i] = !selected[i];">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon>
+                                    </button>
+                                </div>
+                        </mat-list-item>
+                        <p class="add">
+                        <button mat-icon-button>
+                            Add<mat-icon aria-label="Example icon-button with a heart icon">add_circle</mat-icon>
+                        </button>
+                        </p>
+                        <mat-divider></mat-divider>
+                        <h3 mat-subheader>Prebooked</h3>
+                        <mat-list-item class="eachitem" 
+                                       role="listitem"
+                                       *ngFor="let dish of menu[day][slot].pre; let i=index;">
+                                <div class="floatleft">
+                                    <span mat-line>{{ dish.name }}</span>
+                                    <span mat-line>Price: &#8377;{{ dish.price }} </span>
+                                </div>
+                                <div class="floatright"  *ngIf="!selected[i]">
+                                    <button mat-icon-button type="button" disabled>
+                                    </button>
+                                </div>
+                                <div class="floatright"  *ngIf="!selected[i]">
+                                    <button mat-icon-button
+                                            (click)="selected[i] = !selected[i];">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="floatright flow"  *ngIf="selected[i]">
+                                    <button mat-icon-button
+                                            (click)="selected[i] = !selected[i];">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                                    </button>
+                                    <button mat-icon-button
+                                            (click)="selected[i] = !selected[i];">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon>
+                                    </button>
+                                </div>
+                        </mat-list-item>
+                        <p class="add">
+                          <button mat-icon-button>
+                              Add<mat-icon aria-label="Example icon-button with a heart icon">add_circle</mat-icon>
+                          </button>
+                        </p>
+                    </mat-list>
+                </mat-card>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

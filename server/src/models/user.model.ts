@@ -11,6 +11,7 @@ export interface UserModel extends Document {
     password: string;
     email: string;
     tokens: string[] | TokenModel[];
+    prebooked: string[];
     generateHash: (password: string) => string;
     validPassword: (password: string) => boolean;
 }

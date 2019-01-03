@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DishesService, TokensService } from '@app/services';
+import { DishModel } from '@app/models';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-edititem',
@@ -7,9 +10,57 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EdititemComponent implements OnInit {
 
-  constructor() { }
+  days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
+  active: number;
+  menu = {};
+  selected: boolean[];
+
+  constructor(private dishesService: DishesService, private tokensService: TokensService) { }
 
   ngOnInit() {
+    this.active = this.days.indexOf(moment().format('dddd'));
+    for (const day of this.days) {
+      this.dishesService.getSomedaysDishes(day)
+        .subscribe(dishes => {
+          this.selected = dishes.map(_ => false);
+          this.menu[day] = {
+            Breakfast: this.groupByPrebookable(this.filterSlot(dishes, 'Breakfast')),
+            Lunch: this.groupByPrebookable(this.filterSlot(dishes, 'Lunch')),
+            Dinner: this.groupByPrebookable(this.filterSlot(dishes, 'Dinner')),
+          };
+        });
+    }
+  }
+
+  filterSlot(dishes: DishModel[], slot: 'Breakfast' | 'Lunch' | 'Dinner') {
+    return dishes && dishes.filter(dish => dish.slot.includes(slot));
+  }
+
+  groupByPrebookable(dishes: DishModel[]) {
+    return {
+      pre: dishes.filter(dish => dish.prebookable),
+      notpre: dishes.filter(dish => !dish.prebookable)
+    };
+  }
+
+  nextday() {
+    if (this.active < 6) {
+      this.active++;
+    }
+  }
+
+  prevday() {
+    if (this.active > 0) {
+      this.active--;
+    }
   }
 
 }

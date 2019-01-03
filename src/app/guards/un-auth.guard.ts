@@ -16,11 +16,11 @@ export class UnAuthGuard implements CanActivate {
 
   canActivate(): Promise<boolean> {
     return this.authService.check()
-      .then((user: boolean) => {
+      .then(async (user: boolean) => {
         if (user) {
-            this.authService.checkMess().then(mess => {
-                this.router.navigateByUrl(mess ? '/mess' : '/home');
-          });
+          const admin = await this.authService.isAdmin();
+          const mess = await this.authService.checkMess();
+          this.router.navigateByUrl( admin ? '/control' : mess ? '/mess' : '/home' );
         }
         return !user;
       });

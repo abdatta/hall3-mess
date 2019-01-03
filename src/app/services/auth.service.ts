@@ -30,6 +30,9 @@ export class AuthService {
 
   check = (): Promise<boolean> => this.currentUser.then((user: UserModel) => user != null);
 
+  isAdmin = (): Promise<boolean> => this.currentUser.then((user: UserModel) =>
+                user.rollno === 'admin' || user.rollno === 'secy' || user.rollno === 'mess')
+
   logIn(roll: string, pass: string): Observable<number> {
     return this.http.post<UserModel>('/api/account/login', { rollno: roll, password: pass})
       .pipe(
