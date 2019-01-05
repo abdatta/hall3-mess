@@ -12,6 +12,7 @@ import { AddDishComponent } from '../add-dish/add-dish.component';
 })
 export class EditDishesComponent implements OnInit {
 
+  deleting = -1;
   loading = true;
   dishes: DishModel[];
   private backupDishes: DishModel[];
@@ -57,4 +58,24 @@ export class EditDishesComponent implements OnInit {
           }
         });
   }
+
+  showConfirmDelete(i: number) {
+    this.deleting = i;
+    setTimeout(() => this.hideConfirmDelete(i), 6000);
+  }
+
+  hideConfirmDelete(i: number) {
+    if (this.deleting === i) {
+      this.deleting = -1;
+    }
+  }
+
+  delete(i: number) {
+    this.dishesService.deleteDish(this.dishes[i])
+      .subscribe(dish => {
+        this.dishes.splice(i, 1);
+        this.snackbar.open('Dish deleted successfully');
+      });
+  }
+
 }

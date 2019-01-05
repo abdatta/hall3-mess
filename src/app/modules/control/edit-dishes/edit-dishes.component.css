@@ -35,6 +35,10 @@ button.mat-button.mat-primary {
     justify-content: space-between;
 }
 
+.mat-button[disabled][disabled] {
+    color: initial;
+}
+
 @media only screen and (min-width: 600px) {
    .abc{
         display: flex;
@@ -43,7 +47,7 @@ button.mat-button.mat-primary {
     
     .def{
         margin-top: 5px;
-    } 
+    }
 }
 
 @media only screen and (max-width: 600px) {
@@ -54,5 +58,9 @@ button.mat-button.mat-primary {
     
     .def{
         margin-top: 5px;
-    } 
+    }
+    
+    .long{
+        display: none;
+    }
 }

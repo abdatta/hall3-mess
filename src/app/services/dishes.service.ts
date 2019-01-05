@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { DishModel } from '@app/models/dish.model';
 
@@ -29,6 +29,11 @@ export class DishesService {
 
   addDish(dish: DishModel): Observable<DishModel> {
     return this.http.post<DishModel>('/api/dishes/add', dish)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteDish(dish: DishModel): Observable<number> {
+    return this.http.delete('/api/dishes/delete/' + dish._id, { responseType: 'text' })
       .pipe(catchError(this.handleError));
   }
 

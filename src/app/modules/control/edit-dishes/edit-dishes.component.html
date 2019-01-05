@@ -42,13 +42,24 @@
         <div class="abc def">
             <mat-checkbox [(ngModel)]="dish.prebookable">Prebookable</mat-checkbox>
         </div>
-        <mat-action-row>
-          <button mat-button class="left" color="accent" (click)="save(i)">Delete</button>
+
+        <mat-action-row *ngIf="deleting !== i ">
+          <button mat-button color="accent" (click)="showConfirmDelete(i)">Delete</button>
           <div>
-            <button mat-button class="left" (click)="save(i)">Discard</button>
+            <button mat-button (click)="discard(i)">Discard</button>
             <button mat-button color="primary" (click)="save(i)">Save</button>
           </div>
         </mat-action-row>
+
+        <mat-action-row *ngIf="deleting === i">
+          <button mat-button (click)="discard(i)" disabled>
+            <span>Sure</span><span class="long"> you want to delete this delicious dish</span>?</button>
+          <div>
+            <button mat-button color="warn" (click)="delete(i)">Yes</button>
+            <button mat-button color="primary" (click)="hideConfirmDelete(i)">No</button>
+          </div>
+        </mat-action-row>
+
       </mat-expansion-panel>
     </mat-accordion>
     <br><br>
