@@ -17,6 +17,16 @@ export class DishesService {
       .pipe(catchError(this.handleError));
   }
 
+  getAllDishes(): Observable<DishModel[]> {
+    return this.http.get<DishModel[]>('/api/dishes/all')
+      .pipe(catchError(this.handleError));
+  }
+
+  updateDish(dish: DishModel): Observable<DishModel> {
+    return this.http.put<DishModel>('/api/dishes/update/' + dish._id, dish)
+      .pipe(catchError(this.handleError));
+  }
+
   handleError(error: any): Observable<any> {
     return throwError(error.status || error.message || error);
   }

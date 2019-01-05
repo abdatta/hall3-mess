@@ -23,6 +23,7 @@ export class DishesRoute {
 
         router
             .get('/:day((mon|tues|wednes|thurs|fri|satur|sun)day)', dishesCtrl.getSomedaysDishes)
+            .get('/all', dishesCtrl.getAllDishes)
             .post('/add', dishesCtrl.addDish)
             .put('/update/:id', dishesCtrl.updateDish)
             .delete('/delete/:id', dishesCtrl.deleteDish);

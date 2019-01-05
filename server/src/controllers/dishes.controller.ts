@@ -65,6 +65,23 @@ export class DishesCtrl {
     }
 
     /**
+     * Get list of all dishes
+     *
+     * @class DishesCtrl
+     * @method getAllDishes
+     */
+    public getAllDishes = (req: Request, res: Response) => {
+        this.dishModel.find({}, '-__v',
+          (err: Error, dishes: DishModel[]) => {
+            if (err) {
+                this.internalServer(res, err);
+            } else {
+                res.status(200).json(dishes);
+            }
+          });
+    }
+
+    /**
      * Update details of a dish in database
      *
      * @class DishesCtrl

@@ -3,6 +3,7 @@ export interface DishModel {
     short_id: string;
     name: string;
     price: number;
+    days?: ('Sun' | 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat')[];
     slot?: ('Breakfast' | 'Lunch' | 'Dinner')[];
     prebookable?: boolean;
     quantity?: number;
