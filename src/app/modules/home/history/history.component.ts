@@ -18,6 +18,7 @@ export class HistoryComponent implements OnInit {
   init_id: string;
   loading: boolean;
   tab = 0;
+  newbie = false;
 
   constructor(private tokensService: TokensService,
               private snackBar: MatSnackBar,
@@ -28,6 +29,10 @@ export class HistoryComponent implements OnInit {
 
     this.tokensService.getTokens()
       .subscribe(tokens => {
+        // If no token is found
+        if (tokens.length === 0) {
+        this.newbie = true;
+        }
         // sort tokens by date and time
         tokens = tokens.sort((t1, t2) =>
                         t2.date.localeCompare(t1.date));

@@ -3,7 +3,10 @@
 <!--<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tab">
     <mat-tab label="Daily History">-->
       <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
-      <mat-accordion *ngIf="!loading">
+      <div class="centr" *ngIf="newbie">
+        No History to show
+      </div>
+      <mat-accordion *ngIf="!loading || !newbie">
         <div></div> <!-- so that margin-top of first element is not set to 0 -->
         <div *ngFor="let date of dates">
           <div class="date">{{ date }}</div>
