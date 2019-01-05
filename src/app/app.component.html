@@ -1,5 +1,5 @@
 <div *ngIf="update" class="updater">
     <span>UPDATE AVAILABLE</span>
-    <span onclick="document.location.reload()">⭮ REFRESH</span>
+    <span>RELOADING <span *ngIf="updatingIn">IN {{ updatingIn }}</span></span>
 </div>
 <router-outlet></router-outlet>

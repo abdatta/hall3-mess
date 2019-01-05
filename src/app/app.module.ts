@@ -8,6 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 import { AppRoutingModule } from '@app/app-routing.module';
 
 // App Modules
@@ -32,6 +33,7 @@ import {
 } from '@app/components';
 
 import { SettingsComponent } from '@app/components/settings/settings.component';
+import { PWAPromptComponent } from './components/pwa-prompt/pwa-prompt.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { SettingsComponent } from '@app/components/settings/settings.component';
     ForgotkeyComponent,
     MessComponent,
     SettingsComponent,
-    ControlComponent
+    ControlComponent,
+    PWAPromptComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import { SettingsComponent } from '@app/components/settings/settings.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    DeviceDetectorModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     LayoutModule,
     MaterialModule,
@@ -59,7 +63,7 @@ import { SettingsComponent } from '@app/components/settings/settings.component';
     DishesService,
     TokensService
   ],
-  entryComponents: [SettingsComponent],
+  entryComponents: [SettingsComponent, PWAPromptComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

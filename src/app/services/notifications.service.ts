@@ -10,7 +10,8 @@ import { map, catchError } from 'rxjs/operators';
 export class NotificationsService {
 
   constructor(private http: HttpClient,
-              private swPush: SwPush) { }
+              private swPush: SwPush) {
+  }
 
   getVapidKey(): Promise<string> {
     return this.http.get<{publicKey: string}>('/api/notifications/vapid')

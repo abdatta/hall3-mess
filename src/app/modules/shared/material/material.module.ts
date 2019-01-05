@@ -23,6 +23,7 @@ import {
   MatMenuModule,
   MatBadgeModule,
   MatDialogModule,
+  MatBottomSheetModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS
 } from '@angular/material';
 
@@ -50,7 +51,8 @@ import {
     MatGridListModule,
     MatMenuModule,
     MatBadgeModule,
-    MatDialogModule
+    MatDialogModule,
+    MatBottomSheetModule
   ],
   declarations: [],
   exports: [

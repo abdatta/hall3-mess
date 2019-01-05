@@ -1,0 +1,9 @@
+.install-buttons {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row-reverse;
+}
+
+/deep/ .mat-raised-button.cdk-program-focused .mat-button-focus-overlay {
+    opacity: 0;
+}
