@@ -12,6 +12,7 @@ import { NavComponent } from '@control/nav/nav.component';
 import { NotifyComponent } from '@control/notify/notify.component';
 import { MakebillsComponent } from '@control/makebills/makebills.component';
 import { EditDishesComponent } from '@control/edit-dishes/edit-dishes.component';
+import { AddDishComponent } from './add-dish/add-dish.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,9 @@ import { EditDishesComponent } from '@control/edit-dishes/edit-dishes.component'
     NavComponent,
     NotifyComponent,
     MakebillsComponent,
-    EditDishesComponent
-  ]
+    EditDishesComponent,
+    AddDishComponent
+  ],
+  entryComponents: [AddDishComponent]
 })
 export class ControlModule { }

@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-.container > * {
+.disher {
     max-width: 600px;
     width: 90%;
 }
@@ -28,4 +28,8 @@
 
 h2{
     text-align: center;
+}
+
+button.mat-button.mat-primary {
+    margin-bottom: 10px;
 }

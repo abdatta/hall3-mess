@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DishesService } from '@app/services';
 import { DishModel } from '@app/models';
 import { MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { AddDishComponent } from '../add-dish/add-dish.component';
 
 @Component({
   selector: 'app-edit-dishes',
@@ -14,6 +16,7 @@ export class EditDishesComponent implements OnInit {
   private backupDishes: DishModel[];
 
   constructor(private dishesService: DishesService,
+              private dialog: MatDialog,
               private snackbar: MatSnackBar) {
 
   }
@@ -36,5 +39,19 @@ export class EditDishesComponent implements OnInit {
 
   discard(i: number) {
     this.dishes[i] = JSON.parse(JSON.stringify(this.backupDishes[i]));
+  }
+
+  add() {
+    const dialogRef = this.dialog.open(AddDishComponent, {
+      width: '500px',
+      disableClose: true
+    });
+    dialogRef.afterClosed()
+        .subscribe(dish => {
+          if (dish) {
+            this.dishes.push(dish);
+            this.backupDishes.push(dish);
+          }
+        });
   }
 }

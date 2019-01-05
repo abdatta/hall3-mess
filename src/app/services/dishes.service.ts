@@ -27,6 +27,11 @@ export class DishesService {
       .pipe(catchError(this.handleError));
   }
 
+  addDish(dish: DishModel): Observable<DishModel> {
+    return this.http.post<DishModel>('/api/dishes/add', dish)
+      .pipe(catchError(this.handleError));
+  }
+
   handleError(error: any): Observable<any> {
     return throwError(error.status || error.message || error);
   }

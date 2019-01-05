@@ -1,46 +1,48 @@
-<div><h2>Edit Dishes</h2>
-<mat-accordion class="example-headers-align container" multi="true">
-    <mat-expansion-panel *ngFor="let dish of dishes; let i=index" (closed)="discard(i)" hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ dish.name }}
-        </mat-panel-title>
-        <mat-panel-description>
-            Price: &#8377; {{ dish.price }}
-          <mat-icon>edit</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-  
-      <div class="abc">
-      <mat-form-field>
-        <input matInput placeholder="Dish Name" [(ngModel)]="dish.name">
-      </mat-form-field>
-  
-      <mat-form-field>
-        <input matInput type="number" min="1" placeholder="Price" [(ngModel)]="dish.price">
-      </mat-form-field>
-      </div>
+<div class="container">
+  <h2>Edit Dishes</h2>
+  <button mat-button color="primary" (click)="add()">Add Dish</button> 
+  <mat-accordion class="example-headers-align disher" multi="true">
+      <mat-expansion-panel *ngFor="let dish of dishes?.reverse(); let i=index" (closed)="discard(i)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ dish.name }}
+          </mat-panel-title>
+          <mat-panel-description>
+              Price: &#8377; {{ dish.price }}
+            <mat-icon>edit</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+    
+        <div class="abc">
+        <mat-form-field>
+          <input matInput placeholder="Dish Name" [(ngModel)]="dish.name">
+        </mat-form-field>
+    
+        <mat-form-field>
+          <input matInput type="number" min="1" placeholder="Price" [(ngModel)]="dish.price">
+        </mat-form-field>
+        </div>
 
-      <div class="abc">
-      <mat-form-field>
-          <mat-select placeholder="Slots" [(ngModel)]="dish.slot" multiple>
-            <mat-option *ngFor="let slot of ['Breakfast','Lunch','Dinner']" [value]="slot">{{slot}}</mat-option>
-          </mat-select>
-      </mat-form-field>
+        <div class="abc">
+        <mat-form-field>
+            <mat-select placeholder="Slots" [(ngModel)]="dish.slot" multiple>
+              <mat-option *ngFor="let slot of ['Breakfast','Lunch','Dinner']" [value]="slot">{{slot}}</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-      <mat-form-field>
-          <mat-select placeholder="Days" [(ngModel)]="dish.days" multiple>
-            <mat-option *ngFor="let day of ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']" [value]="day">{{day}}</mat-option>
-          </mat-select>
-      </mat-form-field>
-      </div>
+        <mat-form-field>
+            <mat-select placeholder="Days" [(ngModel)]="dish.days" multiple>
+              <mat-option *ngFor="let day of ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']" [value]="day">{{day}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
 
-      <div class="abc def">
-          <mat-checkbox [(ngModel)]="dish.prebookable">Prebookable</mat-checkbox>
-      </div>
-      <mat-action-row>
-        <button mat-button color="primary" (click)="save(i)">Save</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
+        <div class="abc def">
+            <mat-checkbox [(ngModel)]="dish.prebookable">Prebookable</mat-checkbox>
+        </div>
+        <mat-action-row>
+          <button mat-button color="primary" (click)="save(i)">Save</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
 </div>

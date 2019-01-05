@@ -1,0 +1,36 @@
+<div class="abc">
+  <h4>Add New Dish</h4>
+</div>
+<div class="abc">
+  <mat-form-field>
+    <input matInput placeholder="Dish Name" [(ngModel)]="dish.name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="number" min="1" placeholder="Price" [(ngModel)]="dish.price">
+  </mat-form-field>
+  </div>
+
+  <div class="abc">
+  <mat-form-field>
+      <mat-select placeholder="Slots" [(ngModel)]="dish.slot" multiple>
+        <mat-option *ngFor="let slot of ['Breakfast','Lunch','Dinner']" [value]="slot">{{slot}}</mat-option>
+      </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+      <mat-select placeholder="Days" [(ngModel)]="dish.days" multiple>
+        <mat-option *ngFor="let day of ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']" [value]="day">{{day}}</mat-option>
+      </mat-select>
+  </mat-form-field>
+  </div>
+
+  <div class="abc def">
+      <mat-checkbox [(ngModel)]="dish.prebookable">Prebookable</mat-checkbox>
+  </div>
+
+<br>
+<div class="abc def">
+  <button mat-raised-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="add()">Add</button>
+</div>
