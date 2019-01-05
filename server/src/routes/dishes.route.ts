@@ -25,7 +25,6 @@ export class DishesRoute {
             .get('/:day((mon|tues|wednes|thurs|fri|satur|sun)day)', dishesCtrl.getSomedaysDishes)
             .post('/add', dishesCtrl.addDish)
             .put('/update/:id', dishesCtrl.updateDish)
-            .get('/fill', dishesCtrl.fillMissingShortIds)
             .delete('/delete/:id', dishesCtrl.deleteDish);
 
         return router;

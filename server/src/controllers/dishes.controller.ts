@@ -24,7 +24,7 @@ export class DishesCtrl {
      * @class DishesCtrl
      * @method addDish
      */
-    public addDish = (req: Request, res: Response) => {
+    public addDish = async (req: Request, res: Response) => {
         const dish = new this.dishModel();
         dish.name = req.body.name;
         dish.days = req.body.days;
@@ -33,24 +33,17 @@ export class DishesCtrl {
         if (req.body.prebookable) {
             dish.prebookable = req.body.prebookable;
         }
-        this.getUniqueShortId((error, short_id) => {
-            if (error) {
-                this.internalServer(res, error);
-            } else if (!short_id) {
-                console.log('Couldn\'t save dish. short_id is undefined', error);
-                this.internalServer(res, { err: 'short_id is undefined'});
-            } else {
-                dish.short_id = short_id;
-                dish.save((err: Error, savedDish: DishModel) => {
-                    if (err) {
-                        this.internalServer(res, err);
-                    } else {
-                        res.status(200).json(savedDish);
-                    }
-                });
-            }
-        });
 
+        dish.short_id = await this.getUniqueShortId();
+
+        if (!dish.short_id) {
+            console.log('Couldn\'t save dish. short_id is undefined');
+            this.internalServer(res, { err: 'short_id is undefined'});
+        } else {
+            dish.save()
+                .then((savedDish: DishModel) => res.status(200).json(savedDish))
+                .catch((error: Error) => this.internalServer(res, error));
+        }
     }
 
     /**
@@ -132,43 +125,14 @@ export class DishesCtrl {
      * @class TokenssCtrl
      * @method getUniqueId
      */
-    private getUniqueShortId(cb: (err: Error | null,  short_id?: string) => void) {
+    private getUniqueShortId(): Promise<string> {
         // 16 <= short_id < 256 (in hex, 10 <= short_id < 100)
         const short_id = Math.floor((Math.random() * 15 + 1) * 16).toString(16);
-        // checking if duplicate
-        this.dishModel.findOne({ short_id: short_id }, (err: Error, dish: DishModel) => {
-            if (err) {
-                cb(err);
-            } else if (dish) {
-                this.getUniqueShortId(cb);
-            } else {
-                cb(null, short_id);
-            }
-        });
-    }
 
-    // TODO: Remove this controller later.
-    public fillMissingShortIds = (req: Request, res: Response) => {
-        this.dishModel.find({}, (err: Error, dishes: DishModel[]) => {
-            if (err) {
-                this.internalServer(res, err);
-            } else {
-                dishes.forEach(dish => {
-                    if (!dish.short_id) {
-                        this.getUniqueShortId((error, short_id) => {
-                            if (error || !short_id) {
-                                console.log('Error: ', error);
-                            } else {
-                                console.log('Generated short_id: ' + short_id);
-                                dish.short_id = short_id;
-                                dish.save();
-                            }
-                        });
-                    }
-                });
-                res.sendStatus(200);
-            }
-        });
+        // checking if duplicate
+        return this.dishModel
+                   .findOne({ short_id: short_id })
+                   .then(dish => dish ? this.getUniqueShortId() : short_id);
     }
 
     /**
