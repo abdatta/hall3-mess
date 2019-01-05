@@ -9,17 +9,10 @@
 }
 
 .disher {
+    display: flex;
+    flex-flow: column-reverse;
     max-width: 600px;
     width: 90%;
-}
-
-.abc{
-    display: flex;
-    justify-content: space-around;
-}
-
-.def{
-    margin-top: 5px;
 }
 
 .mat-expansion-panel {
@@ -32,4 +25,34 @@ h2{
 
 button.mat-button.mat-primary {
     margin-bottom: 10px;
+}
+
+.mat-action-row button.mat-button {
+    height: 37px;
+}
+
+.mat-action-row {
+    justify-content: space-between;
+}
+
+@media only screen and (min-width: 600px) {
+   .abc{
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    .def{
+        margin-top: 5px;
+    } 
+}
+
+@media only screen and (max-width: 600px) {
+   .abc{
+        display: flex;
+        flex-flow:column;
+    }
+    
+    .def{
+        margin-top: 5px;
+    } 
 }

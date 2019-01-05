@@ -9,10 +9,10 @@ import { MakebillsComponent } from '@control/makebills/makebills.component';
 import { ChangepasskeyComponent } from '@shared/changepasskey/changepasskey.component';
 
 const navs = [
-    { title: 'Notifications', url: '/control/notify', icon: 'notifications', badge: 3 },
-    { title: 'Notify People', url: '/control/notify', icon: 'notifications_active' },
+//  { title: 'Notifications', url: '/control/notify', icon: 'notifications', badge: 3 },
+//  { title: 'Notify People', url: '/control/notify', icon: 'notifications_active' },
     { title: 'Edit Dishes', url: '/control/edititem', icon: 'settings' },
-    { title: 'Make Bills', url: '/control/makebills', icon: 'account_balance_wallet' },
+//  { title: 'Make Bills', url: '/control/makebills', icon: 'account_balance_wallet' },
     { title: 'Change Password', url: '/control/changepassword', icon: 'vpn_key' }
   ];
 
@@ -22,11 +22,11 @@ const controlRoutes: Routes = [
         component: NavComponent,
         data: { role: 'secy', navs: navs },
         children : [
-            { path: '', redirectTo: 'notify', pathMatch: 'full' },
-            { path: 'notify', component: NotifyComponent},
+            { path: '', redirectTo: 'edititem', pathMatch: 'full' },
+//          { path: 'notify', component: NotifyComponent},
             { path: 'edititem', component: EditDishesComponent},
             { path: 'changepassword', component: ChangepasskeyComponent},
-            { path: 'makebills', component: MakebillsComponent},
+//          { path: 'makebills', component: MakebillsComponent},
         ]
     }
 ];

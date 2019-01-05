@@ -1,8 +1,10 @@
 <div class="container">
   <h2>Edit Dishes</h2>
-  <button mat-button color="primary" (click)="add()">Add Dish</button> 
-  <mat-accordion class="example-headers-align disher" multi="true">
-      <mat-expansion-panel *ngFor="let dish of dishes?.reverse(); let i=index" (closed)="discard(i)" hideToggle>
+  <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+  <button mat-button color="primary" (click)="add()" *ngIf="!loading">Add Dish</button> 
+  <mat-accordion class="example-headers-align disher" multi="true" *ngIf="!loading">
+      <mat-expansion-panel *ngFor="let dish of dishes; let i= index;" 
+                            (closed)="discard(i)" hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ dish.name }}
@@ -41,8 +43,13 @@
             <mat-checkbox [(ngModel)]="dish.prebookable">Prebookable</mat-checkbox>
         </div>
         <mat-action-row>
-          <button mat-button color="primary" (click)="save(i)">Save</button>
+          <button mat-button class="left" color="accent" (click)="save(i)">Delete</button>
+          <div>
+            <button mat-button class="left" (click)="save(i)">Discard</button>
+            <button mat-button color="primary" (click)="save(i)">Save</button>
+          </div>
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
+    <br><br>
 </div>

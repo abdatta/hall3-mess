@@ -12,6 +12,7 @@ import { AddDishComponent } from '../add-dish/add-dish.component';
 })
 export class EditDishesComponent implements OnInit {
 
+  loading = true;
   dishes: DishModel[];
   private backupDishes: DishModel[];
 
@@ -22,10 +23,12 @@ export class EditDishesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.dishesService.getAllDishes()
       .subscribe(dishes => {
         this.dishes = dishes;
         this.backupDishes = JSON.parse(JSON.stringify(dishes));
+        this.loading = false;
       });
   }
 
