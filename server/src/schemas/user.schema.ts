@@ -1,4 +1,4 @@
-import { Schema, HookNextFunction, SchemaType, SchemaTypes } from 'mongoose';
+import { Schema, HookNextFunction, SchemaTypes } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export let UserSchema: Schema = new Schema({
@@ -6,6 +6,8 @@ export let UserSchema: Schema = new Schema({
     rollno: {type: String, unique: true, required: true},
     password: {type: String, default: '', required: true},
     email: {type: String},
+    permissions: {type: [String], default: []},
+    verified: {type: Boolean, default: false},
     tokens: {type: [{type: SchemaTypes.ObjectId, ref: 'Token'}], default: []}
 });
 

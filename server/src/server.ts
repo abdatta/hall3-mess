@@ -7,6 +7,7 @@ import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
 import passport from 'passport';
+import dotenv from 'dotenv';
 
 // Routes
 import { AccountsRoute } from './routes/accounts.route';
@@ -35,6 +36,7 @@ import { SubscriptionSchema } from './schemas/subscription.schema';
 // Config
 import { LocalConfig } from './config/local.config';
 import { PassportConfig } from './config/passport.config';
+import { MailerConfig } from './config/mailer.config';
 
 /**
  * The server.
@@ -99,10 +101,12 @@ export class Server {
    * @method config
    */
   public config = (): void => {
+    // Load environment variables
+    dotenv.config();
 
     // MongoDB connection
-    const dbaddr: string = process.env.MONGO_PORT_27017_TCP_ADDR || 'localhost';
-    const dbport: string = process.env.MONGO_PORT_27017_TCP_PORT || '27017';
+    const dbaddr: string = process.env.MONGO_ADDR || 'localhost';
+    const dbport: string = process.env.MONGO_PORT || '27017';
     const MONGODB_CONNECTION = `mongodb://${ dbaddr }:${ dbport }/${ LocalConfig.dbname }`;
 
     const getDate = () => moment().format('DD MMM\'YY HH:mm:ss');
@@ -186,8 +190,11 @@ export class Server {
     this.app.use(passport.initialize());
     this.app.use(passport.session()); // persistent login sessions
 
+    // Set up mailer
+    const mailer = MailerConfig.setup();
+
     // Set up controllers
-    this.accountCtrl = new AccountCtrl(this.userModel);
+    this.accountCtrl = new AccountCtrl(this.userModel, passport, mailer);
     this.dishesCtrl = new DishesCtrl(this.dishModel);
     this.tokensCtrl = new TokensCtrl(this.tokenModel, this.dishModel, this.userModel);
     this.notificationCtrl = new NotificationsCtrl(this.subscriptionModel);
@@ -202,7 +209,7 @@ export class Server {
   public routes = () => {
 
     // API Routes
-    this.app.use('/api/account', AccountsRoute.create(this.accountCtrl, passport));
+    this.app.use('/api/account', AccountsRoute.create(this.accountCtrl));
     this.app.use('/api/notifications', NotificationsRoute.create(this.notificationCtrl, this.accountCtrl));
     this.app.use('/api/dishes', DishesRoute.create(this.dishesCtrl));
     this.app.use('/api/tokens', TokensRoute.create(this.tokensCtrl, this.accountCtrl));

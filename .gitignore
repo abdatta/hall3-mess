@@ -6,7 +6,8 @@
 /tmp
 /out-tsc
 
-# private files
+# environment files
+/server/.env
 /server/src/config/local.config.ts
 
 # dependencies

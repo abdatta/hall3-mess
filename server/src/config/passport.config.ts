@@ -29,50 +29,22 @@ export class PassportConfig {
       passReqToCallback: false
     };
 
-    // verify function for signup
-    const verifySignUp: VerifyFunction = (rollno: string, password: string, done) => {
-      process.nextTick(() => {
-        model.findOne({
-          'rollno': rollno
-        }, (err, user: UserModel) => {
-          if (err) {
-            return done(err);
-          }
-          if (user) {
-            return done(err, null);
-          } else {
-            const newUser = new model();
-            newUser.rollno = rollno;
-            newUser.password = newUser.generateHash(password);
-            // save the user
-            newUser.save((error) => {
-              return done(error, newUser);
-            });
-          }
-        });
-      });
-    };
-
     const verifySignIn: VerifyFunction = (rollno: string, password: string, done) => {
       process.nextTick(() => {
-        model.findOne({
-          'rollno': rollno
-        }, (err, user: UserModel) => {
-          if (err) {
-            return done(err);
-          }
-          if (!user) {
-            return done(null, null);
-          } else if (!user.validPassword(password)) {
-            return done(null, null);
-          } else {
-            return done(null, user);
-          }
-        });
+        model.findOne({ rollno: rollno })
+          .then((user: UserModel | null) => {
+              if (!user || !user.validPassword(password)) {
+                done(null, null,  { message: 'INCORRECT_ROLLNO_OR_PASSWORD' });
+              } else if (!user.verified) {
+                return done(null, null, { message: 'ACCOUNT_NOT_VERIFIED' });
+              } else {
+                return done(null, user);
+              }
+          })
+          .catch((error: any) => done(error));
       });
     };
 
-    passport.use('signup', new Strategy(options, verifySignUp));
     passport.use('signin', new Strategy(options, verifySignIn));
 
   }

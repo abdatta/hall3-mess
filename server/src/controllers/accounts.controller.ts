@@ -3,10 +3,10 @@ import { Model } from 'mongoose';
 import request from 'request';
 
 import { UserModel } from '../models/user.model';
+import { Mailer } from '../config/mailer.config';
+import { PassportStatic } from 'passport';
 
 export class AccountCtrl {
-
-    private userModel: Model<UserModel>;
 
     /**
      * Constructor
@@ -14,8 +14,9 @@ export class AccountCtrl {
      * @class AccountCtrl
      * @constructor
      */
-    constructor(model: Model<UserModel>) {
-        this.userModel = model;
+    constructor(private userModel: Model<UserModel>,
+                private passport: PassportStatic,
+                private mailer: Mailer) {
     }
 
     /**
@@ -48,16 +49,97 @@ export class AccountCtrl {
     }
 
     /**
+     * Login user into the session
+     *
+     * @class AccountCtrl
+     * @method logIn
+     */
+    public logIn = (req: Request, res: Response) => {
+        this.passport.authenticate('signin', (error, user, info) => {
+            if (error) {
+                this.internalServer(res, error);
+            } else if (!user) {
+                switch (info.message) {
+                    case 'INCORRECT_ROLLNO_OR_PASSWORD':
+                        res.sendStatus(401);
+                        break;
+                    case 'ACCOUNT_NOT_VERIFIED':
+                        res.sendStatus(403); // Forbidden as not verified
+                        break;
+                    default:
+                        res.sendStatus(404);
+                }
+            } else {
+                req.logIn(user, (err) => {
+                    if (err) {
+                        this.internalServer(res, err);
+                    }
+                    res.status(200).json(this.sanitize(user));
+                });
+            }
+          })(req, res);
+    }
+
+    /**
      * Check authentication status
      *
      * @class AccountCtrl
      * @method getAuthStatus
      */
-    public getAuthStatus = (req: Request, res: Response, next: NextFunction) => {
+    public getAuthStatus = (req: Request, res: Response) => {
         res.status(200).json({
             user: req.isAuthenticated() ? this.sanitize(req.user) : null,
             mess: req.session ? req.session.mess : null
         });
+    }
+
+    /**
+     * Create a account of a new user
+     *
+     * @class AccountCtrl
+     * @method createNewUser
+     */
+    public createNewUser = (req: Request, res: Response, next: NextFunction) => {
+        this.userModel.findOne({ 'rollno': req.body.rollno })
+            .then((user: UserModel | null) => {
+                if (user) {
+                    res.sendStatus(401);
+                    return;
+                }
+                const newUser = new this.userModel();
+                newUser.rollno = req.body.rollno;
+                newUser.password = newUser.generateHash(req.body.password);
+                // save the user
+                return newUser.save().then(() => next());
+            })
+            .catch((error) => this.internalServer(res, error));
+      }
+
+    /**
+     * Send account verification mail
+     *
+     * @class AccountCtrl
+     * @method sendVerificationMail
+     */
+    public sendVerificationMail = (req: Request, res: Response, next: NextFunction) => {
+        this.userModel.findOne({ rollno: req.body.rollno })
+            .then((user: UserModel | null) => {
+                if (!user) {
+                    res.sendStatus(404);  // Not found
+                    return;
+                }
+
+                const verifyLink = `${req.protocol}://${req.get('host')}/api/account/verify/${user._id}`;
+                const deregisterLink = `${req.protocol}://${req.get('host')}/api/account/delete_unverified/${user._id}`;
+
+                this.mailer.sendAccountVerficationLink(user.email, verifyLink, deregisterLink)
+                    .then((info) => next())
+                    .catch((error) => {
+                        user.remove();
+                        this.internalServer(res, error);
+                    });
+            })
+            .catch((error) => this.internalServer(res, error));
     }
 
     /**
@@ -68,7 +150,7 @@ export class AccountCtrl {
      */
     public updateUser = (req: Request, res: Response) => {
         this.userModel.findOne({
-            'rollno': req.user.rollno
+            'rollno': req.body.rollno
         }, (err: Error, user: UserModel) => {
             if (err) {
                 this.internalServer(res, err);
@@ -94,6 +176,42 @@ export class AccountCtrl {
     }
 
     /**
+     * Set user account as verified
+     *
+     * @class AccountCtrl
+     * @method verifyUser
+     */
+    public verifyUser = (req: Request, res: Response) => {
+        this.userModel.findByIdAndUpdate(req.params.id, { verified: true })
+                .then((user: UserModel | null) => {
+                    if (!user) {
+                        res.sendStatus(404); // Not found
+                        return;
+                    }
+                    res.sendStatus(200);
+                })
+                .catch((error) => this.internalServer(res, error));
+    }
+
+    /**
+     * Delete unverified user
+     *
+     * @class AccountCtrl
+     * @method deleteUnverifiedUser
+     */
+    public deleteUnverifiedUser  = (req: Request, res: Response) => {
+        this.userModel.findOneAndRemove({ id: req.params.id, verified: false })
+                .then((user: UserModel | null) => {
+                    if (!user) {
+                        res.sendStatus(404); // Not found
+                        return;
+                    }
+                    res.sendStatus(200);
+                })
+                .catch((error) => this.internalServer(res, error));
+    }
+
+    /**
      * Fetch photo of a user from IITK OA
      *
      * @class AccountCtrl
@@ -103,7 +221,6 @@ export class AccountCtrl {
         const url = `https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/${req.params.roll}_0.jpg`;
         request.get(url).on('error', () => res.sendStatus(404)).pipe(res);
     }
-
 
     /**
      * Logout user

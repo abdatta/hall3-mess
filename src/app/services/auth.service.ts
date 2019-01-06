@@ -49,7 +49,6 @@ export class AuthService {
     return this.http.post<UserModel>('/api/account/signup', { rollno: roll, password: pass })
       .pipe(
         map((response: UserModel) => {
-          this.currentUser = Promise.resolve(response);
           return 200;
         }),
         catchError(this.handleError)

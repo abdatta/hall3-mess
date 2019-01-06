@@ -10,8 +10,9 @@ export interface UserModel extends Document {
     rollno: string;
     password: string;
     email: string;
+    permissions: string[];
+    verified: boolean;
     tokens: string[] | TokenModel[];
-    prebooked: string[];
     generateHash: (password: string) => string;
     validPassword: (password: string) => boolean;
 }
