@@ -281,11 +281,25 @@ export class AccountCtrl {
      * @method messOut
      */
     public messOut = (req: Request, res: Response) => {
-        if (req.session) {
-            req.session.mess = undefined;
+        if (req.session === undefined) {
+            res.sendStatus(200);
+            return;
         }
-        req.logOut();
-        res.sendStatus(200);
+        this.userModel.findOne({
+            rollno: 'mess'
+        }, (err: Error, user: UserModel) => {
+            if (err) {
+                this.internalServer(res, err);
+            } else if (!user) {
+                res.sendStatus(404);  // Not Found
+            } else if (!user.validPassword(req.body.password)) {
+                res.sendStatus(401); // Wrong Password, unauthorised
+            } else {
+                (req.session as Express.Session).mess = undefined;
+                req.logOut();
+                res.sendStatus(200);
+            }
+        });
     }
 
     /**

@@ -1,0 +1,8 @@
+Please Enter Password :
+<mat-form-field>
+  <input matInput type="password" placeholder="Password" (keyup.enter)="logout(pass.value)" #pass>
+</mat-form-field>
+<div class="abc">
+  <button mat-raised-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="logout(pass.value)">Logout</button>
+</div>

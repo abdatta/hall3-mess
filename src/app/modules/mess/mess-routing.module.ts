@@ -7,8 +7,8 @@ import { NonvegbookingsComponent } from '@mess/nonvegbookings/nonvegbookings.com
 import { MessLoginComponent } from './mess-login/mess-login.component';
 
 const navs = [
-  { title: 'Notifications', url: '/mess/login', icon: 'notifications', badge: 3 },
-  { title: 'Book', url: '/mess/login', icon: 'border_color' }
+//  { title: 'Notifications', url: '/mess/login', icon: 'notifications', badge: 3 },
+    { title: 'Book', url: '/mess/login', icon: 'border_color' }
 ];
 
 const messRoutes: Routes = [
@@ -19,7 +19,7 @@ const messRoutes: Routes = [
         children : [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
             { path: 'login', component: MessLoginComponent },
-            { path: 'nonvegbookings', component: NonvegbookingsComponent },
+//          { path: 'nonvegbookings', component: NonvegbookingsComponent },
         ]
     }
 ];

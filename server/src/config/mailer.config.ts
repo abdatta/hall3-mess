@@ -8,8 +8,8 @@ export class MailerConfig {
             port: 465,
             secure: true, // use SSL
             auth: {
-                user: process.env.MAILER_AUTH || '',
-                pass: process.env.MAILER_PASS || ''
+                user: process.env.MAIL_AUTH || '',
+                pass: process.env.MAIL_PASS || ''
             }
         });
     }

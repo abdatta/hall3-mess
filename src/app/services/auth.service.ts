@@ -91,18 +91,16 @@ export class AuthService {
       );
   }
 
-  messOut(): void {
-    this.isInMess = Promise.resolve(false);
-    this.currentUser = Promise.resolve(null);
-
-    // To execute observable, it is converted to a promise
-    this.http.post('/api/account/messout', {})
+  messOut(pass: string): Promise<number> {
+    const messingOut = this.http.post('/api/account/messout', { password: pass })
       .pipe(
+        map((res) => 200),
         catchError(this.handleError)
-      )
-      .subscribe(_ => {
-        this.router.navigateByUrl('/mess');
-      });
+      ).toPromise();
+
+      this.isInMess = messingOut.then(res => res !== 200);
+      this.currentUser = messingOut.then(async res => res === 200 ? null : await this.currentUser);
+      return messingOut;
   }
 
   handleError(error: any): Observable<any> {
