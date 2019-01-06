@@ -8,20 +8,25 @@
         <div class="container">
             <h2>Recents</h2>
                 <mat-accordion multi="true">
-                    <mat-expansion-panel *ngFor="let person of loginactivity" [expanded]="person.detail.rollno === loginactivity[0].detail.rollno">
+                    <mat-expansion-panel *ngFor="let token of tokens; let i=index;" [expanded]="i === 0">
                       <mat-expansion-panel-header>
-                        <mat-panel-title><span class="space">{{ person.detail.rollno }}</span> {{ person.detail.name }}</mat-panel-title>
-                        <mat-panel-description>{{ person.time }}</mat-panel-description>
+                        <mat-panel-title><span class="space">{{ token.rollno }}</span></mat-panel-title>
+                        <mat-panel-description>{{ token.date }}</mat-panel-description>
                       </mat-expansion-panel-header>
                       <mat-divider></mat-divider>
                       <mat-card class="inside">
                       <div class="tokenlist">
-                        <img src="http://localhost:8000/api/account/photo/{{ person.detail.rollno }}.jpg">
+                        <img src="http://localhost:8000/api/account/photo/{{ token.rollno }}.jpg">
                         <mat-divider [vertical]="true" class="inner"></mat-divider>
-                        <div class="leftpad">
-                            <span class="eighty">Paneer Bhujia</span><span class="twenty">1</span>  
+
+                        <div class="recentside">
+                        <div class="leftpad" *ngFor="let dish of token.dishes">
+                            <span class="eighty">{{ dish.name }}(Rs.{{ dish.price }})</span>
+                            <span class="twenty">{{ dish.quantity}}</span>
                         </div>
                       </div>
+                      </div>
+
                       </mat-card>
                     </mat-expansion-panel>
                   </mat-accordion>

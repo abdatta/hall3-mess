@@ -15,7 +15,7 @@ export class TokensService {
               private authService: AuthService) { }
 
   getTokens(): Observable<TokenModel[]> {
-    return this.http.get<TokenModel[]>('/api/tokens')
+    return this.http.get<TokenModel[]>('/api/tokens/user')
       .pipe(catchError(this.handleError));
   }
 
@@ -32,6 +32,11 @@ export class TokensService {
         }),
         catchError(this.handleError)
       );
+  }
+
+  getLatestTokens(): Observable<TokenModel[]> {
+    return this.http.get<TokenModel[]>('/api/tokens')
+      .pipe(catchError(this.handleError));
   }
 
   handleError(error: any): Observable<any> {

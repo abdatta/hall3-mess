@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TokensService } from '@app/services';
+import { TokenModel } from '@app/models';
 
 @Component({
   selector: 'app-nav',
@@ -7,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
+  tokens: TokenModel[];
   rollno = 180161;
   loginactivity = [
     {
@@ -46,9 +49,11 @@ export class NavComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private tokenService: TokensService) { }
 
   ngOnInit() {
+    this.tokenService.getLatestTokens()
+            .subscribe(tokens => this.tokens = tokens);
   }
 
 }

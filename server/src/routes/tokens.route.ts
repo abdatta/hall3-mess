@@ -28,7 +28,8 @@ export class TokensRoute {
         const router: Router = Router();
 
         router
-            .get('/', accountCtrl.checkAuth, tokenCtrl.getTokens)
+            .get('/', accountCtrl.checkMessAuth, tokenCtrl.getLatestTokens)
+            .get('/user', accountCtrl.checkAuth, tokenCtrl.getUserTokens)
             .post('/book', accountCtrl.checkAuth, tokenCtrl.addToken);
 
         return router;

@@ -134,9 +134,9 @@ export class TokensCtrl {
      * Get list of user's tokens
      *
      * @class TokensCtrl
-     * @method getTokens
+     * @method getUserTokens
      */
-    public getTokens = (req: Request, res: Response) => {
+    public getUserTokens = (req: Request, res: Response) => {
         const rollno = req.user.rollno;
         this.userModel.findOne({ rollno: rollno }, 'tokens')
           .populate('tokens')
@@ -150,6 +150,16 @@ export class TokensCtrl {
           });
     }
 
+    public getLatestTokens = (req: Request,res: Response) => {
+        const maxtoken = 10;
+        const today = moment(moment().format('YYYY-MM-DD')).format();
+        this.tokenModel.find({date: { $gte: today } })
+            .sort('-date').limit(maxtoken)
+            .then((tokens: TokenModel[]) => {
+                res.status(200).json(tokens);
+            })
+            .catch((error) => this.internalServer(res, error));
+}
     /**
      * Create a random unique id for token
      *

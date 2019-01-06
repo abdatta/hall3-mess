@@ -117,3 +117,7 @@ mat-expansion-panel {
 }
 
 ::-webkit-scrollbar {display:none;}
+
+.recentside {
+    width: 100%;
+}
