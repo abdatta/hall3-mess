@@ -12,6 +12,7 @@ export interface UserModel extends Document {
     email: string;
     permissions: string[];
     verified: boolean;
+    resetPasswordCode?: string;
     tokens: string[] | TokenModel[];
     generateHash: (password: string) => string;
     validPassword: (password: string) => boolean;

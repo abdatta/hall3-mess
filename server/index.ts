@@ -1,3 +1,6 @@
+// Load environment variables
+require('dotenv').config();
+
 // module dependencies
 import { Server } from './src/server';
 import winston from 'winston';

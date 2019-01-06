@@ -7,7 +7,6 @@ import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
 import passport from 'passport';
-import dotenv from 'dotenv';
 
 // Routes
 import { AccountsRoute } from './routes/accounts.route';
@@ -101,9 +100,6 @@ export class Server {
    * @method config
    */
   public config = (): void => {
-    // Load environment variables
-    dotenv.config();
-
     // MongoDB connection
     const dbaddr: string = process.env.MONGO_ADDR || 'localhost';
     const dbport: string = process.env.MONGO_PORT || '27017';

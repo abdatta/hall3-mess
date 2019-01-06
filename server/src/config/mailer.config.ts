@@ -1,5 +1,8 @@
 import nodemailer from 'nodemailer';
 
+const SENDER = `"${ process.env.MAIL_SENDER }" <noreply@${ process.env.MAIL_HOST }>`;
+const BCC = process.env.MAIL_BCC || '';
+
 export class MailerConfig {
 
     public static setup() {
@@ -18,15 +21,9 @@ export class MailerConfig {
 
 export class Mailer {
 
-    private SENDER: string;
-    private BCC: string;
-
     private transporter: nodemailer.Transporter;
 
     constructor(config: MailConfig) {
-        this.SENDER = `"${ process.env.MAIL_SENDER }" <noreply@${ process.env.MAIL_HOST }>`;
-        this.BCC = process.env.MAIL_BCC || '';
-
         // create reusable transporter object using the default SMTP transport
         this.transporter = nodemailer.createTransport(config);
     }
@@ -47,8 +44,8 @@ export class Mailer {
     public sendAccountVerficationLink(to: string, verifyLink: string, deregisterLink: string): Promise<any> {
         const mailOptions: nodemailer.SendMailOptions = {
             to: to,
-            from: this.SENDER,
-            bcc: this.BCC,
+            from: SENDER,
+            bcc: BCC,
             subject: 'Account Verification Link',
             html: `<p>` +
                     `Thank you for signing up in the Mess Automation Portal, Hall 3. ` +
@@ -58,6 +55,24 @@ export class Mailer {
                   `<p>` +
                     `If you didn't signup, you can deregister your account using ` +
                     `<a href="${ deregisterLink }">this link</a>.` +
+                  `</p>`
+        };
+
+        return this.sendMail(mailOptions);
+    }
+
+    public sendResetPasswordLink(to: string, rollno: string, resetLink: string): Promise<any> {
+        const mailOptions: nodemailer.SendMailOptions = {
+            to: to,
+            from: SENDER,
+            bcc: BCC,
+            subject: 'Reset Password Link',
+            html: `<p>` +
+                    `The reset password link for your account with Roll No: ${ rollno } is given below:` +
+                  `</p>` +
+                  `<p><a href="${ resetLink }">${ resetLink }</a></p>` +
+                  `<p>` +
+                    `If you didn't request for reset password, kindly ignore this mail.` +
                   `</p>`
         };
 

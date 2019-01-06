@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import request from 'request';
 
 import { UserModel } from '../models/user.model';
@@ -209,6 +209,38 @@ export class AccountCtrl {
                     res.sendStatus(200);
                 })
                 .catch((error) => this.internalServer(res, error));
+    }
+
+    public sendResetPasswordCode = (req: Request, res: Response) => {
+        const resetCode = Types.ObjectId();
+        this.userModel.findOneAndUpdate({rollno: req.body.rollno}, { resetPasswordCode: resetCode })
+            .then((user: UserModel | null) => {
+                if (!user) {
+                    res.sendStatus(404); // Not found
+                    return;
+                }
+
+                const resetLink = `${req.protocol}://${req.get('host')}/reset_password/${user.rollno}/${resetCode}`;
+                this.mailer.sendResetPasswordLink(user.email, user.rollno, resetLink)
+                    .then((info) => res.sendStatus(200))
+                    .catch((error) => this.internalServer(res, error));
+            })
+            .catch((error) => this.internalServer(res, error));
+    }
+
+    public resetPassword = (req: Request, res: Response) => {
+        this.userModel.findOneAndUpdate(
+                { rollno: req.body.rollno, resetPasswordCode: req.body.reset_code },
+                { password: new this.userModel().generateHash(req.body.password), resetPasswordCode: undefined}
+            )
+            .then((user: UserModel | null) => {
+                if (!user) {
+                    res.sendStatus(401);
+                    return;
+                }
+                res.sendStatus(200);
+            })
+            .catch((error) => this.internalServer(res, error));
     }
 
     /**

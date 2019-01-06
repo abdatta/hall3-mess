@@ -8,6 +8,7 @@ export let UserSchema: Schema = new Schema({
     email: {type: String},
     permissions: {type: [String], default: []},
     verified: {type: Boolean, default: false},
+    resetPasswordCode: {type: String},
     tokens: {type: [{type: SchemaTypes.ObjectId, ref: 'Token'}], default: []}
 });
 
