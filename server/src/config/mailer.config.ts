@@ -29,6 +29,12 @@ export class Mailer {
     }
 
     private sendMail(mailOptions: nodemailer.SendMailOptions): Promise<any> {
+        if (!process.env.MAIL_ENABLED) {
+            console.log('Mail would have been sent to ' + mailOptions.to);
+            console.log('Mail Payoad: ', JSON.stringify(mailOptions, null, 2));
+            return Promise.resolve();
+        }
+
         return new Promise((resolve, reject) => {
             this.transporter.sendMail(mailOptions, (error: any, info: any) => {
                 if (error) {
