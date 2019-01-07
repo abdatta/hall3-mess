@@ -55,6 +55,7 @@ export class MessLoginComponent implements OnInit {
             const dialogRef = this.dialog.open(BookComponent, {
               disableClose: true,
               width: '95%',
+              maxHeight: '95vh',
               maxWidth: '720px'
             });
             dialogRef.afterClosed()
@@ -62,6 +63,8 @@ export class MessLoginComponent implements OnInit {
 
           } else if (s === 401) {
             this.snackBar.open('Incorrect Username or Password');
+          } else if (s === 403) {
+            this.snackBar.open('Account not verified. Please check email.');
           } else {
             this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.logIn(rollno, password));

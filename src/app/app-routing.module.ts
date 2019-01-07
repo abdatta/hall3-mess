@@ -23,9 +23,9 @@ const routes: Routes = [
 
     { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard, MessUnAuthGuard] },
 
-    { path: 'signup', component: SignupComponent, canActivate: [UnAuthGuard, MessUnAuthGuard] },
+    { path: 'signup', component: SignupComponent, canActivate: [UnAuthGuard] },
 
-    { path: 'forgotpassword', component: ForgotkeyComponent, canActivate: [UnAuthGuard, MessUnAuthGuard] },
+    { path: 'forgotpassword', component: ForgotkeyComponent, canActivate: [UnAuthGuard] },
 
     { path: 'mess', component : MessComponent, canActivate: [MessUnAuthGuard] },
 
