@@ -1,4 +1,5 @@
-.abc {
+.mat-form-field {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    text-align: center;
 }

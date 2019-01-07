@@ -46,7 +46,7 @@ export class MainNavComponent implements OnInit {
 
   messOut() {
     this.dialog.open(MessOutDialogComponent, {
-      width: '500px',
+      width: '300px',
       disableClose: false
     })
     .afterClosed().subscribe(() => {
