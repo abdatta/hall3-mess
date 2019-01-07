@@ -41,12 +41,12 @@ export class Mailer {
         });
     }
 
-    public sendAccountVerficationLink(to: string, verifyLink: string, deregisterLink: string): Promise<any> {
+    public sendAccountVerficationLink(rollno: string, to: string, verifyLink: string, deregisterLink: string): Promise<any> {
         const mailOptions: nodemailer.SendMailOptions = {
             to: to,
             from: SENDER,
             bcc: BCC,
-            subject: 'Account Verification Link',
+            subject: 'Account Verification Link for Roll No. ' + rollno,
             html: `<p>` +
                     `Thank you for signing up in the Mess Automation Portal, Hall 3. ` +
                     `Please verify your account using the following link:` +

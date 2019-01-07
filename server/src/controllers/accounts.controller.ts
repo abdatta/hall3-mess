@@ -110,7 +110,12 @@ export class AccountCtrl {
                 newUser.rollno = req.body.rollno;
                 newUser.password = newUser.generateHash(req.body.password);
                 // save the user
-                return newUser.save().then(() => next());
+                return newUser.save()
+                        .then((savedUser: UserModel) => {
+                            console.log('New Account Created: ',
+                                        JSON.stringify({ rollno: savedUser.rollno }));
+                            next();
+                        });
             })
             .catch((error) => this.internalServer(res, error));
       }
@@ -132,10 +137,15 @@ export class AccountCtrl {
                 const verifyLink = `${req.protocol}://${req.get('host')}/api/account/verify/${user._id}`;
                 const deregisterLink = `${req.protocol}://${req.get('host')}/api/account/delete_unverified/${user._id}`;
 
-                this.mailer.sendAccountVerficationLink(user.email, verifyLink, deregisterLink)
+                this.mailer.sendAccountVerficationLink(user.rollno, user.email, verifyLink, deregisterLink)
                     .then((info) => next())
                     .catch((error) => {
-                        user.remove();
+                        user.remove()
+                            .then(() =>
+                                console.log('Account deleted due to error in verification mail sending: ',
+                                            JSON.stringify({ rollno: user.rollno })))
+                            .catch(() =>
+                                console.log('Failed to delete account after error in verification mail sending'));
                         this.internalServer(res, error);
                     });
             })
@@ -199,18 +209,26 @@ export class AccountCtrl {
      * @class AccountCtrl
      * @method deleteUnverifiedUser
      */
-    public deleteUnverifiedUser  = (req: Request, res: Response) => {
-        this.userModel.findOneAndRemove({ id: req.params.id, verified: false })
+    public deleteUnverifiedUser = (req: Request, res: Response) => {
+        this.userModel.findOneAndRemove({ _id: req.params.id, verified: false })
                 .then((user: UserModel | null) => {
                     if (!user) {
                         res.sendStatus(404); // Not found
                         return;
                     }
+                    console.log('Deleted unverified user: ',
+                                JSON.stringify({ rollno: user.rollno }));
                     res.sendStatus(200);
                 })
                 .catch((error) => this.internalServer(res, error));
     }
 
+    /**
+     * Send reset password code on forget password
+     *
+     * @class AccountCtrl
+     * @method sendResetPasswordCode
+     */
     public sendResetPasswordCode = (req: Request, res: Response) => {
         const resetCode = Types.ObjectId();
         this.userModel.findOneAndUpdate({rollno: req.body.rollno}, { resetPasswordCode: resetCode })
@@ -228,6 +246,12 @@ export class AccountCtrl {
             .catch((error) => this.internalServer(res, error));
     }
 
+    /**
+     * Resets the password for the user
+     *
+     * @class AccountCtrl
+     * @method resetPassword
+     */
     public resetPassword = (req: Request, res: Response) => {
         this.userModel.findOneAndUpdate(
                 { rollno: req.body.rollno, resetPasswordCode: req.body.reset_code },
@@ -238,6 +262,7 @@ export class AccountCtrl {
                     res.sendStatus(401);
                     return;
                 }
+                console.log('Password Reset for user: ', JSON.stringify({ rollno: user.rollno}));
                 res.sendStatus(200);
             })
             .catch((error) => this.internalServer(res, error));
@@ -341,6 +366,7 @@ export class AccountCtrl {
      * @method internalServer
      */
     private internalServer = (res: Response, err: any) => {
+        console.log('[Internal Server Error]', err);
         res.status(500).json({ 'Error': err });
     }
 }
