@@ -33,7 +33,6 @@ import { TokenSchema } from './schemas/token.schema';
 import { SubscriptionSchema } from './schemas/subscription.schema';
 
 // Config
-import { LocalConfig } from './config/local.config';
 import { PassportConfig } from './config/passport.config';
 import { MailerConfig } from './config/mailer.config';
 
@@ -101,9 +100,10 @@ export class Server {
    */
   public config = (): void => {
     // MongoDB connection
-    const dbaddr: string = process.env.MONGO_ADDR || 'localhost';
-    const dbport: string = process.env.MONGO_PORT || '27017';
-    const MONGODB_CONNECTION = `mongodb://${ dbaddr }:${ dbport }/${ LocalConfig.dbname }`;
+    const dbaddr: string = process.env.DB_ADDR || 'localhost';
+    const dbport: string = process.env.DB_PORT || '27017';
+    const dbname: string = process.env.DB_NAME || 'Hall3_Mess_Local';
+    const MONGODB_CONNECTION = `mongodb://${ dbaddr }:${ dbport }/${ dbname }`;
 
     const getDate = () => moment().format('DD MMM\'YY HH:mm:ss');
 
@@ -144,7 +144,7 @@ export class Server {
 
     // create session
     const esession = session({
-      secret: LocalConfig.session_secret,
+      secret: process.env.SESSION_SECRET || 'local-session',
       saveUninitialized: false,
       resave: true,
       store: new MongoStore({

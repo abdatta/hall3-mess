@@ -8,7 +8,7 @@
     "start": "nodemon",
     "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "keys": "web-push generate-vapid-keys --json"
+    "keys": "web-push generate-vapid-keys"
   },
   "keywords": [],
   "author": "",

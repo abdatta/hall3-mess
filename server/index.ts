@@ -13,7 +13,7 @@ const logger: winston.Logger = winston.createLogger({
 });
 
 // create http server
-const httpPort = normalizePort(process.env.PORT || '7500');
+const httpPort = normalizePort(process.env.SERVER_PORT || '7500');
 const app = Server.bootstrap().app;
 
 app.set('port', httpPort);

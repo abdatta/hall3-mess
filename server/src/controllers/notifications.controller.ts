@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import { LocalConfig } from '../config/local.config';
 import { Model } from 'mongoose';
 import webpush from 'web-push';
-import moment from 'moment';
 
 import { SubscriptionModel } from '../models/subscription.model';
+
+const PUBLIC_KEY  = process.env.VAPID_PUBLIC_KEY  || '';
+const PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY || '';
 
 export class NotificationsCtrl {
 
@@ -19,9 +20,9 @@ export class NotificationsCtrl {
     constructor(model: Model<SubscriptionModel>) {
         this.subscriptionModel = model;
         webpush.setVapidDetails(
-            'mailto:iamrohandatta@gmail.com',
-            LocalConfig.VAPID_KEYS.publicKey,
-            LocalConfig.VAPID_KEYS.privateKey
+            'mailto:hall3-mess@googlegroups.com',
+            PUBLIC_KEY,
+            PRIVATE_KEY
         );
     }
 
@@ -32,7 +33,7 @@ export class NotificationsCtrl {
      * @method getVAPIDkeys
      */
     public getVAPIDkeys = (req: Request, res: Response) => {
-        res.status(200).json({ publicKey: LocalConfig.VAPID_KEYS.publicKey });
+        res.status(200).json({ publicKey: PUBLIC_KEY });
     }
 
     /**
