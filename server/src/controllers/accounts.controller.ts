@@ -134,7 +134,7 @@ export class AccountCtrl {
                     return;
                 }
 
-                const verifyLink = `${req.protocol}://${req.get('host')}/api/account/verify/${user._id}`;
+                const verifyLink = `${req.protocol}://${req.get('host')}/verify/${user._id}`;
                 const deregisterLink = `${req.protocol}://${req.get('host')}/api/account/delete_unverified/${user._id}`;
 
                 this.mailer.sendAccountVerficationLink(user.rollno, user.email, verifyLink, deregisterLink)

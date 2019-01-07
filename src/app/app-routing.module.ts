@@ -7,7 +7,8 @@ import {
   SignupComponent,
   ForgotkeyComponent,
   MessComponent,
-  ControlComponent
+  ControlComponent,
+  VerifyComponent
 } from '@app/components';
 
 // App Guards
@@ -24,6 +25,8 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard, MessUnAuthGuard] },
 
     { path: 'signup', component: SignupComponent, canActivate: [UnAuthGuard] },
+
+    { path: 'verify/:id', component: VerifyComponent, canActivate: [UnAuthGuard] },
 
     { path: 'forgotpassword', component: ForgotkeyComponent, canActivate: [UnAuthGuard] },
 

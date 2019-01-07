@@ -53,10 +53,18 @@ export class AuthService {
       );
   }
 
+  verifyUser(id: string): Observable<number> {
+    return this.http.post('/api/account/verify/' + id, {})
+      .pipe(
+        map(response => 200),
+        catchError(this.handleError)
+      );
+  }
+
   forgotPassword(roll: string): Observable<number> {
     return this.http.post('/api/account/forgot_password', { rollno: roll })
       .pipe(
-        map(res => 200),
+        map(response => 200),
         catchError(this.handleError)
       );
   }

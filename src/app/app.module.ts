@@ -32,11 +32,11 @@ import {
   SignupComponent,
   ForgotkeyComponent,
   MessComponent,
-  ControlComponent
+  ControlComponent,
+  SettingsComponent,
+  PWAPromptComponent,
+  VerifyComponent
 } from '@app/components';
-
-import { SettingsComponent } from '@app/components/settings/settings.component';
-import { PWAPromptComponent } from './components/pwa-prompt/pwa-prompt.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,8 @@ import { PWAPromptComponent } from './components/pwa-prompt/pwa-prompt.component
     MessComponent,
     SettingsComponent,
     ControlComponent,
-    PWAPromptComponent
+    PWAPromptComponent,
+    VerifyComponent
   ],
   imports: [
     BrowserModule,

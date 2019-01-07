@@ -24,13 +24,13 @@ export class AccountsRoute {
         router
             .get('/auth',  accountCtrl.getAuthStatus)
             .get('/photo/:roll.jpg', accountCtrl.fetchPhoto)
-            .get('/verify/:id', accountCtrl.verifyUser)
             .get('/delete_unverified/:id', accountCtrl.deleteUnverifiedUser)
-            .post('/forgot_password', accountCtrl.sendResetPasswordCode)
-            .post('/reset_password', accountCtrl.resetPassword)
             .post('/login', accountCtrl.logIn)
             .post('/signup', accountCtrl.createNewUser, accountCtrl.sendVerificationMail, accountCtrl.updateUser)
+            .post('/verify/:id', accountCtrl.verifyUser)
             .patch('/update', accountCtrl.checkAuth, accountCtrl.updateUser)
+            .post('/forgot_password', accountCtrl.sendResetPasswordCode)
+            .post('/reset_password', accountCtrl.resetPassword)
             .post('/logout', accountCtrl.checkAuth, accountCtrl.logout)
             .post('/messin', accountCtrl.messIn)
             .post('/messout', accountCtrl.messOut);

@@ -1,0 +1,24 @@
+<div class="container form">
+  <form autocomplete="new-password" autocomplete="off">
+    <header><img src="assets/img/mauryans_logo.png"></header>
+    <h3>Signup Verification</h3>
+    <p>{{ message }}</p>
+    <mat-progress-bar mode="indeterminate" *ngIf="verifying"></mat-progress-bar>
+    <button mat-raised-button type="button" color="accent" *ngIf="!verifying && !status" (click)="verify()">
+      <b>Retry</b>
+    </button>
+    <button mat-raised-button type="button" color="primary" *ngIf="!verifying && status" routerLink="/login">
+      <b>Log In</b>
+    </button>
+    <div class="links">
+      <p>
+        Already forgot your password?<br>
+        Worry not! Use&nbsp;<a routerLink="/signup">Forgot Password</a>
+      </p>
+    </div>
+  </form>
+  <footer>
+    <p><a href="http://hall3iitk.com/" target="_blank" rel="noreferrer">Hall-3</a> Mess Automation Portal</p>
+  </footer>
+</div>
+  
