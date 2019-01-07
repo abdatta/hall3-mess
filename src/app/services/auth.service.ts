@@ -48,9 +48,15 @@ export class AuthService {
   signUp(roll: string, pass: string): Observable<number> {
     return this.http.post<UserModel>('/api/account/signup', { rollno: roll, password: pass })
       .pipe(
-        map((response: UserModel) => {
-          return 200;
-        }),
+        map((response: UserModel) => 200),
+        catchError(this.handleError)
+      );
+  }
+
+  forgotPassword(roll: string): Observable<number> {
+    return this.http.post('/api/account/forgot_password', { rollno: roll })
+      .pipe(
+        map(res => 200),
         catchError(this.handleError)
       );
   }

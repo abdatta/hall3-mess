@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { AuthService } from '@app/services';
 
 @Component({
   selector: 'app-forgotkey',
@@ -11,10 +11,25 @@ export class ForgotkeyComponent implements OnInit {
 
   submitting: boolean;
 
-  constructor(private router: Router ,
-              public snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+  }
+
+  submit(roll: any) {
+    this.submitting = true;
+    this.authService.forgotPassword(roll.value)
+      .subscribe(code => {
+        if (code === 200) {
+          roll.value = '';
+          this.snackBar.open('Reset password link sent. Check mail.');
+        } else {
+          this.snackBar.open('Oops! Some error occured.', 'Retry')
+                  .onAction().subscribe(_ => this.submit(roll));
+        }
+        this.submitting = false;
+      });
   }
 
 }

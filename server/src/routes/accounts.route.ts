@@ -26,7 +26,7 @@ export class AccountsRoute {
             .get('/photo/:roll.jpg', accountCtrl.fetchPhoto)
             .get('/verify/:id', accountCtrl.verifyUser)
             .get('/delete_unverified/:id', accountCtrl.deleteUnverifiedUser)
-            .post('/forget_password', accountCtrl.sendResetPasswordCode)
+            .post('/forgot_password', accountCtrl.sendResetPasswordCode)
             .post('/reset_password', accountCtrl.resetPassword)
             .post('/login', accountCtrl.logIn)
             .post('/signup', accountCtrl.createNewUser, accountCtrl.sendVerificationMail, accountCtrl.updateUser)
