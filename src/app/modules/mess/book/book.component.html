@@ -6,5 +6,5 @@
                  (submit)="book($event)">
 </app-dish-picker>
 <div class="btm">
-<a *ngIf="!loading && !submitting" (click)="logout()" routerLink="">Cancel</a>
+<button *ngIf="!loading && !submitting" mat-raised-button color="accent" (click)="logout()"><b>Cancel</b></button>
 </div>

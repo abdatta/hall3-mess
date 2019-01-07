@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { TokenModel, DishModel } from '@app/models';
@@ -11,8 +11,25 @@ import { AuthService } from '@app/services/auth.service';
 })
 export class TokensService {
 
+  private _recentTokens: TokenModel[];
+  recentTokens: Subject<TokenModel[]>;
+
   constructor(private http: HttpClient,
-              private authService: AuthService) { }
+              private authService: AuthService) {
+    this._recentTokens = [];
+    this.recentTokens = new Subject();
+  }
+
+  private setRecentTokens(tokens: TokenModel[]) {
+    this._recentTokens = tokens;
+    this.recentTokens.next(this._recentTokens);
+    return tokens;
+  }
+
+  private updateRecentTokens(token: TokenModel) {
+    this._recentTokens.unshift(token);
+    this.recentTokens.next(this._recentTokens);
+  }
 
   getTokens(): Observable<TokenModel[]> {
     return this.http.get<TokenModel[]>('/api/tokens/user')
@@ -28,15 +45,19 @@ export class TokensService {
               this.authService.logout();
             }
           });
+          this.updateRecentTokens(token);
           return token;
         }),
         catchError(this.handleError)
       );
   }
 
-  getLatestTokens(): Observable<TokenModel[]> {
+  getRecentTokens(): Observable<TokenModel[]> {
     return this.http.get<TokenModel[]>('/api/tokens')
-      .pipe(catchError(this.handleError));
+      .pipe(
+        map((response: TokenModel[]) => this.setRecentTokens(response)),
+        catchError(this.handleError)
+      );
   }
 
   handleError(error: any): Observable<any> {
