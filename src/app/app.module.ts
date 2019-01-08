@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { AppRoutingModule } from '@app/app-routing.module';
+import { NgxAnalyticsModule } from 'ngx-analytics';
+import { NgxAnalyticsGoogleAnalytics } from 'ngx-analytics/ga';
 
 // App Modules
 import { MaterialModule } from '@shared/material';
@@ -54,6 +56,7 @@ import { PWAPromptComponent } from './components/pwa-prompt/pwa-prompt.component
     HttpClientModule,
     AppRoutingModule,
     DeviceDetectorModule.forRoot(),
+    NgxAnalyticsModule.forRoot([NgxAnalyticsGoogleAnalytics]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     LayoutModule,
     MaterialModule,

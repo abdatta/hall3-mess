@@ -1,7 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material';
+import { MatBottomSheet } from '@angular/material';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { NgxAnalyticsGoogleAnalytics } from 'ngx-analytics/ga';
 import { PWAPromptComponent } from '@app/components';
 
 @Component({
@@ -17,7 +18,9 @@ export class AppComponent implements OnInit {
 
   constructor(private swUpdate: SwUpdate,
               private bottomSheet: MatBottomSheet,
-              private deviceService: DeviceDetectorService) {}
+              private deviceService: DeviceDetectorService,
+              // Keep googleAnalytics variable !important
+              private googleAnalytics: NgxAnalyticsGoogleAnalytics) {}
 
   ngOnInit() {
     this.swUpdate.available.subscribe(event => {
