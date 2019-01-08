@@ -15,3 +15,110 @@
 max-width:600px;
 width:80%;
 }
+
+.editlist {
+    max-width:600px;
+    width:90%;  
+}
+
+.mat-tab-group {
+    width:100%;
+}
+
+:host >>> .mat-tab-body-content {
+    display: flex;
+    justify-content: center;
+}
+
+.dishes {
+    width: 100%;
+}
+
+.date {
+    margin: 15px 20px 5px;
+}
+
+.mat-expansion-panel-spacing {
+    margin: 8px 2px;
+    padding: 5px;
+}
+
+:host >>> .mat-expansion-panel-body {
+    padding: 0 16px 16px;
+}
+
+.mat-expansion-panel-header-title {
+    color: rgba(0,0,0,.54);
+}
+
+.mat-expansion-panel-header-description {
+    color: black;
+    flex-grow: 0.1;
+}
+
+tr.mat-footer-row {
+    font-weight: bold;
+}
+
+.mat-column-Quantity {
+    text-align: center;
+ }
+
+ .mat-column-Cost {
+    text-align: center;
+ }
+
+ .spinner{
+    margin-top: 60px;
+}
+
+button.mat-button.mat-primary {
+    margin-bottom: 10px;
+}
+
+.mat-button[disabled][disabled] {
+    color: initial;
+}
+
+.mat-action-row button.mat-button {
+    height: 37px;
+}
+
+.mat-action-row {
+    justify-content: space-between;
+    margin-bottom: 23px;
+}
+
+@media only screen and (min-width: 600px) {
+    .abc{
+         display: flex;
+         justify-content: space-around;
+     }
+     
+     .def{
+         margin-top: 5px;
+     }
+ }
+ 
+ @media only screen and (max-width: 600px) {
+    .abc{
+         display: flex;
+         flex-flow:column;
+     }
+     
+     .def{
+         margin-top: 5px;
+     }
+     
+     .long{
+         display: none;
+     }
+ }
+
+.editlist[_ngcontent-c9] {
+    margin-top: 57px;
+}
+
+.mat-icon {
+    color: slategray;
+}
