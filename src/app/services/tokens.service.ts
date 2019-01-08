@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { TokenModel, DishModel } from '@app/models';
+import { TokenModel, DishModel, UserModel } from '@app/models';
 import { AuthService } from '@app/services/auth.service';
 
 @Injectable({
@@ -58,6 +58,11 @@ export class TokensService {
         map((response: TokenModel[]) => this.setRecentTokens(response)),
         catchError(this.handleError)
       );
+  }
+
+  getEditTokens(rollno: number): Observable<TokenModel[]> {
+    return this.http.get<TokenModel[]>('/api/tokens/filter?rollno=' + rollno)
+      .pipe(catchError(this.handleError));
   }
 
   handleError(error: any): Observable<any> {

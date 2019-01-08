@@ -30,8 +30,8 @@ export class TokensRoute {
         router
             .get('/', accountCtrl.checkMessAuth, tokenCtrl.getLatestTokens)
             .get('/user', accountCtrl.checkAuth, tokenCtrl.getUserTokens)
-            .post('/book', accountCtrl.checkAuth, tokenCtrl.addToken);
-
+            .post('/book', accountCtrl.checkAuth, tokenCtrl.addToken)
+            .get('/filter', accountCtrl.checkAuth, tokenCtrl.getEditTokens);
         return router;
     }
 

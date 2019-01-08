@@ -159,7 +159,23 @@ export class TokensCtrl {
                 res.status(200).json(tokens);
             })
             .catch((error) => this.internalServer(res, error));
-}
+    }
+
+    public getEditTokens = (req: Request,res: Response) => {
+        const rollno = req.query.rollno;
+        const maxtoken = 10;
+        this.userModel.findOne({ rollno: rollno }, 'tokens')
+            .populate('tokens')
+            .then(user => {
+                if (!user) {
+                    res.sendStatus(404); // not found
+                    return;
+                }
+                user.tokens.splice(maxtoken);
+                res.status(200).json(user.tokens);
+            })
+            .catch((error) => this.internalServer(res, error));
+    }
     /**
      * Create a random unique id for token
      *

@@ -12,7 +12,8 @@ import { NavComponent } from '@control/nav/nav.component';
 import { NotifyComponent } from '@control/notify/notify.component';
 import { MakebillsComponent } from '@control/makebills/makebills.component';
 import { EditDishesComponent } from '@control/edit-dishes/edit-dishes.component';
-import { AddDishComponent } from './add-dish/add-dish.component';
+import { AddDishComponent } from '@control/add-dish/add-dish.component';
+import { EditTokenComponent } from '@control/edit-token/edit-token.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { AddDishComponent } from './add-dish/add-dish.component';
     NotifyComponent,
     MakebillsComponent,
     EditDishesComponent,
-    AddDishComponent
+    AddDishComponent,
+    EditTokenComponent
   ],
   entryComponents: [AddDishComponent]
 })
