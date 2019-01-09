@@ -4,10 +4,10 @@
   "description": "The backend for the Mess Automation Portal of Hall 3.",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && copyfiles package.json package-lock.json ../mess-build && cd ../mess-build && npm install --production",
     "start": "nodemon",
-    "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && copyfiles package.json package-lock.json ../mess-build && cd ../mess-build && npm install --production",
+    "prod": "tsc --outDir ../mess-build-prod && copyfiles package.json package-lock.json ../mess-build-prod && cd ../mess-build-prod && npm install --production",
     "keys": "web-push generate-vapid-keys"
   },
   "keywords": [],

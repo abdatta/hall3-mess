@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "mess-build/public",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -27,7 +27,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/analytics.js"
+              "src/scripts/analytics.js"
             ]
           },
           "configurations": {
@@ -36,11 +36,35 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/scripts/analytics.js",
+                  "with": "src/scripts/analytics.prod.js"
                 }
               ],
+              "outputPath": "mess-build-prod/public",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputPath": "mess-build/public",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
