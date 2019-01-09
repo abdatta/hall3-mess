@@ -4,9 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently -i \"npm:server -s\" \"npm:client -s\"",
-    "client": "ng serve -o --proxy-config proxy.json",
+    "client": "ng serve -o",
     "server": "cd server && npm start",
-    "prod": "concurrently \"ng build --prod --aot\" \"cd server && npm run build -s\"",
+    "build": "concurrently \"ng build --prod --aot\" \"cd server && npm run build -s\"",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -68,7 +68,7 @@
         "npm run lint"
       ],
       "pre-push": [
-        "npm run prod"
+        "npm run build"
       ],
       "post-commit": [],
       "post-checkout": [],
