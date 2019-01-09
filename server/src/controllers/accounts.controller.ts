@@ -107,13 +107,15 @@ export class AccountCtrl {
                     return;
                 }
                 const newUser = new this.userModel();
+                newUser.name = req.body.name;
                 newUser.rollno = req.body.rollno;
                 newUser.password = newUser.generateHash(req.body.password);
                 // save the user
                 return newUser.save()
                         .then((savedUser: UserModel) => {
+                            req.user = { rollno: savedUser.rollno };
                             console.log('New Account Created: ',
-                                        JSON.stringify({ rollno: savedUser.rollno }));
+                                        JSON.stringify(req.user));
                             next();
                         });
             })
@@ -127,7 +129,7 @@ export class AccountCtrl {
      * @method sendVerificationMail
      */
     public sendVerificationMail = (req: Request, res: Response, next: NextFunction) => {
-        this.userModel.findOne({ rollno: req.body.rollno })
+        this.userModel.findOne({ rollno: req.user.rollno })
             .then((user: UserModel | null) => {
                 if (!user) {
                     res.sendStatus(404);  // Not found
@@ -137,7 +139,7 @@ export class AccountCtrl {
                 const verifyLink = `${req.protocol}://${req.get('host')}/verify/${user._id}`;
                 const deregisterLink = `${req.protocol}://${req.get('host')}/api/account/delete_unverified/${user._id}`;
 
-                this.mailer.sendAccountVerficationLink(user.rollno, user.email, verifyLink, deregisterLink)
+                this.mailer.sendAccountVerficationLink(user, verifyLink, deregisterLink)
                     .then((info) => next())
                     .catch((error) => {
                         user.remove()
@@ -160,7 +162,7 @@ export class AccountCtrl {
      */
     public updateUser = (req: Request, res: Response) => {
         this.userModel.findOne({
-            'rollno': req.body.rollno
+            'rollno': req.user.rollno
         }, (err: Error, user: UserModel) => {
             if (err) {
                 this.internalServer(res, err);

@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { UserModel } from '../models/user.model';
 
 const SENDER = `"${ process.env.MAIL_SENDER }" <noreply@${ process.env.MAIL_HOST }>`;
 const BCC = process.env.MAIL_BCC || '';
@@ -47,13 +48,14 @@ export class Mailer {
         });
     }
 
-    public sendAccountVerficationLink(rollno: string, to: string, verifyLink: string, deregisterLink: string): Promise<any> {
+    public sendAccountVerficationLink(user: UserModel, verifyLink: string, deregisterLink: string): Promise<any> {
         const mailOptions: nodemailer.SendMailOptions = {
-            to: to,
+            to: user.email,
             from: SENDER,
             bcc: BCC,
-            subject: 'Account Verification Link for Roll No. ' + rollno,
-            html: `<p>` +
+            subject: 'Account Verification Link',
+            html: `<p>Hi ${ user.name } (${ user.rollno }),</p>` +
+                  `<p>` +
                     `Thank you for signing up in the Mess Automation Portal, Hall 3. ` +
                     `Please verify your account using the following link:` +
                   `</p>` +
