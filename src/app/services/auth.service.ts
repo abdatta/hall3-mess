@@ -18,10 +18,11 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router,
               private notificationsService: NotificationsService) {
+
     const authStatus = this.http.get<{user: UserModel, mess: boolean}>('/api/account/auth')
-                           .pipe(catchError((err: any, caught) => of(null))).toPromise();
-    this.currentUser = authStatus.then(auth => auth.user);
-    this.isInMess = authStatus.then(auth => auth.mess === true);
+                                .toPromise();
+    this.currentUser = authStatus.then(auth => auth.user).catch(_ => null);
+    this.isInMess = authStatus.then(auth => auth.mess === true).catch(_ => false);
   }
 
   checkMess = (): Promise<boolean> => this.isInMess;
