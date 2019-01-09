@@ -81,7 +81,5 @@ function onListening() {
   const bind = typeof addr === 'string' ?
     'pipe ' + addr : 'port ' + addr.port;
   logger.log('info', 'Listening on ' + bind);
-  logger.log('info', 'MongoDB on ' +
-             process.env.MONGO_PORT_27017_TCP_ADDR + ':' +
-             process.env.MONGO_PORT_27017_TCP_PORT);
+  logger.log('info', `MongoDB on ${process.env.DB_ADDR}:${process.env.DB_PORT}`);
 }

@@ -103,7 +103,9 @@ export class Server {
     const dbaddr: string = process.env.DB_ADDR || 'localhost';
     const dbport: string = process.env.DB_PORT || '27017';
     const dbname: string = process.env.DB_NAME || 'Hall3_Mess_Local';
-    const MONGODB_CONNECTION = `mongodb://${ dbaddr }:${ dbport }/${ dbname }`;
+    const dbuser: string = process.env.DB_USER || '';
+    const dbpass: string = process.env.DB_PASS || '';
+    const MONGODB_CONNECTION = `mongodb://${dbuser}:${dbpass}@${dbaddr}:${dbport}/${dbname}?authSource=admin`;
 
     const getDate = () => moment().format('DD MMM\'YY HH:mm:ss');
 
