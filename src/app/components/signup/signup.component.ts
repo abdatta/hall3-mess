@@ -17,11 +17,11 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
   }
 
-  signUp(rollno: string, password: string, repassword: string) {
-    if (rollno && password && repassword) {
+  signUp(name: string, rollno: string, password: string, repassword: string) {
+    if (name && rollno && password && repassword) {
       if (password === repassword) {
         this.submitting = true;
-        this.authService.signUp(rollno, password)
+        this.authService.signUp(name, rollno, password)
           .subscribe(s => {
             if (s === 200) {
               this.router.navigateByUrl('/home');
@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit {
               this.snackBar.open('User already exists.');
             } else {
               this.snackBar.open('Oops! Some error occured.', 'Retry')
-                  .onAction().subscribe(_ => this.signUp(rollno, password, repassword));
+                  .onAction().subscribe(_ => this.signUp(name, rollno, password, repassword));
             }
             this.submitting = false;
           });
