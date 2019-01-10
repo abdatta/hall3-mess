@@ -18,6 +18,7 @@ import { NotwellComponent } from '@home/notwell/notwell.component';
 import { GuestroomComponent } from '@home/guestroom/guestroom.component';
 import { NotificationComponent } from '@home/notification/notification.component';
 import { QRDialogComponent } from './qr-dialog/qr-dialog.component';
+import { CreditsComponent } from './credits/credits.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { QRDialogComponent } from './qr-dialog/qr-dialog.component';
     NotwellComponent,
     GuestroomComponent,
     NotificationComponent,
-    QRDialogComponent
+    QRDialogComponent,
+    CreditsComponent
   ],
   entryComponents: [QRDialogComponent]
 })

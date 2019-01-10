@@ -1,0 +1,43 @@
+<div class="container">
+  <h2>Credits</h2>
+<div class="credit-container">
+<mat-card>
+  <div>
+    <div class="img-container">
+    <img src="assets/img/ashish.jpeg" alt="Avatar" style="width:100%">
+    </div>
+    <div class="container">
+      <h4 href="">Ashish Kr Singh</h4> 
+      <div class="email">
+        asgsgh@iitk.ac.in
+      </div>
+      <div class="no">
+        8778124118
+      </div>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card>
+    <div>
+      <img src="assets/img/rohan.jpg">
+      <div class="container">
+        <h4>Rohan Datta</h4> 
+        <div class="email">
+          abdatta@iitk.ac.in
+        </div>
+        <div class="no">
+          7003801867
+        </div> 
+      </div>
+    </div>
+  </mat-card>
+  </div>
+
+  <br>
+  <div class="liketext">Like it? Give a thumbs up</div>
+    <br>
+    <button mat-mini-fab (click)="thumbsup = true;" [color]="thumbsup? 'primary' : '' ">
+        <mat-icon aria-label="Example icon-button with a heart icon" [class.grey]="!thumbsup">thumb_up</mat-icon>
+    </button>
+</div>

@@ -11,6 +11,7 @@ import { NotwellComponent } from '@home/notwell/notwell.component';
 import { GuestroomComponent } from '@home/guestroom/guestroom.component';
 import { NotificationComponent } from '@home/notification/notification.component';
 import { ChangepasskeyComponent } from '@shared/changepasskey/changepasskey.component';
+import { CreditsComponent } from './credits/credits.component';
 
 const navs = [
 //  { title: 'Notifications', url: '/home/notifications', icon: 'notifications', badge: 3 },
@@ -20,6 +21,7 @@ const navs = [
     { title: 'Bills and History', url: '/home/history', icon: 'calendar_today' },
 //  { title: 'Not Well', url: '/home/notwell', icon: 'local_hospital' },
     { title: 'Change Password', url: '/home/changepassword', icon: 'vpn_key' },
+    { title: 'Credits', url: '/home/credits', icon: 'code' }
 //  { title: 'Book Guestroom', url: '/home/guestroom', icon: 'hotel' }
 ];
 
@@ -37,6 +39,7 @@ const homeRoutes: Routes = [
 //          { path: 'notwell', component: NotwellComponent},
 //          { path: 'guestroom', component: GuestroomComponent},
             { path: 'changepassword', component: ChangepasskeyComponent},
+            { path: 'credits', component: CreditsComponent},
 //          { path: 'notifications', component: NotificationComponent}
         ]
     }
