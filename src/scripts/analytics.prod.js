@@ -12,5 +12,5 @@ if (window.location.hostname === 'mess.hall3iitk.com') {
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-131897429-3', 'auto');
-    ga('send', 'pageview');
+
 }

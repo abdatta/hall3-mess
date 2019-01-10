@@ -57,7 +57,11 @@ import {
     HttpClientModule,
     AppRoutingModule,
     DeviceDetectorModule.forRoot(),
-    NgxAnalyticsModule.forRoot([NgxAnalyticsGoogleAnalytics]),
+    NgxAnalyticsModule.forRoot([NgxAnalyticsGoogleAnalytics], {
+      pageTracking: {
+        excludedRoutes: [ /\/mess\/.+/ ]
+      }
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     LayoutModule,
     MaterialModule,
