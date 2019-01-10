@@ -3,6 +3,7 @@ import { SwUpdate } from '@angular/service-worker';
 import { MatBottomSheet } from '@angular/material';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxAnalyticsGoogleAnalytics } from 'ngx-analytics/ga';
+import { NgxAnalytics } from 'ngx-analytics';
 import { PWAPromptComponent } from '@app/components';
 
 @Component({
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
               private bottomSheet: MatBottomSheet,
               private deviceService: DeviceDetectorService,
               // Keep googleAnalytics variable !important
+              private analytics: NgxAnalytics,
               private googleAnalytics: NgxAnalyticsGoogleAnalytics) {}
 
   ngOnInit() {
@@ -32,6 +34,14 @@ export class AppComponent implements OnInit {
           window.location.reload();
         }
       }, 1000);
+
+      // Add analytics for update event
+      this.analytics.eventTrack.next({
+        action: 'Update',
+        properties: {
+          category: 'PWA'
+        },
+      });
     });
   }
 
@@ -48,6 +58,16 @@ export class AppComponent implements OnInit {
       // Open prompt after 2 seconds
       this.waitFor(2000).then(this.openPrompt);
     }
+  }
+
+  @HostListener('window:appinstalled', ['$event'])
+  afterAppInstalled(event: any) {
+    this.analytics.eventTrack.next({
+      action: 'Added',
+      properties: {
+        category: 'PWA'
+      },
+    });
   }
 
   waitFor = (ms: number) => new Promise(resolve => setTimeout(() => resolve(), ms));
