@@ -59,7 +59,7 @@ import {
     DeviceDetectorModule.forRoot(),
     NgxAnalyticsModule.forRoot([NgxAnalyticsGoogleAnalytics], {
       pageTracking: {
-        excludedRoutes: [ '/mess/login' ]
+        excludedRoutes: [ 'mess/login' ]
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
