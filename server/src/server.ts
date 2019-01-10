@@ -154,7 +154,7 @@ export class Server {
       }),
       cookie: {
         // domain: 'mess.hall3iitk.com', // TODO: make this for domain specific
-        maxAge: 1 * 24 * 60 * 60 * 1000  // 1 day
+        maxAge: 14 * 24 * 60 * 60 * 1000  // 14 days
       }
     });
 
