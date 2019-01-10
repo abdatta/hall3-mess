@@ -18,9 +18,8 @@ export class UnAuthGuard implements CanActivate {
     return this.authService.check()
       .then(async (user: boolean) => {
         if (user) {
-          const admin = await this.authService.isAdmin();
           const mess = await this.authService.checkMess();
-          this.router.navigateByUrl( admin ? '/control' : mess ? '/mess' : '/home' );
+          this.router.navigateByUrl( mess ? '/mess' : '/home' );
         }
         return !user;
       });
