@@ -1,5 +1,5 @@
-.def{
-    margin-top: 5px;
+h4 {
+    text-align: center;
 }
 
 @media only screen and (min-width: 600px) {
@@ -16,4 +16,10 @@
          flex-flow:column;
      }
 
+}
+
+.def{
+    margin-top: 5px;
+    justify-content: space-around;
+    flex-flow: row;
 }
