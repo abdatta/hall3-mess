@@ -4,7 +4,7 @@
 <mat-card>
   <div>
     <div class="img-container">
-    <img src="assets/img/ashish.jpeg" alt="Avatar" style="width:100%">
+    <img src="assets/img/ashish.jpeg">
     </div>
     <div class="container">
       <h4 href="">Ashish Kr Singh</h4> 
@@ -20,9 +20,9 @@
 
 <mat-card>
     <div>
-      <img src="assets/img/rohan.jpg">
+      <img src="assets/img/abhishek.jpg">
       <div class="container">
-        <h4>Rohan Datta</h4> 
+        <h4>Abhishek Datta</h4> 
         <div class="email">
           abdatta@iitk.ac.in
         </div>
@@ -37,7 +37,7 @@
   <br>
   <div class="liketext">Like it? Give a thumbs up</div>
     <br>
-    <button mat-mini-fab (click)="thumbsup = true;" [color]="thumbsup? 'primary' : '' ">
+    <button mat-mini-fab (click)="like()" [color]="thumbsup? 'primary' : '' ">
         <mat-icon aria-label="Example icon-button with a heart icon" [class.grey]="!thumbsup">thumb_up</mat-icon>
     </button>
 </div>

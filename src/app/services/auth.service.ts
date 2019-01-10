@@ -54,7 +54,7 @@ export class AuthService {
             action: 'Login',
             properties: {
               category: 'Auth',
-              label: [response.name, response.rollno],
+              label: response.rollno,
             },
           });
 
