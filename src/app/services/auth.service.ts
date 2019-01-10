@@ -7,6 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { UserModel } from '@app/models';
 import { NotificationsService } from '@app/services/notifications.service';
 import { DishesService } from '@app/services/dishes.service';
+import { NgxAnalytics } from 'ngx-analytics';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private router: Router,
+              private analytics: NgxAnalytics,
               private dishesService: DishesService,
               private notificationsService: NotificationsService) {
 
@@ -47,6 +49,14 @@ export class AuthService {
 
           ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
                   .forEach(day => this.dishesService.getSomedaysDishes(day).subscribe());
+
+          this.analytics.eventTrack.next({
+            action: 'Login',
+            properties: {
+              category: 'Auth',
+              label: [response.name, response.rollno],
+            },
+          });
 
           return 200;
         }),
