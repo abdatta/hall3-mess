@@ -6,6 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 
 import { UserModel } from '@app/models';
 import { NotificationsService } from '@app/services/notifications.service';
+import { DishesService } from '@app/services/dishes.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private router: Router,
+              private dishesService: DishesService,
               private notificationsService: NotificationsService) {
 
     const authStatus = this.http.get<{user: UserModel, mess: boolean}>('/api/account/auth')
@@ -39,7 +41,13 @@ export class AuthService {
       .pipe(
         map((response: UserModel) => {
           this.currentUser = Promise.resolve(response);
-          this.isInMess.then(mess => mess ? null : this.notificationsService.subscribeToNotifications());
+          // this.isInMess.then(mess => mess ? null : this.notificationsService.subscribeToNotifications());
+
+          this.http.get('/api/account/auth').toPromise().catch(); // Re-caches the auth api endpoint
+
+          ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                  .forEach(day => this.dishesService.getSomedaysDishes(day).subscribe());
+
           return 200;
         }),
         catchError(this.handleError)
@@ -92,6 +100,7 @@ export class AuthService {
         this.isInMess.then(mess => {
           this.router.navigateByUrl(mess ? '/mess/login' : '/');
         });
+        this.http.get('/api/account/auth').toPromise().catch(); // Re-caches the auth api endpoint
       });
   }
 
