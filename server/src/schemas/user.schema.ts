@@ -9,6 +9,7 @@ export let UserSchema: Schema = new Schema({
     permissions: {type: [String], default: []},
     verified: {type: Boolean, default: false},
     resetPasswordCode: {type: String},
+    liked: {type: Boolean},
     tokens: {type: [{type: SchemaTypes.ObjectId, ref: 'Token'}], default: []}
 });
 

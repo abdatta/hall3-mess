@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxAnalytics } from 'ngx-analytics';
 import { AuthService } from '@app/services';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-credits',
@@ -9,23 +9,28 @@ import { AuthService } from '@app/services';
 })
 export class CreditsComponent implements OnInit {
 
-  thumbsup = false;
+  thumbsup: boolean;
 
-  constructor(private analytics: NgxAnalytics,
+  constructor(private snackBar: MatSnackBar,
               private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.getUser()
+        .then(user => this.thumbsup = user.liked);
   }
 
-  async like() {
-    this.thumbsup = !this.thumbsup;
-    this.analytics.eventTrack.next({
-      action: this.thumbsup ? 'Like' : 'Unlike',
-      properties: {
-        category: 'Like/Unlike',
-        label: (await this.authService.getUser()).rollno
-      },
-    });
+  async like(liked: boolean) {
+    this.thumbsup = liked;
+    this.authService.like(this.thumbsup)
+        .subscribe((s: number) => {
+          if (s === 200) {
+              this.snackBar.open('Thank you for your feedback! 😊');
+          } else {
+              this.ngOnInit();
+              this.snackBar.open('Oops! Some error occured.', 'Retry')
+                .onAction().subscribe(_ => this.like(liked));
+          }
+        });
   }
 
 }

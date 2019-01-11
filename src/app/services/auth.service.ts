@@ -99,6 +99,24 @@ export class AuthService {
       );
   }
 
+  like(liked: boolean): Observable<number> {
+    return this.http.patch<UserModel>('/api/account/update', { liked })
+    .pipe(
+      map((response: UserModel) => {
+        this.currentUser = Promise.resolve(response);
+        this.analytics.eventTrack.next({
+          action: liked ? 'Like' : 'Unlike',
+          properties: {
+            category: 'Like/Unlike',
+            label: response.rollno
+          },
+        });
+        return 200;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   logout(): void {
     this.currentUser = Promise.resolve(null);
     // To execute observable, it is converted to a promise

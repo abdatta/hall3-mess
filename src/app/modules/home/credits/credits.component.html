@@ -35,9 +35,9 @@
   </div>
 
   <br>
-  <div class="liketext">Like it? Give a thumbs up</div>
+  <div class="liketext">{{ thumbsup? 'Thanks for the like!' : 'Like this app? Give a thumbs up' }}</div>
     <br>
-    <button mat-mini-fab (click)="like()" [color]="thumbsup? 'primary' : '' ">
+    <button mat-mini-fab (click)="like(!thumbsup)" [color]="thumbsup? 'primary' : '' ">
         <mat-icon aria-label="Example icon-button with a heart icon" [class.grey]="!thumbsup">thumb_up</mat-icon>
     </button>
 </div>

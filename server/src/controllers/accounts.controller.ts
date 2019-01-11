@@ -176,6 +176,9 @@ export class AccountCtrl {
                     user.password = user.generateHash(req.body['newpassword']);
                 }
                 user.email = req.body.email || user.email || (user.rollno + '@iitk.ac.in');
+                if (req.body.liked !== undefined) {
+                    user.liked = req.body.liked;
+                }
                 user.save((error) => {
                     if (error) {
                         this.internalServer(res, error);
