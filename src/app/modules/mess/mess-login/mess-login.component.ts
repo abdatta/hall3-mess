@@ -83,6 +83,7 @@ export class MessLoginComponent implements OnInit {
     this.dialog_open = true;
     const dialogRef = this.dialog.open(QRBookComponent, {
       width: '500px',
+      maxHeight: '95vh',
       data: data
     });
     dialogRef.afterClosed()
