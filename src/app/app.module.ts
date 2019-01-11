@@ -36,7 +36,8 @@ import {
   SettingsComponent,
   PWAPromptComponent,
   VerifyComponent,
-  DeleteComponent
+  DeleteComponent,
+  ResetPasswordComponent
 } from '@app/components';
 
 @NgModule({
@@ -50,7 +51,8 @@ import {
     ControlComponent,
     PWAPromptComponent,
     VerifyComponent,
-    DeleteComponent
+    DeleteComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

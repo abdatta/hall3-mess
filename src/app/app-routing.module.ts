@@ -8,7 +8,8 @@ import {
   ForgotkeyComponent,
   MessComponent,
   VerifyComponent,
-  DeleteComponent
+  DeleteComponent,
+  ResetPasswordComponent
 } from '@app/components';
 
 // App Guards
@@ -31,6 +32,8 @@ const routes: Routes = [
     { path: 'verify/:id', component: VerifyComponent, canActivate: [UnAuthGuard] },
 
     { path: 'delete/:id', component: DeleteComponent, canActivate: [UnAuthGuard] },
+
+    { path: 'reset/:id', component: ResetPasswordComponent, canActivate: [UnAuthGuard] },
 
     { path: 'forgotpassword', component: ForgotkeyComponent, canActivate: [UnAuthGuard] },
 
