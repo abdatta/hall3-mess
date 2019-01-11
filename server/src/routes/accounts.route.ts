@@ -24,10 +24,10 @@ export class AccountsRoute {
         router
             .get('/auth',  accountCtrl.getAuthStatus)
             .get('/photo/:roll.jpg', accountCtrl.fetchPhoto)
-            .get('/delete_unverified/:id', accountCtrl.deleteUnverifiedUser)
             .post('/login', accountCtrl.logIn)
             .post('/signup', accountCtrl.createNewUser, accountCtrl.sendVerificationMail, accountCtrl.updateUser)
             .post('/verify/:id', accountCtrl.verifyUser)
+            .post('/delete_unverified/:id', accountCtrl.deleteUnverifiedUser)
             .patch('/update', accountCtrl.checkAuth, accountCtrl.updateUser)
             .post('/forgot_password', accountCtrl.sendResetPasswordCode)
             .post('/reset_password', accountCtrl.resetPassword)

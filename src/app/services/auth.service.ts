@@ -80,6 +80,14 @@ export class AuthService {
       );
   }
 
+  deleteUnverifiedUser(id: string): Observable<number> {
+    return this.http.post('/api/account/delete_unverified/' + id, {})
+      .pipe(
+        map(response => 200),
+        catchError(this.handleError)
+      );
+  }
+
   forgotPassword(roll: string): Observable<number> {
     return this.http.post('/api/account/forgot_password', { rollno: roll })
       .pipe(

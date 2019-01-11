@@ -7,8 +7,8 @@ import {
   SignupComponent,
   ForgotkeyComponent,
   MessComponent,
-  ControlComponent,
-  VerifyComponent
+  VerifyComponent,
+  DeleteComponent
 } from '@app/components';
 
 // App Guards
@@ -16,10 +16,10 @@ import {
   AuthGuard,
   UnAuthGuard,
   MessAuthGuard,
-  MessUnAuthGuard
+  MessUnAuthGuard,
+  ControlAuthGuard,
+  ControlUnAuthGuard
 } from '@app/guards';
-import { ControlAuthGuard } from './guards/control-auth.guard';
-import { ControlUnAuthGuard } from './guards/control-un-auth.guard';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -29,6 +29,8 @@ const routes: Routes = [
     { path: 'signup', component: SignupComponent, canActivate: [UnAuthGuard] },
 
     { path: 'verify/:id', component: VerifyComponent, canActivate: [UnAuthGuard] },
+
+    { path: 'delete/:id', component: DeleteComponent, canActivate: [UnAuthGuard] },
 
     { path: 'forgotpassword', component: ForgotkeyComponent, canActivate: [UnAuthGuard] },
 

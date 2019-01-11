@@ -6,6 +6,7 @@ import { ControlComponent } from '@app/components/control/control.component';
 import { SettingsComponent } from '@app/components/settings/settings.component';
 import { PWAPromptComponent } from '@app/components/pwa-prompt/pwa-prompt.component';
 import { VerifyComponent } from '@app/components/verify/verify.component';
+import { DeleteComponent } from '@app/components/delete/delete.component';
 
 export {
     LoginComponent,
@@ -15,5 +16,6 @@ export {
     ControlComponent,
     SettingsComponent,
     PWAPromptComponent,
-    VerifyComponent
+    VerifyComponent,
+    DeleteComponent
 };
