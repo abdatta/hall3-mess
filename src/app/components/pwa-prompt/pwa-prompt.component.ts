@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { NgxAnalytics } from 'ngx-analytics';
 
@@ -14,6 +14,11 @@ export class PWAPromptComponent implements OnInit {
               @Inject(MAT_BOTTOM_SHEET_DATA) private deferredPrompt: any) { }
 
   ngOnInit() {
+  }
+
+  @HostListener('window:appinstalled', ['$event'])
+  afterAppInstalled(event: any) {
+    this.bottomSheetRef.dismiss();
   }
 
   addToHomescreen(flag: boolean) {
