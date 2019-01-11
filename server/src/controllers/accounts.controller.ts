@@ -137,7 +137,7 @@ export class AccountCtrl {
                 }
 
                 const verifyLink = `${req.protocol}://${req.get('host')}/verify/${user._id}`;
-                const deregisterLink = `${req.protocol}://${req.get('host')}/api/account/delete_unverified/${user._id}`;
+                const deregisterLink = `${req.protocol}://${req.get('host')}/deregister/${user._id}`;
 
                 this.mailer.sendAccountVerficationLink(user, verifyLink, deregisterLink)
                     .then((info) => next())
@@ -243,7 +243,7 @@ export class AccountCtrl {
                     return;
                 }
 
-                const resetLink = `${req.protocol}://${req.get('host')}/reset_password/${user.rollno}/${resetCode}`;
+                const resetLink = `${req.protocol}://${req.get('host')}/reset/${user.rollno}/${resetCode}`;
                 this.mailer.sendResetPasswordLink(user.email, user.rollno, resetLink)
                     .then((info) => res.sendStatus(200))
                     .catch((error) => this.internalServer(res, error));
@@ -260,7 +260,10 @@ export class AccountCtrl {
     public resetPassword = (req: Request, res: Response) => {
         this.userModel.findOneAndUpdate(
                 { rollno: req.body.rollno, resetPasswordCode: req.body.reset_code },
-                { password: new this.userModel().generateHash(req.body.password), resetPasswordCode: undefined}
+                {
+                    $set: { password: new this.userModel().generateHash(req.body.password) },
+                    $unset: { resetPasswordCode: 1 }
+                }
             )
             .then((user: UserModel | null) => {
                 if (!user) {

@@ -1,7 +1,7 @@
 <div class="container form">
     <form autocomplete="new-password" autocomplete="off">
       <header><img src="assets/img/mauryans_logo.png"></header>
-      <h3>Account Deletion</h3>
+      <h3>Account Deregistration</h3>
       <p>{{ message }}</p>
       <mat-progress-bar mode="indeterminate" *ngIf="deleting"></mat-progress-bar>
       <button mat-raised-button type="button" color="accent" *ngIf="!deleting && !status" (click)="delete()">

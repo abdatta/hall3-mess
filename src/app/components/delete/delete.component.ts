@@ -9,8 +9,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DeleteComponent implements OnInit {
 
-
-  user_id: string;
   deleting: boolean;
   status: boolean;
   message: string;
@@ -20,22 +18,20 @@ export class DeleteComponent implements OnInit {
 
   ngOnInit() {
     this.status = false;
-    this.route.params.subscribe(params => {
-      this.user_id = params['id'];
-      this.delete();
-    });
+    this.route.params
+      .subscribe(params => this.delete(params['id']));
   }
 
-  delete() {
+  delete(user_id: string) {
     this.deleting = true;
-    this.authService.deleteUnverifiedUser(this.user_id)
+    this.authService.deleteUnverifiedUser(user_id)
       .subscribe(code => {
         if (code === 200) {
           this.status = true;
-          this.message = 'Deletion Successful!';
+          this.message = 'Deregistered Successfully!';
         } else {
           this.status = false;
-          this.message = 'Failed to Delete! Click to try again.';
+          this.message = 'Failed to deregister! Click to try again.';
         }
         this.deleting = false;
       });

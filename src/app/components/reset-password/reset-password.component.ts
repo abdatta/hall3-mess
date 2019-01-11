@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@app/services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -10,16 +10,19 @@ import { MatSnackBar } from '@angular/material';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  user_id: string;
+  rollno: string;
+  reset_id: string;
   reseting: boolean;
 
   constructor(private authService: AuthService,
               private route: ActivatedRoute,
+              private router: Router,
               private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.user_id = params['id'];
+      this.rollno = params['rollno'];
+      this.reset_id = params['id'];
     });
   }
 
@@ -30,12 +33,14 @@ export class ResetPasswordComponent implements OnInit {
       this.snackBar.open('Retype new password correctly');
     } else {
       this.reseting = true;
-      this.authService.deleteUnverifiedUser(this.user_id)
+      this.authService.resetPassword(this.rollno, this.reset_id, newpass)
           .subscribe(code => {
             if (code === 200) {
+              this.router.navigateByUrl('/login');
               this.snackBar.open('Reset successful');
             } else {
-              this.snackBar.open('Failed to reset password! Retry');
+              this.snackBar.open('Oops! Some error occured.', 'Retry')
+                  .onAction().subscribe(_ => this.reset(newpass, renewpass));
             }
             this.reseting = false;
           });

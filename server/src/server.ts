@@ -114,6 +114,8 @@ export class Server {
 
     httpLogger.token('date', getDate);
 
+    httpLogger.token('user', (req: express.Request, res: express.Response) => req.user && req.user.rollno);
+
     httpLogger.token('post', (req: express.Request, res: express.Response) => {
         if (req.method === 'POST') {
             req.body['password'] = undefined;
@@ -123,7 +125,7 @@ export class Server {
         }
     });
 
-    this.app.use(httpLogger('[:date] :method :url (:status) :post'));
+    this.app.use(httpLogger('[:date] :method :url [:user] (:status) :post'));
 
     // use json bodyparser
     this.app.use(bodyParser.json());

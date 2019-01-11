@@ -96,6 +96,14 @@ export class AuthService {
       );
   }
 
+  resetPassword(rollno: string, reset_code: string, password: string) {
+    return this.http.post('/api/account/reset_password', { rollno, reset_code, password })
+      .pipe(
+        map(response => 200),
+        catchError(this.handleError)
+      );
+  }
+
   chngpin(oldpin: string, newpin: string): Observable<number> {
     return this.http.patch<UserModel>('/api/account/update', { password: oldpin, newpassword: newpin })
       .pipe(
