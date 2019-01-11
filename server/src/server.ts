@@ -133,6 +133,9 @@ export class Server {
       extended: true
     }));
 
+    // trust nginx proxy if present
+    this.app.set('trust proxy', true);
+
     // connect to mongoose
     require('mongoose').Promise = global.Promise;
 
