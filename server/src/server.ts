@@ -125,7 +125,11 @@ export class Server {
         }
     });
 
-    this.app.use(httpLogger('[:date] :method :url [:user] (:status) :post'));
+    this.app.use(httpLogger('[:date] :method :url [:user] (:status) :post',
+      {
+        skip: (req, res) => !['.css', '.js', '.json', '.ico', '.jpg', '.png']
+                              .every(ext => !req.url.endsWith(ext))
+      }));
 
     // use json bodyparser
     this.app.use(bodyParser.json());
