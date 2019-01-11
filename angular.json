@@ -59,6 +59,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/manifest.json",
+                  "with": "src/manifest.dev.json"
                 }
               ],
               "outputPath": "mess-build/public",
