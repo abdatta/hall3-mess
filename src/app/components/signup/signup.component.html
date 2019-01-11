@@ -2,6 +2,7 @@
   <form autocomplete="new-password" autocomplete="off">
     <header><img src="assets/img/mauryans_logo.png"></header>
     <h3>Hall-3 Mess Signup</h3>
+    <div class="container" *ngIf= "!signupsuccess">
     <mat-form-field>
       <input matInput placeholder="Name" type="text" (keyup.enter)="roll.focus()" autocomplete="new-password" autocomplete="off" autofocus #name>
     </mat-form-field>
@@ -18,6 +19,12 @@
     <button mat-raised-button *ngIf="!submitting" color="primary" type="button" (click)="signUp(name.value, roll.value, pass.value, repass.value)">
       <b>Signup</b>
     </button>
+    </div>
+    <div class="done" *ngIf= "signupsuccess">
+      <p>
+        Signup Successful !! Please follow the link in your email to activate account.
+      </p>
+    </div>
     <div class="links">
       <p>
         Have done this once?&nbsp;<a routerLink="/login">Login</a><br>

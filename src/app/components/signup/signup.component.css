@@ -26,7 +26,7 @@ form > *:last-child {
 }
 
 button {
-	margin: 10px 0;
+	margin: 4px 0px;
 }
 
 .mat-progress-bar {
@@ -62,4 +62,8 @@ header img {
 
 header img:focus , footer a:focus { 
 	outline: none;
+}
+
+.done{
+	padding: 19px 21px;
 }

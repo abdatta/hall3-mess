@@ -10,6 +10,7 @@ import { AuthService } from '@app/services';
 })
 export class SignupComponent implements OnInit {
 
+  signupsuccess = false;
   submitting: boolean;
   constructor(private authService: AuthService,
               private router: Router , public snackBar: MatSnackBar) { }
@@ -24,8 +25,7 @@ export class SignupComponent implements OnInit {
         this.authService.signUp(name, rollno, password)
           .subscribe(s => {
             if (s === 200) {
-              this.router.navigateByUrl('/home');
-              this.snackBar.open('Sign up successful! Please check your mail.');
+              this.signupsuccess = true;
             } else if (s === 401) {
               this.snackBar.open('User already exists.');
             } else {
