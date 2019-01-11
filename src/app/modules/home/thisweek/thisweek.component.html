@@ -2,6 +2,7 @@
     <mat-tab *ngFor="let day of days;" label="{{ day }}">
         <div (swipeleft)="nextday()"
              (swiperight)="prevday()"
+             [style.minHeight]="'95%'"
              [style.touch-action]="'pan-y'"
              [style.user-select]="'text'">
             <h2>{{ day }} Menu</h2>
