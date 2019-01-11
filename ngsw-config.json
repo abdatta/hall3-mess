@@ -35,7 +35,7 @@
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 10,
-        "maxAge": "1d",
+        "maxAge": "12d",
         "timeout": "3s"
       }
     },
@@ -45,7 +45,7 @@
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 10,
-        "maxAge": "1d",
+        "maxAge": "12d",
         "timeout": "3s"
       }
     },
@@ -55,7 +55,7 @@
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 10,
-        "maxAge": "1d",
+        "maxAge": "12d",
         "timeout": "3s"
       }
     }
