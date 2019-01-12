@@ -114,7 +114,8 @@ export class Server {
 
     httpLogger.token('date', getDate);
 
-    httpLogger.token('user', (req: express.Request, res: express.Response) => req.user && req.user.rollno);
+    httpLogger.token('user', (req: express.Request, res: express.Response) =>
+      req.user && ('\x1b[31m' + req.user.rollno + '\x1b[0m'));
 
     httpLogger.token('post', (req: express.Request, res: express.Response) => {
         if (req.method === 'POST') {

@@ -89,7 +89,7 @@ export class Mailer {
         return this.sendMail(mailOptions);
     }
 
-    private readonly FOOTER = '<hr>' +
+    private readonly FOOTER = `------` +
                                 `<div style="font: 10px/1.4 Arial,Helvetica,sans-serif;">` +
                                     `<p>In case of any difficulty or concern, please feel free to contact any one of us.</p>` +  
                                     `<p>` +
