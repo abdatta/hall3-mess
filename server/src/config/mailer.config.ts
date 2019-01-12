@@ -30,6 +30,7 @@ export class Mailer {
     }
 
     private sendMail(mailOptions: nodemailer.SendMailOptions): Promise<any> {
+        mailOptions.html += this.FOOTER;
         if (!process.env.MAIL_ENABLED) {
             console.log('Mail would have been sent to ' + mailOptions.to);
             console.log('Mail Payoad: ', JSON.stringify(mailOptions, null, 2));
@@ -69,14 +70,15 @@ export class Mailer {
         return this.sendMail(mailOptions);
     }
 
-    public sendResetPasswordLink(to: string, rollno: string, resetLink: string): Promise<any> {
+    public sendResetPasswordLink(user: UserModel, resetLink: string): Promise<any> {
         const mailOptions: nodemailer.SendMailOptions = {
-            to: to,
+            to: user.email,
             from: SENDER,
             bcc: BCC,
             subject: 'Reset Password Link',
-            html: `<p>` +
-                    `The reset password link for your account with Roll No: ${ rollno } is given below:` +
+            html: `<p>Hi ${ user.name } (${ user.rollno }),</p>` +
+                  `<p>` +
+                    `The reset password link for your account with Roll No: ${ user.rollno } is given below:` +
                   `</p>` +
                   `<p><a href="${ resetLink }">${ resetLink }</a></p>` +
                   `<p>` +
@@ -87,6 +89,23 @@ export class Mailer {
         return this.sendMail(mailOptions);
     }
 
+    private readonly FOOTER = '<hr>' +
+                                `<div style="font: 10px/1.4 Arial,Helvetica,sans-serif;">` +
+                                    `<p>In case of any difficulty or concern, please feel free to contact any one of us.</p>` +  
+                                    `<p>` +
+                                        `Ashish Kumar Singh<br>` +
+                                        `Web-Incharge (Present)<br>` +
+                                        `Hall 3 IIT Kanpur<br>` +
+                                        `<a href="mailto:ashsgh@iitk.ac.in">ashsgh@iitk.ac.in</a> | 8778124118` +
+                                    `</p>` +
+            
+                                    `<p>` +
+                                        `Abhishek Datta<br>` +
+                                        `Web-Incharge (2017-2018)<br>` +
+                                        `Hall 3 IIT Kanpur<br>` +
+                                        `<a href="mailto:abdatta@iitk.ac.in">abdatta@iitk.ac.in</a> | 7003801867` +
+                                    `</p>` +
+                               `</div>`;
 }
 
 interface MailConfig {

@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
     // Open prompt if device is mobile
     if (this.deviceService.isMobile()) {
       // Open prompt after 2 seconds
-      this.waitFor(2000).then(this.openPrompt);
+      this.waitFor(200).then(this.openPrompt);
     }
   }
 

@@ -244,7 +244,7 @@ export class AccountCtrl {
                 }
 
                 const resetLink = `${req.protocol}://${req.get('host')}/reset/${user.rollno}/${resetCode}`;
-                this.mailer.sendResetPasswordLink(user.email, user.rollno, resetLink)
+                this.mailer.sendResetPasswordLink(user, resetLink)
                     .then((info) => res.sendStatus(200))
                     .catch((error) => this.internalServer(res, error));
             })
