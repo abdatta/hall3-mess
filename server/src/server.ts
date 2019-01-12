@@ -118,8 +118,9 @@ export class Server {
       req.user && ('\x1b[31m' + req.user.rollno + '\x1b[0m'));
 
     httpLogger.token('post', (req: express.Request, res: express.Response) => {
-        if (req.method === 'POST') {
+        if (req.method === 'POST' || req.method === 'PATCH' || req.method === 'PUT') {
             req.body['password'] = undefined;
+            req.body['newpassword'] = undefined;
             return JSON.stringify(req.body);
         } else {
             return ' ';
@@ -128,8 +129,11 @@ export class Server {
 
     this.app.use(httpLogger('[:date] :method :url [:user] (:status) :post',
       {
-        skip: (req, res) => !['.css', '.js', '.json', '.ico', '.jpg', '.png']
+        skip: (req, res) => !['.css', '.js', '.json', '.ico', '.jpg', '.jpeg', '.png']
                               .every(ext => !req.url.includes(ext))
+                            || (req.url.endsWith('day') &&
+                               !req.url.endsWith(moment().format('dddd').toLowerCase()) &&
+                               !req.url.endsWith(moment().add(1, 'days').format('dddd').toLowerCase()))
       }));
 
     // use json bodyparser
