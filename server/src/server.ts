@@ -128,7 +128,7 @@ export class Server {
     this.app.use(httpLogger('[:date] :method :url [:user] (:status) :post',
       {
         skip: (req, res) => !['.css', '.js', '.json', '.ico', '.jpg', '.png']
-                              .every(ext => !req.url.endsWith(ext))
+                              .every(ext => !req.url.includes(ext))
       }));
 
     // use json bodyparser
