@@ -97,6 +97,7 @@ export class NotificationsCtrl {
      * @method internalServer
      */
     private internalServer = (res: Response, err: any) => {
+        console.error('[Internal Server Error]', err);
         res.status(500).json({ 'Error': err });
     }
 }

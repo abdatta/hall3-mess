@@ -112,10 +112,13 @@ export class Server {
     const log = console.log;
     console.log = (...args) => log(`[${getDate()}]`, ...args);
 
+    const errorLogger = console.error;
+    console.error = (...args) => errorLogger('\x1b[31m', ...args, '\x1b[0m');
+
     httpLogger.token('date', getDate);
 
     httpLogger.token('user', (req: express.Request, res: express.Response) =>
-      req.user && ('\x1b[31m' + req.user.rollno + '\x1b[0m'));
+      req.user && ('\x1b[36m' + req.user.rollno + '\x1b[0m'));
 
     httpLogger.token('post', (req: express.Request, res: express.Response) => {
         if (req.method === 'POST' || req.method === 'PATCH' || req.method === 'PUT') {

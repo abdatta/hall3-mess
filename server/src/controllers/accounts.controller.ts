@@ -374,7 +374,7 @@ export class AccountCtrl {
      * @method internalServer
      */
     private internalServer = (res: Response, err: any) => {
-        console.log('[Internal Server Error]', err);
+        console.error('[Internal Server Error]', err);
         res.status(500).json({ 'Error': err });
     }
 }
