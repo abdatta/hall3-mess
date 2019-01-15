@@ -20,6 +20,10 @@ export class SignupComponent implements OnInit {
 
   signUp(name: string, rollno: string, password: string, repassword: string) {
     if (name && rollno && password && repassword) {
+      if (isNaN(rollno as any)) {
+        this.snackBar.open('Roll number must be a number.');
+        return;
+      }
       if (password === repassword) {
         this.submitting = true;
         this.authService.signUp(name, rollno, password)

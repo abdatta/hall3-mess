@@ -12,6 +12,7 @@ export class DeleteComponent implements OnInit {
   deleting: boolean;
   status: boolean;
   message: string;
+  user_id: string;
 
   constructor(private authService: AuthService,
               private route: ActivatedRoute) { }
@@ -19,16 +20,22 @@ export class DeleteComponent implements OnInit {
   ngOnInit() {
     this.status = false;
     this.route.params
-      .subscribe(params => this.delete(params['id']));
+      .subscribe(params => {
+        this.user_id = params['id'];
+        this.delete();
+      });
   }
 
-  delete(user_id: string) {
+  delete() {
     this.deleting = true;
-    this.authService.deleteUnverifiedUser(user_id)
+    this.authService.deleteUnverifiedUser(this.user_id)
       .subscribe(code => {
         if (code === 200) {
           this.status = true;
           this.message = 'Deregistered Successfully!';
+        } else if (code === 404) {
+          this.status = false;
+          this.message = 'User does not exist. You might have already deregistered.';
         } else {
           this.status = false;
           this.message = 'Failed to deregister! Click to try again.';

@@ -33,6 +33,10 @@ export class VerifyComponent implements OnInit {
         if (code === 200) {
           this.status = true;
           this.message = 'Verification Successful!';
+        } else if (code === 404) {
+          this.status = false;
+          this.message =
+            'User does not exist. You either haven\'t signed up or your account has been deregistered using the link in your email.';
         } else {
           this.status = false;
           this.message = 'Verification Failed! Click to try again.';

@@ -150,7 +150,7 @@ export class TokensCtrl {
           });
     }
 
-    public getLatestTokens = (req: Request,res: Response) => {
+    public getLatestTokens = (req: Request, res: Response) => {
         const maxtoken = 10;
         const today = moment(moment().format('YYYY-MM-DD')).format();
         this.tokenModel.find({date: { $gte: today } })
@@ -161,7 +161,7 @@ export class TokensCtrl {
             .catch((error) => this.internalServer(res, error));
     }
 
-    public getEditTokens = (req: Request,res: Response) => {
+    public getEditTokens = (req: Request, res: Response) => {
         const rollno = req.query.rollno;
         const maxtoken = 10;
         this.userModel.findOne({ rollno: rollno }, 'tokens')
@@ -202,7 +202,7 @@ export class TokensCtrl {
      * @method internalServer
      */
     private internalServer = (res: Response, err: any) => {
-        console.error('[Internal Server Error]', err);
+        console.error('[Internal Server Error]', JSON.stringify(err));
         res.status(500).json({ 'Error': err });
     }
 }

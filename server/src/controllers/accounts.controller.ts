@@ -267,7 +267,7 @@ export class AccountCtrl {
             )
             .then((user: UserModel | null) => {
                 if (!user) {
-                    res.sendStatus(401);
+                    res.sendStatus(404);
                     return;
                 }
                 console.log('Password Reset for user: ', JSON.stringify({ rollno: user.rollno}));
@@ -294,6 +294,7 @@ export class AccountCtrl {
      * @method logout
      */
     public logout = (req: Request, res: Response) => {
+        console.log('Logging out user: ', '\x1b[36m' + req.user.rollno + '\x1b[0m');
         req.logout();
         res.sendStatus(200);
     }
@@ -374,7 +375,7 @@ export class AccountCtrl {
      * @method internalServer
      */
     private internalServer = (res: Response, err: any) => {
-        console.error('[Internal Server Error]', err);
+        console.error('[Internal Server Error]', JSON.stringify(err));
         res.status(500).json({ 'Error': err });
     }
 }
