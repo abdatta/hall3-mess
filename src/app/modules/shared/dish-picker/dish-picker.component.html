@@ -1,8 +1,11 @@
 <div class="container">
   <h2>{{title}}</h2>
   <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+  <mat-tab-group class="fullwidth" mat-stretch-tabs [(selectedIndex)]="active">
+    <mat-tab *ngFor="let slot of slots;" label="{{ slot }}">
   <div class="disher" *ngIf="!loading">
-    <mat-card class="dish-item" *ngFor="let dish of dishes; let i=index;">
+    <ng-container *ngFor="let dish of dishes; let i=index;">
+    <mat-card class="dish-item" >
       <mat-checkbox [(ngModel)]="selected[i]" (ngModelChange)="resetQuantity(i)"></mat-checkbox>
       <button mat-button class="dish-button"
               (click)="selected[i] = !selected[i]; resetQuantity(i)">{{dish.name}} (&#8377;{{dish.price}})</button>
@@ -16,8 +19,12 @@
             <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_right</mat-icon>
           </button>
       </div>
-    </mat-card>
+    </mat-card></ng-container>
   </div>
+  </mat-tab>
+  </mat-tab-group>
   <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
   <button *ngIf="!loading && !submitting" mat-raised-button color="primary" (click)="submit.emit(selected)"><b>{{submitText}}</b></button>
+  <br>
+  <br>
 </div>
