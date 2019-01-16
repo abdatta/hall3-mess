@@ -5,12 +5,12 @@
 }
 
 .main{
-    width: 60%;
+    width: 65%;
     height: 100%;
 }
 
 .recents{
-    width: 40%;
+    width: 35%;
     height: 100%;
     background-color: #fafafa;
     overflow: auto;
