@@ -41,22 +41,24 @@ export class AuthService {
   logIn(roll: string, pass: string): Observable<number> {
     return this.http.post<UserModel>('/api/account/login', { rollno: roll, password: pass})
       .pipe(
-        map((response: UserModel) => {
+        map(async (response: UserModel) => {
           this.currentUser = Promise.resolve(response);
           // this.isInMess.then(mess => mess ? null : this.notificationsService.subscribeToNotifications());
 
-          this.http.get('/api/account/auth').toPromise().catch(); // Re-caches the auth api endpoint
+          if (!(await this.isInMess)) {
+            this.http.get('/api/account/auth').toPromise().catch(); // Re-caches the auth api endpoint
 
-          ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-                  .forEach(day => this.dishesService.getSomedaysDishes(day).subscribe());
+            ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                    .forEach(day => this.dishesService.getSomedaysDishes(day).subscribe());
 
-          this.analytics.eventTrack.next({
-            action: 'Login',
-            properties: {
-              category: 'Auth',
-              label: response.rollno,
-            },
-          });
+            this.analytics.eventTrack.next({
+              action: 'Login',
+              properties: {
+                category: 'Auth',
+                label: response.rollno,
+              },
+            });
+          }
 
           return 200;
         }),
