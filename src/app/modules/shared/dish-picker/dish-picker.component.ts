@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DishModel } from '@app/models';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dish-picker',
@@ -24,12 +25,23 @@ export class DishPickerComponent implements OnInit {
 
   dishes: DishModel[];
   selected: boolean[];
+  slotnow: string;
+  active: number;
+  slots = ['Breakfast',
+          'Lunch',
+          'Dinner'];
+  menu = {};
 
   @Output() submit = new EventEmitter<boolean[]>();
 
   constructor() { }
 
   ngOnInit() {
+    if (moment().format('HHmm') <= '1045') {
+      this.slotnow = 'Breakfast';
+    } else if ((moment().format('HHmm') > '1045') && (moment().format('HHmm') <= '1700')) {
+      this.slotnow = 'Lunch';
+    } else {this.slotnow = 'Dinner'; }
   }
 
   resetQuantity(i: number) {
