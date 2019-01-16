@@ -1,6 +1,5 @@
 h2 {
     text-align: center;
-    margin: 22px 0px -8px;
 }
 
 mat-checkbox {
@@ -10,7 +9,6 @@ mat-checkbox {
 .disher {
     width: 90%;
     max-width: 600px;
-    margin: 10px 20px 20px;
 }
 
 .mat-progress-bar {
@@ -49,6 +47,14 @@ mat-checkbox {
 
 .mat-tab-group {
     width: 100%;
-    max-width: 610px;
-    margin: 10px 0;
+    max-width: 650px;
+}
+
+:host >>> .mat-tab-header {
+    margin-bottom: 10px;
+}
+
+:host >>> .mat-tab-body-content {
+    display: flex;
+    justify-content: center;
 }

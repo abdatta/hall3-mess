@@ -41,11 +41,14 @@ export class AuthService {
   logIn(roll: string, pass: string): Observable<number> {
     return this.http.post<UserModel>('/api/account/login', { rollno: roll, password: pass})
       .pipe(
-        map(async (response: UserModel) => {
+        map((response: UserModel) => {
           this.currentUser = Promise.resolve(response);
           // this.isInMess.then(mess => mess ? null : this.notificationsService.subscribeToNotifications());
 
-          if (!(await this.isInMess)) {
+          this.isInMess.then(mess => {
+            if (mess) {
+              return;
+            }
             this.http.get('/api/account/auth').toPromise().catch(); // Re-caches the auth api endpoint
 
             ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -58,7 +61,7 @@ export class AuthService {
                 label: response.rollno,
               },
             });
-          }
+          });
 
           return 200;
         }),
