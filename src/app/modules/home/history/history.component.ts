@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TokensService } from '@app/services';
+import { TokensService, DishesService } from '@app/services';
 import { TokenModel } from '@app/models';
 import * as moment from 'moment';
 import { MatSnackBar } from '@angular/material';
@@ -21,6 +21,7 @@ export class HistoryComponent implements OnInit {
   newbie = false;
 
   constructor(private tokensService: TokensService,
+              private dishService: DishesService,
               private snackBar: MatSnackBar,
               private route: ActivatedRoute) {}
   ngOnInit() {
@@ -73,10 +74,6 @@ export class HistoryComponent implements OnInit {
   }
 
   format(date: string) {
-    if (moment(date).format('HHmm') <= '1045') {
-      return 'Breakfast ' + moment(date).format('HH:mm') + '\u00A0hrs';
-    } else if ((moment(date).format('HHmm') > '1045') && (moment(date).format('HHmm') <= '1700')) {
-      return 'Lunch ' + moment(date).format('HH:mm') + '\u00A0hrs';
-    } else {return 'Dinner ' + moment(date).format('HH:mm') + '\u00A0hrs'; }
+    return this.dishService.getSlot(date) + ' ' + moment(date).format('HH:mm') + '\u00A0hrs';
   }
 }

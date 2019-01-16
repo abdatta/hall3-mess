@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { DishModel } from '@app/models/dish.model';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,15 @@ export class DishesService {
 
   constructor(private http: HttpClient) { }
 
+  getSlot(date = Date()): ('Breakfast' | 'Lunch' | 'Dinner') {
+    if (moment(date).format('HHmm') <= '1100') {
+      return 'Breakfast';
+    } else if (moment(date).format('HHmm') <= '1700') {
+      return 'Lunch';
+    } else {
+      return 'Dinner';
+    }
+  }
   getSomedaysDishes(day: string): Observable<DishModel[]> {
     return this.http.get<DishModel[]>('/api/dishes/' + day.toLowerCase())
       .pipe(catchError(this.handleError));
