@@ -19,6 +19,7 @@ export class HistoryComponent implements OnInit {
   loading: boolean;
   tab = 0;
   newbie = false;
+  total = 0;
 
   constructor(private tokensService: TokensService,
               private dishService: DishesService,
@@ -34,6 +35,11 @@ export class HistoryComponent implements OnInit {
         if (tokens.length === 0) {
         this.newbie = true;
         }
+
+        for (const token of tokens) {
+          this.total += this.getCost(token);
+        }
+
         // sort tokens by date and time
         tokens = tokens.sort((t1, t2) =>
                         t2.date.localeCompare(t1.date));
@@ -64,6 +70,7 @@ export class HistoryComponent implements OnInit {
         this.snackBar.open('Oops! Some error occured. Please refresh the page.');
         this.loading = false;
       });
+
   }
 
   getCost(token: TokenModel) {
