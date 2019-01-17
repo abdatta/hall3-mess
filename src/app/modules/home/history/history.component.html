@@ -2,8 +2,8 @@
   <h2>Bills and History</h2>
 <!--<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tab">
     <mat-tab label="Daily History">-->
-      <div *ngIf="!loading">
-          Running Total: {{ total }}
+      <div *ngIf="!loading" class="this-month-total">
+          Total this month: &#8377;{{ total }}
       </div>
       <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
       <div class="centr" *ngIf="newbie">

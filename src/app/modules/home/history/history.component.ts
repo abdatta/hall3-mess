@@ -36,13 +36,14 @@ export class HistoryComponent implements OnInit {
         this.newbie = true;
         }
 
-        for (const token of tokens) {
-          this.total += this.getCost(token);
-        }
-
         // sort tokens by date and time
         tokens = tokens.sort((t1, t2) =>
                         t2.date.localeCompare(t1.date));
+
+        // calculate total this month
+        /* TODO: needs to be fetched from api when only last 10 tokens return */
+        this.total = tokens.filter(token => moment().isSame(token.date, 'month'))
+                           .reduce((total, token) => total + this.getCost(token), 0);
 
         // group tokens by date
         tokens.forEach(token => {

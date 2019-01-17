@@ -1,3 +1,7 @@
+h2 {
+    margin-bottom: 4px;
+}
+
 .mat-tab-group {
     width:100%;
 }
@@ -100,6 +104,6 @@ p{
     margin-top: 192px;
 }
 
-h2 {
-    margin: 22px 0 4px;
+.this-month-total {
+    color: rgba(0,0,0,.54);
 }
