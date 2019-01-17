@@ -26,5 +26,4 @@
   <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
   <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
   <button *ngIf="!loading && !submitting" mat-raised-button color="primary" (click)="submit.emit(selected)"><b>{{submitText}}</b></button>
-  <br>
 </div>

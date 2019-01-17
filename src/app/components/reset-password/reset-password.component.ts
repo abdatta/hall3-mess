@@ -38,6 +38,8 @@ export class ResetPasswordComponent implements OnInit {
             if (code === 200) {
               this.router.navigateByUrl('/login');
               this.snackBar.open('Reset successful');
+            } else if (code === 404) {
+              this.snackBar.open('The link has expired or does not exist.');
             } else {
               this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.reset(newpass, renewpass));

@@ -117,8 +117,16 @@ export class Server {
 
     httpLogger.token('date', getDate);
 
-    httpLogger.token('user', (req: express.Request, res: express.Response) =>
-      req.user && ('\x1b[36m' + req.user.rollno + '\x1b[0m'));
+    httpLogger.token('user', (req: express.Request, res: express.Response) => {
+      let user = '';
+      if (req.user) {
+        user = '\x1b[36m' + req.user.rollno + '\x1b[0m'; // in cyan color
+        if (req.session && req.session.mess === true) {
+          user += ' @ \x1b[35m' + 'mess' + '\x1b[0m'; // in magenta color
+        }
+      }
+      return user;
+    });
 
     httpLogger.token('post', (req: express.Request, res: express.Response) => {
         if (req.method === 'POST' || req.method === 'PATCH' || req.method === 'PUT') {

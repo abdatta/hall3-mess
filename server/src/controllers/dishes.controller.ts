@@ -159,7 +159,7 @@ export class DishesCtrl {
      * @method internalServer
      */
     private internalServer = (res: Response, err: any) => {
-        console.error('[Internal Server Error]', err);
+        console.error('[Internal Server Error]', JSON.stringify(err));
         res.status(500).json({ 'Error': err });
     }
 }

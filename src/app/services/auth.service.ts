@@ -45,17 +45,22 @@ export class AuthService {
           this.currentUser = Promise.resolve(response);
           // this.isInMess.then(mess => mess ? null : this.notificationsService.subscribeToNotifications());
 
-          this.http.get('/api/account/auth').toPromise().catch(); // Re-caches the auth api endpoint
+          this.isInMess.then(mess => {
+            if (mess) {
+              return;
+            }
+            this.http.get('/api/account/auth').toPromise().catch(); // Re-caches the auth api endpoint
 
-          ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-                  .forEach(day => this.dishesService.getSomedaysDishes(day).subscribe());
+            ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                    .forEach(day => this.dishesService.getSomedaysDishes(day).subscribe());
 
-          this.analytics.eventTrack.next({
-            action: 'Login',
-            properties: {
-              category: 'Auth',
-              label: response.rollno,
-            },
+            this.analytics.eventTrack.next({
+              action: 'Login',
+              properties: {
+                category: 'Auth',
+                label: response.rollno,
+              },
+            });
           });
 
           return 200;
