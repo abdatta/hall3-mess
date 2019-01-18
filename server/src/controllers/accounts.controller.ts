@@ -102,7 +102,7 @@ export class AccountCtrl {
      */
     public checkIITKUser = (req: Request, res: Response, next: NextFunction) => {
         ssh.connect({
-            host: 'webhome.cc.iitk.ac.in',
+            host: 'appserver.cc.iitk.ac.in',
             username: req.body.IITKusername,
             password: req.body.IITKpassword
         })
@@ -112,10 +112,12 @@ export class AccountCtrl {
         })
         .catch((error: any) => {
             ssh.dispose();
-            if (error.code) {
-                this.internalServer(res, error);
-            } else {
+            if (error.level === 'client-authentication') {
                 res.sendStatus(403); // Forbidden
+            } else if (error.level === 'client-timeout') {
+                res.sendStatus(408); // Request Timeout
+            } else {
+                this.internalServer(res, error);
             }
         });
 

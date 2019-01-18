@@ -22,8 +22,9 @@ export class AccountsRoute {
         const router: Router = Router();
 
         router
-            .get('/auth',  accountCtrl.getAuthStatus)
+            .get('/auth', accountCtrl.getAuthStatus)
             .get('/photo/:roll.jpg', accountCtrl.fetchPhoto)
+            .post('/auth/iitk', accountCtrl.checkIITKUser, (req, res) => res.sendStatus(200))
             .post('/login', accountCtrl.logIn)
             .post('/signup', accountCtrl.checkIITKUser, accountCtrl.createNewUser, accountCtrl.sendVerificationMail, accountCtrl.updateUser)
             .post('/verify/:id', accountCtrl.verifyUser)
