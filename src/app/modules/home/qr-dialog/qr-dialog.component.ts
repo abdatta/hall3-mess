@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
@@ -8,16 +8,10 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class QRDialogComponent implements OnInit {
 
-  qrlogo: any;
-
-  @ViewChild('logo')
-  logoElement: ElementRef;
-
   constructor(private dialogRef: MatDialogRef<QRDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string) { }
+              @Inject(MAT_DIALOG_DATA) public data: { qrdata: string, qrlogo: any}) { }
 
   ngOnInit() {
-    setTimeout(() => this.qrlogo = this.logoElement.nativeElement, 100);
   }
 
 }

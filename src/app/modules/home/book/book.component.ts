@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DishesService } from '@app/services';
 import { DishModel } from '@app/models';
 import { MatSnackBar } from '@angular/material';
@@ -19,6 +19,9 @@ export class BookComponent implements OnInit {
   loading: boolean;
   submitting: boolean;
   slot: ('Breakfast' | 'Lunch' | 'Dinner');
+
+  @ViewChild('logo')
+  logoElement: ElementRef;
 
   constructor(private qrdialog: MatDialog,
               private snackBar: MatSnackBar,
@@ -52,7 +55,7 @@ export class BookComponent implements OnInit {
       this.qrdialog.open(QRDialogComponent, {
         width: '95%',
         maxWidth: '450px',
-        data: qrdata
+        data: { qrdata, qrlogo: this.logoElement.nativeElement }
       });
     } else {
       this.snackBar.open('No dish is selected.');
