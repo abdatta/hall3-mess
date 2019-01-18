@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Model, Types } from 'mongoose';
 import request from 'request';
+const ssh = new (require('node-ssh'))();
 
 import { UserModel } from '../models/user.model';
 import { Mailer } from '../config/mailer.config';
@@ -91,6 +92,34 @@ export class AccountCtrl {
             user: req.isAuthenticated() ? this.sanitize(req.user) : null,
             mess: req.session ? req.session.mess : null
         });
+    }
+
+    /**
+     * Check if the user is an IITK user
+     *
+     * @class AccountCtrl
+     * @method checkIITKUser
+     */
+    public checkIITKUser = (req: Request, res: Response, next: NextFunction) => {
+        ssh.connect({
+            host: 'webhome.cc.iitk.ac.in',
+            username: req.body.IITKusername,
+            password: req.body.IITKpassword
+        })
+        .then(() => {
+            ssh.dispose();
+            next();
+        })
+        .catch((error: any) => {
+            ssh.dispose();
+            if (error.code) {
+                this.internalServer(res, error);
+            } else {
+                res.sendStatus(403); // Forbidden
+            }
+        });
+
+        req.body.IITKpassword = undefined; // Removing iitk password immediately after use
     }
 
     /**

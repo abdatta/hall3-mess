@@ -25,7 +25,7 @@ export class AccountsRoute {
             .get('/auth',  accountCtrl.getAuthStatus)
             .get('/photo/:roll.jpg', accountCtrl.fetchPhoto)
             .post('/login', accountCtrl.logIn)
-            .post('/signup', accountCtrl.createNewUser, accountCtrl.sendVerificationMail, accountCtrl.updateUser)
+            .post('/signup', accountCtrl.checkIITKUser, accountCtrl.createNewUser, accountCtrl.sendVerificationMail, accountCtrl.updateUser)
             .post('/verify/:id', accountCtrl.verifyUser)
             .post('/delete_unverified/:id', accountCtrl.deleteUnverifiedUser)
             .patch('/update', accountCtrl.checkAuth, accountCtrl.updateUser)
