@@ -170,7 +170,7 @@ export class AccountCtrl {
                 const verifyLink = `${req.protocol}://${req.get('host')}/verify/${user._id}`;
                 const deregisterLink = `${req.protocol}://${req.get('host')}/deregister/${user._id}`;
 
-                this.mailer.sendAccountVerficationLink(user, verifyLink, deregisterLink)
+                this.mailer.sendAccountVerficationLink(user, req.body.IITKusername, verifyLink, deregisterLink)
                     .then((info) => next())
                     .catch((error) => {
                         user.remove()

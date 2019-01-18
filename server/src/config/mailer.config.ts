@@ -49,7 +49,7 @@ export class Mailer {
         });
     }
 
-    public sendAccountVerficationLink(user: UserModel, verifyLink: string, deregisterLink: string): Promise<any> {
+    public sendAccountVerficationLink(user: UserModel, IITKuser: string, verifyLink: string, deregisterLink: string): Promise<any> {
         const mailOptions: nodemailer.SendMailOptions = {
             to: user.email,
             from: SENDER,
@@ -62,7 +62,8 @@ export class Mailer {
                   `</p>` +
                   `<p><a href="${ verifyLink }">${ verifyLink }</a></p>` +
                   `<p>` +
-                    `If you didn't signup, you can deregister your account using ` +
+                    `You were signed up by IITK user: ${ IITKuser }.<br>` +
+                    `If you didn't request for this signup, you can deregister your account using ` +
                     `<a href="${ deregisterLink }">this link</a>.` +
                   `</p>`
         };
