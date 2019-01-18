@@ -38,6 +38,14 @@ export class AuthService {
   isAdmin = (): Promise<boolean> => this.currentUser.then((user: UserModel) =>
                 user.rollno === 'admin' || user.rollno === 'secy' || user.rollno === 'mess')
 
+  authIITK(IITKusername: string, IITKpassword: string): Observable<number> {
+    return this.http.post('/api/account/auth/iitk', { IITKusername, IITKpassword })
+      .pipe(
+        map(response => 200),
+        catchError(this.handleError)
+      );
+  }
+
   logIn(roll: string, pass: string): Observable<number> {
     return this.http.post<UserModel>('/api/account/login', { rollno: roll, password: pass})
       .pipe(
@@ -69,8 +77,8 @@ export class AuthService {
       );
   }
 
-  signUp(name: string, rollno: string, password: string): Observable<number> {
-    return this.http.post<UserModel>('/api/account/signup', { name, rollno, password })
+  signUp(name: string, rollno: string, password: string, IITKusername, IITKpassword): Observable<number> {
+    return this.http.post<UserModel>('/api/account/signup', { name, rollno, password, IITKusername, IITKpassword })
       .pipe(
         map((response: UserModel) => 200),
         catchError(this.handleError)

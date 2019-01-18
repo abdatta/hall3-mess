@@ -39,6 +39,7 @@ import {
   DeleteComponent,
   ResetPasswordComponent
 } from '@app/components';
+import { IITKAuthComponent } from './components/iitk-auth/iitk-auth.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {
     PWAPromptComponent,
     VerifyComponent,
     DeleteComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    IITKAuthComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,7 @@ import {
     DishesService,
     TokensService
   ],
-  entryComponents: [SettingsComponent, PWAPromptComponent],
+  entryComponents: [SettingsComponent, PWAPromptComponent, IITKAuthComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

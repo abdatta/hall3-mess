@@ -1,0 +1,15 @@
+<div class="container">
+  <h4>Authorise as an IITK user</h4>
+  <mat-form-field>
+    <input matInput placeholder="IITK CC Username" type="text" (keyup.enter)="pass.focus()" autofocus #user>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="IITK CC Password*" type="password" (keyup.enter)="authoriseIITK(user.value, pass.value)" autofocus #pass>
+    <mat-hint>*We promise we will not store your CC password anywhere in our database.</mat-hint>
+  </mat-form-field>
+  <br>
+  <mat-progress-bar mode="indeterminate" *ngIf="authorising"></mat-progress-bar>
+  <button mat-raised-button *ngIf="!authorising" color="primary" type="button" (click)="authoriseIITK(user.value, pass.value)">
+    <b>Authorise</b>
+  </button>
+</div>
