@@ -1,7 +1,14 @@
 <div class="container">
   <h3>QR Code for Your Booking</h3>
   <div>
-    <ngx-kjua [text]="data" ecLevel="M" size="300" cssClass="qr"></ngx-kjua>
+    <ngx-kjua [text]="data"
+              ecLevel="M"
+              size="300"
+              cssClass="qr"
+              [mode]="qrlogo?'image':'text'"
+              [image]="qrlogo">
+    </ngx-kjua>
   </div>
   <p>Please scan this at the mess counter.</p>
 </div>
+<img id="img-buffer" src="/assets/img/qr_logo.png" #logo>

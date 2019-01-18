@@ -10,7 +10,8 @@
           "/index.html",
           "/*.json",
           "/*.css",
-          "/*.js"
+          "/*.js",
+          "/assets/img/**"
         ],
         "urls": [
           "https://fonts.googleapis.com/icon?family=Material+Icons",

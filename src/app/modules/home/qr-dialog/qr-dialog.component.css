@@ -2,6 +2,10 @@ h3 {
     text-align: center;
 }
 
+#img-buffer {
+    display: none;
+}
+
 @media(max-width: 400px) {
     h3 {
         margin-top: 0;
