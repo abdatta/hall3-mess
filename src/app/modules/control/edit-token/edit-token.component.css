@@ -45,10 +45,15 @@ width:80%;
 
 :host >>> .mat-expansion-panel-body {
     padding: 0 16px 16px;
+    margin-bottom: 22px;
 }
 
 .mat-expansion-panel-header-title {
     color: rgba(0,0,0,.54);
+}
+
+.mat-expansion-panel-header {
+    margin: 6px 0px;
 }
 
 .mat-expansion-panel-header-description {
@@ -116,9 +121,14 @@ button.mat-button.mat-primary {
  }
 
 .editlist[_ngcontent-c9] {
-    margin-top: 57px;
+    margin-bottom: 40px;
 }
 
 .mat-icon {
     color: slategray;
+}
+
+h4 {
+    font-weight: 400;
+    margin: 18px 0px 0px;
 }

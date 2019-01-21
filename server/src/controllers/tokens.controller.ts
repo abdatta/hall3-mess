@@ -150,6 +150,25 @@ export class TokensCtrl {
           });
     }
 
+    public reduceDishesInToken = (req: Request, res: Response) => {
+        this.tokenModel.findById(req.params.id)
+            .then(token => {
+                if (!token) {
+                    res.sendStatus(404);
+                    return;
+                }
+                const i = token.dishes.map(dish => dish._id.toString())
+                                        .indexOf(req.body._id)
+                if (i === -1 ) {console.log(token.dishes.map(dish => dish._id));
+                    res.sendStatus(404);
+                    return;
+                }
+                token.dishes.splice(i,1);
+                token.save().then(token => res.sendStatus(200));
+            })
+            .catch((error) => this.internalServer(res, error));
+    }
+
     public getLatestTokens = (req: Request, res: Response) => {
         const maxtoken = 10;
         const today = moment(moment().format('YYYY-MM-DD')).format();

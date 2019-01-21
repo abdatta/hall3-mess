@@ -1,18 +1,24 @@
 <div class="container">
     <h2>Edit Token</h2>
-    <mat-card>
+    <mat-card *ngIf="!submitted">
       <div>
       Enter Roll no:
       <mat-form-field>
-      <input matInput type="text" (keyup.enter)="listToken(rollno.value)" #rollno>
+      <input matInput type="text" (keyup.enter)="listToken()" [(ngModel)]="rollno">
       </mat-form-field>
     </div>
     <br>
-    <button mat-raised-button (click)="listToken(rollno.value)" color="primary">List Tokens</button>
+    <button mat-raised-button (click)="listToken()" color="primary">List Tokens</button>
   
   </mat-card>
 
-    <div class="editlist">
+  <button *ngIf="submitted" mat-raised-button type="button" color="primary" (click)="back()">
+      Back
+  </button>
+  <h4 *ngIf="submitted">
+      Rollno: {{ rollno }}
+  </h4>
+    <div *ngIf="submitted" class="editlist">
     <mat-expansion-panel *ngFor="let token of tokens; let i=index;" (closed)="discard(i)" [expanded]="i === 0">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -33,9 +39,7 @@
           <ng-container matColumnDef="Quantity">
             <th mat-header-cell *matHeaderCellDef> Quantity </th>
             <td mat-cell *matCellDef="let dish; let j= index">
-                <button mat-icon-button (click)="changeQuantity(i,j)" [disabled]="dish.quantity<=1">
                   {{dish.quantity}}
-                </button>
             </td>
 
           </ng-container>
@@ -43,7 +47,7 @@
           <ng-container matColumnDef="Cost">
             <th mat-header-cell *matHeaderCellDef> Delete </th>
             <td mat-cell *matCellDef="let dish">
-                <button mat-icon-button>
+                <button mat-icon-button (click)="delete(dish,token)">
                   <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
                 </button>
             </td>
@@ -54,23 +58,6 @@
           <tr mat-row *matRowDef="let row; columns: ['Dish', 'Quantity', 'Cost'];"></tr>
 
         </table>
-
-        <mat-action-row *ngIf="deleting !== i ">
-          <button mat-button color="accent" (click)="showConfirmDelete(i)">Delete</button>
-          <div>
-            <button mat-button (click)="discard(i)">Discard</button>
-            <button mat-button color="primary" (click)="save(i)">Save</button>
-          </div>
-        </mat-action-row>
-
-        <mat-action-row *ngIf="deleting === i">
-          <button mat-button (click)="discard(i)" disabled>
-            <span>Sure</span><span class="long"> you want to delete this delicious dish</span>?</button>
-          <div>
-            <button mat-button color="warn" (click)="delete(i)">Yes</button>
-            <button mat-button color="primary" (click)="hideConfirmDelete(i)">No</button>
-          </div>
-        </mat-action-row>
       </mat-expansion-panel>
     </div>
   </div>

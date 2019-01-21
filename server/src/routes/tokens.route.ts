@@ -31,6 +31,7 @@ export class TokensRoute {
             .get('/', accountCtrl.checkMessAuth, tokenCtrl.getLatestTokens)
             .get('/user', accountCtrl.checkAuth, tokenCtrl.getUserTokens)
             .post('/book', accountCtrl.checkAuth, tokenCtrl.addToken)
+            .post('/reduce/:id', accountCtrl.checkAuth, tokenCtrl.reduceDishesInToken)
             .get('/filter', accountCtrl.checkAuth, tokenCtrl.getEditTokens);
         return router;
     }

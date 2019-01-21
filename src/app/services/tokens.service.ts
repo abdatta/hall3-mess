@@ -37,7 +37,7 @@ export class TokensService {
   }
 
   bookToken(dishes: DishModel[]): Observable<TokenModel> {
-    return this.http.post<TokenModel>('/api/tokens/book', { dishes: dishes })
+    return this.http.post<TokenModel>('/api/tokens/book', { dishes })
       .pipe(
         map((token: TokenModel) => {
           this.authService.checkMess().then(mess => {
@@ -52,6 +52,14 @@ export class TokensService {
       );
   }
 
+  reduceDishesInToken(dish: DishModel, token: TokenModel): Observable<number> {
+      return this.http.post('/api/tokens/reduce/' + token._id, dish )
+        .pipe(
+          map(response => 200),
+          catchError(this.handleError)
+        );
+  }
+
   getRecentTokens(): Observable<TokenModel[]> {
     return this.http.get<TokenModel[]>('/api/tokens')
       .pipe(
@@ -60,7 +68,7 @@ export class TokensService {
       );
   }
 
-  getEditTokens(rollno: number): Observable<TokenModel[]> {
+  getEditTokens(rollno: string): Observable<TokenModel[]> {
     return this.http.get<TokenModel[]>('/api/tokens/filter?rollno=' + rollno)
       .pipe(catchError(this.handleError));
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { TokensService } from '@app/services';
-import { TokenModel } from '@app/models';
+import { TokensService, DishesService } from '@app/services';
+import { TokenModel, DishModel } from '@app/models';
 import * as moment from 'moment';
 
 @Component({
@@ -13,27 +13,30 @@ export class EditTokenComponent implements OnInit {
 
   tokens: TokenModel[];
   deleting = -1;
+  submitted = false;
+  rollno: string;
 
-  constructor(private snackbar: MatSnackBar,
-              private tokenService: TokensService) { }
+  constructor(private snackBar: MatSnackBar,
+              private tokenService: TokensService,
+              private dishService: DishesService) { }
 
   ngOnInit() {
   }
 
-  listToken(rollno: number) {
-    if (rollno) {
-    this.tokenService.getEditTokens(rollno)
+  listToken() {
+    if (this.rollno) {
+    this.tokenService.getEditTokens(this.rollno)
         .subscribe(tokens => {
           this.tokens = tokens;
-          console.log(this.tokens);
+          this.submitted = true;
         },
         error => {
           if (error === 404) {
-            this.snackbar.open('Not a valid Rollno');
+            this.snackBar.open('Rollno not found');
           }
         });
     } else {
-      this.snackbar.open('Please Enter Rollno');
+      this.snackBar.open('Please Enter Rollno');
     }
   }
 
@@ -45,33 +48,23 @@ export class EditTokenComponent implements OnInit {
   }
 
   format(date: string) {
-    if (moment(date).format('HHmm') <= '1045') {
-      return 'Breakfast ' + moment(date).format('HH:mm') + '\u00A0hrs';
-    } else if ((moment(date).format('HHmm') > '1045') && (moment(date).format('HHmm') <= '1700')) {
-      return 'Lunch ' + moment(date).format('HH:mm') + '\u00A0hrs';
-    } else {return 'Dinner ' + moment(date).format('HH:mm') + '\u00A0hrs'; }
+      return this.dishService.getSlot(date) + ' ' + moment(date).format('HH:mm') + '\u00A0hrs';
   }
 
-  showConfirmDelete(i: number) {
-    this.deleting = i;
-    setTimeout(() => this.hideConfirmDelete(i), 6000);
+  back() {
+    this.submitted = false;
+    this.rollno = '';
   }
 
-  hideConfirmDelete(i: number) {
-    if (this.deleting === i) {
-      this.deleting = -1;
-    }
-  }
-
-  discard(i: number) {
-
-  }
-
-  changeQuantity(i: number, j: number ) {
-    this.tokens[i].dishes[j].quantity -= 1;
-  }
-
-  save(i: number) {
-
+  delete(dish: DishModel, token: TokenModel) {
+    this.tokenService.reduceDishesInToken(dish, token)
+    .subscribe((s: number) => {
+      if (s === 200) {
+        this.snackBar.open('Dish deleted successfully');
+      } else {
+        this.snackBar.open('Oops! Some error occured.', 'Retry')
+              .onAction().subscribe(_ => this.delete(dish, token));
+      }
+  });
   }
 }
