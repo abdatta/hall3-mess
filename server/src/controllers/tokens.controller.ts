@@ -207,6 +207,7 @@ export class TokensCtrl {
                         billData[token.rollno] = billData[token.rollno] || {};
                         billData[token.rollno][dishName] = billData[token.rollno][dishName] || 0;
                         billData[token.rollno][dishName] += (dish.price * dish.quantity);
+                        billData[token.rollno]['Total (₹)'] = billData[token.rollno]['Total (₹)'] || 0;
                         billData[token.rollno]['Total (₹)'] += (dish.price * dish.quantity);
                         billData['TOTAL EXTRAS'] = billData['TOTAL EXTRAS'] || {};
                         billData['TOTAL EXTRAS'][dishName] = billData['TOTAL EXTRAS'][dishName] || 0;
@@ -242,7 +243,7 @@ export class TokensCtrl {
                 // Append bill data
                 XLSX.utils.sheet_add_json(ws, billData, { origin: 'A4' });
                 ws['!cols'] = [{width: 13}, {width: longestNameLength}, ...Object.keys(dishes).map(dish => ({width: dish.length}))];
-                ws['!merges'] = [{s: {c: 0, r: 0}, e: {c: 2, r: 0}},
+                ws['!merges'] = [{s: {c: 0, r: 0}, e: {c: 3, r: 0}},
                                  {s: {c: 0, r: 1}, e: {c: 2, r: 1}},
                                  {s: {c: 0, r: 2}, e: {c: 2, r: 2}},
                                  {s: {c: 5, r: 0}, e: {c: 7, r: 0}},

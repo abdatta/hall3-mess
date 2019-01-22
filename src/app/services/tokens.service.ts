@@ -67,7 +67,7 @@ export class TokensService {
   }
 
   downloadMessBill(from: Moment, to: Moment): Observable<{name: string, data: Blob}> {
-    const billName = `Mess_Bill_${from.format('DD.MMM.YYYY')}_TO_${to.format('DD.MMM.YYYY')}`.toUpperCase() + '.xlsx';
+    const billName = `Mess_Bill_${from.format('DDMMMYYYY')}_TO_${to.format('DDMMMYYYY')}`.toUpperCase() + '.xlsx';
     return this.http.get(`/api/tokens/bill?from=${encodeURIComponent(from.format())}` +
                                          `&to=${encodeURIComponent(to.format())}`,
                         {responseType: 'arraybuffer'})
