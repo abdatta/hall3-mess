@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Model, Types } from 'mongoose';
 import moment from 'moment';
+import XLSX from 'xlsx';
 
 import { TokenModel } from '../models/token.model';
 import { DishModel } from '../models/dish.model';
@@ -70,37 +71,28 @@ export class TokensCtrl {
             $or: [
                 {days: today},
                 {days: tomorrow, prebookable: true}
-            ]},
-            (error: Error, dishes: DishModel[]) => {
-                if (error) {
-                    this.internalServer(res, error);
-                } else {
-                    token.dishes = dishes.map(dish => ({
-                        _id: dish._id,
-                        name: dish.name,
-                        price: dish.price,
-                        quantity: quantity[dish._id]
-                    }));
-                    if (token.dishes.length > 0) {
-                        this.getUniqueId((err: Error, id: string) => {
-                            if (err) {
-                                this.internalServer(res, err);
-                            } else {
-                                token._id = Types.ObjectId(id);
-                                token.save((err2: Error, savedToken: TokenModel) => {
-                                    if (err2) {
-                                        this.internalServer(res, err2);
-                                    } else {
-                                        this.insertTokenIntoUser(req, res, savedToken);
-                                    }
-                                });
-                            }
-                        });
-                    } else {
-                        res.sendStatus(400); // Bad Request
-                    }
+            ]})
+            .then((dishes: DishModel[]) => {
+                token.dishes = dishes.map(dish => ({
+                    _id: dish._id,
+                    name: dish.name,
+                    price: dish.price,
+                    quantity: quantity[dish._id]
+                }));
+                if (token.dishes.length === 0) {
+                    res.sendStatus(400); // Bad Request
+                    return;
                 }
-            });
+                this.getUniqueId()
+                    .then((id: string) => {
+                        token._id = Types.ObjectId(id);
+                        return token.save();
+                    })
+                    .then((savedToken: TokenModel) => {
+                            this.insertTokenIntoUser(req, res, savedToken);
+                    });
+            })
+            .catch((error) => this.internalServer(res, error));
     }
 
    /**
@@ -110,24 +102,17 @@ export class TokensCtrl {
      * @method insertTokenIntoUser
      */
     private insertTokenIntoUser(req: Request, res: Response, token: TokenModel) {
-        this.userModel.findOne({
-            'rollno': req.user.rollno
-        }, (err, user: UserModel) => {
-            if (err) {
-                this.internalServer(res, err);
-            } else if (!user) {
-                res.sendStatus(406);  // Not acceptable
-            } else {
+        this.userModel.findOne({ rollno: req.user.rollno })
+            .then((user: UserModel | null) => {
+                if (!user) {
+                    res.sendStatus(406);  // Not acceptable
+                    return;
+                }
                 (user.tokens as string[]).push(token._id);
-                user.save((error) => {
-                    if (error) {
-                        this.internalServer(res, error);
-                    } else {
-                        res.status(200).json(this.sanitize(token));
-                    }
-                });
-            }
-        });
+                user.save().then((savedUser: UserModel) =>
+                        res.status(200).json(this.sanitize(token)));
+            })
+            .catch((error) => this.internalServer(res, error));
     }
 
     /**
@@ -150,6 +135,12 @@ export class TokensCtrl {
           });
     }
 
+    /**
+     * Get latest tokens for recents
+     *
+     * @class TokensCtrl
+     * @method getLatestTokens
+     */
     public getLatestTokens = (req: Request, res: Response) => {
         const maxtoken = 10;
         const today = moment(moment().format('YYYY-MM-DD')).format();
@@ -161,6 +152,13 @@ export class TokensCtrl {
             .catch((error) => this.internalServer(res, error));
     }
 
+    /**
+     * Get latest tokens of a user for edit
+     *
+     * @class TokensCtrl
+     * @method getEditTokens
+     */
+    // TODO: Unify this function with getUserToken
     public getEditTokens = (req: Request, res: Response) => {
         const rollno = req.query.rollno;
         const maxtoken = 10;
@@ -176,23 +174,108 @@ export class TokensCtrl {
             })
             .catch((error) => this.internalServer(res, error));
     }
+
+    /**
+     * Download mess bill as an excel sheet
+     *
+     * @class TokensCtrl
+     * @method getBillAsExcelSheet
+     */
+    public getBillAsExcelSheet = (req: Request, res: any) => {
+        if (!req.query.from || !req.query.to) {
+            res.sendStatus(400); // Bad Request
+            return;
+        }
+        const from = moment(req.query.from).startOf('day');
+        const to = moment(req.query.to).endOf('day');
+        if (!from.isValid() || !to.isValid()) {
+            res.sendStatus(400); // Bad Request
+            return;
+        }
+
+        let billData: any = {};
+        this.userModel.find({ permissions: { $size: 0 }, verified: true})
+            .then((users: UserModel[]) => {
+                users.forEach(user => billData[user.rollno] = {'Name': user.name, 'Total (₹)': 0});
+                billData['TOTAL EXTRAS'] = {'Name': '', 'Total (₹)': 0};
+                return this.tokenModel.find({date: {$gte: from.format(), $lte: to.format()}}).exec();
+            })
+            .then((tokens: TokenModel[]) => {
+                tokens.forEach(token => {
+                    token.dishes.forEach(dish => {
+                        const dishName = `${dish.name} (₹${dish.price})`;
+                        billData[token.rollno] = billData[token.rollno] || {};
+                        billData[token.rollno][dishName] = billData[token.rollno][dishName] || 0;
+                        billData[token.rollno][dishName] += (dish.price * dish.quantity);
+                        billData[token.rollno]['Total (₹)'] += (dish.price * dish.quantity);
+                        billData['TOTAL EXTRAS'] = billData['TOTAL EXTRAS'] || {};
+                        billData['TOTAL EXTRAS'][dishName] = billData['TOTAL EXTRAS'][dishName] || 0;
+                        billData['TOTAL EXTRAS'][dishName] += (dish.price * dish.quantity);
+                        billData['TOTAL EXTRAS']['Total (₹)'] += (dish.price * dish.quantity);
+                    });
+                });
+            })
+            .then(() => {
+                billData = Object.keys(billData).map((key: string) => ({
+                    'Roll No': key,
+                    ...billData[key]
+                }));
+                const dishes: any = {};
+                let longestNameLength = 0;
+                billData.forEach((bill: any) => {
+                    if (bill['Name'] && bill['Name'].length > longestNameLength) {
+                        longestNameLength = bill['Name'].length;
+                    }
+                    Object.keys(bill).forEach(col => {
+                        if (col !== 'Name' && col !== 'Roll No') {
+                            dishes[col] = true;
+                        }
+                    });
+                });
+                /* generate workbook */
+                // Add Heading Text
+                const ws = XLSX.utils.aoa_to_sheet([['INDIAN INSTITUTE OF TECHNOLOGY KANPUR', '', '', '', '',
+                                                     'MESS EXTRAS BILL FOR THE FOLLOWING DURATION', '', '', '', ''],
+                                                     ['HALL OF RESIDENCE NO. 3', '', '', '',
+                                                      'FROM:', from.format('Do MMMM YYYY').toUpperCase(), '',
+                                                      'TO:', to.format('Do MMMM YYYY').toUpperCase()]]);
+                // Append bill data
+                XLSX.utils.sheet_add_json(ws, billData, { origin: 'A4' });
+                ws['!cols'] = [{width: 13}, {width: longestNameLength}, ...Object.keys(dishes).map(dish => ({width: dish.length}))];
+                ws['!merges'] = [{s: {c: 0, r: 0}, e: {c: 2, r: 0}},
+                                 {s: {c: 0, r: 1}, e: {c: 2, r: 1}},
+                                 {s: {c: 0, r: 2}, e: {c: 2, r: 2}},
+                                 {s: {c: 5, r: 0}, e: {c: 7, r: 0}},
+                                 {s: {c: 5, r: 1}, e: {c: 6, r: 1}},
+                                 {s: {c: 8, r: 1}, e: {c: 9, r: 1}}]
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'HALL3_EXTRAS');
+
+                /* generate buffer */
+                const buf = XLSX.write(wb, {type: 'buffer', bookType: 'xlsx'});
+
+                /* send to client */
+                res.status(200).send(buf);
+            })
+            .catch((error) => this.internalServer(res, error));
+    }
+
     /**
      * Create a random unique id for token
      *
      * @class TokenssCtrl
      * @method getUniqueId
      */
-    private getUniqueId(cb: (err: Error | any, id: string | any) => void) {
+    private getUniqueId(): Promise<string> {
         const id = TokensCtrl.sid(Math.floor((Math.random() * 15 + 1) * Math.pow(16, 5)).toString(16));
-        this.tokenModel.findById(id, (err: Error, token: TokenModel) => {
-            if (err) {
-                cb(err, null);
-            } else if (token) {
-                this.getUniqueId(cb);
-            } else {
-                cb(null, id);
-            }
-        });
+        return this.tokenModel.findById(id)
+            .then((token: TokenModel | null) => {
+                if (token) {
+                    return this.getUniqueId();
+                } else {
+                    return id;
+                }
+            });
     }
 
     /**
@@ -202,7 +285,7 @@ export class TokensCtrl {
      * @method internalServer
      */
     private internalServer = (res: Response, err: any) => {
-        console.error('[Internal Server Error]', JSON.stringify(err));
+        console.error('[Internal Server Error]', err);
         res.status(500).json({ 'Error': err });
     }
 }

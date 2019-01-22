@@ -28,7 +28,8 @@
     "request": "^2.88.0",
     "typescript": "^3.0.3",
     "web-push": "^3.3.3",
-    "winston": "^3.0.0"
+    "winston": "^3.0.0",
+    "xlsx": "^0.14.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^2.0.0",
