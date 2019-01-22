@@ -25,7 +25,10 @@ import {
   MatDialogModule,
   MatBottomSheetModule,
   MatSelectModule,
-  MAT_SNACK_BAR_DEFAULT_OPTIONS
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MAT_DATE_LOCALE
 } from '@angular/material';
 
 @NgModule({
@@ -54,7 +57,9 @@ import {
     MatBadgeModule,
     MatDialogModule,
     MatBottomSheetModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: [],
   exports: [
@@ -81,13 +86,19 @@ import {
     MatMenuModule,
     MatBadgeModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: { duration: 4000 }
-    }
+    },
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'en-IN'
+    },
   ]
 })
 export class MaterialModule { }

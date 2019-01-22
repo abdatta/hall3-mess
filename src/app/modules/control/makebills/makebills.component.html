@@ -1,3 +1,21 @@
-<p>
-  i edited this
-</p>
+<div class="container">
+  <h2>Make Bills</h2>
+  <mat-card>
+    <p>Select a start date and an end date to download the mess bill of those days.</p>
+    <mat-form-field>
+        <input matInput [matDatepicker]="from" [(ngModel)]="fromDate" [max]="yesterday()" placeholder="From Date" (focus)="from.open()">
+        <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+        <mat-datepicker #from></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+          <input matInput [matDatepicker]="to" [(ngModel)]="toDate" [min]="fromDate" [max]="yesterday()" placeholder="To Date" (focus)="to.open()">
+          <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+          <mat-datepicker #to></mat-datepicker>
+      </mat-form-field>
+    <br>
+    <mat-progress-bar *ngIf="downloading" mode="indeterminate"></mat-progress-bar>
+    <div *ngIf="downloading"></div> <!-- to prevent 0 margin of last mat-card element -->
+    <button mat-raised-button *ngIf="!downloading" color="primary" (click)="requestDownload()">Download Bill</button>
+  </mat-card>
+</div>
+<a #downloadLink hidden></a>

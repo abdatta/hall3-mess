@@ -13,7 +13,7 @@ const navs = [
 //  { title: 'Notifications', url: '/control/notify', icon: 'notifications', badge: 3 },
 //  { title: 'Notify People', url: '/control/notify', icon: 'notifications_active' },
     { title: 'Edit Dishes', url: '/control/edititem', icon: 'settings' },
-//  { title: 'Make Bills', url: '/control/makebills', icon: 'account_balance_wallet' },
+    { title: 'Make Bills', url: '/control/makebills', icon: 'attach_money' },
     { title: 'Change Password', url: '/control/changepassword', icon: 'vpn_key' },
     { title: 'Edit Token', url: '/control/edittoken', icon: 'stars' }
   ];
@@ -29,7 +29,7 @@ const controlRoutes: Routes = [
             { path: 'edititem', component: EditDishesComponent},
             { path: 'edittoken', component: EditTokenComponent},
             { path: 'changepassword', component: ChangepasskeyComponent},
-//          { path: 'makebills', component: MakebillsComponent},
+            { path: 'makebills', component: MakebillsComponent},
         ]
     }
 ];

@@ -1,0 +1,17 @@
+p {
+    text-align: center;
+}
+
+.mat-card {
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.mat-progress-bar {
+    margin: 12px 0;
+    width: 50%;
+    height: 3px;
+}
