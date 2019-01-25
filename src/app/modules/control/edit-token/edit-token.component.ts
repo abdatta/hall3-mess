@@ -15,6 +15,7 @@ export class EditTokenComponent implements OnInit {
   deleting = -1;
   submitted = false;
   rollno: string;
+  trackBy = (index: number, row: DishModel) => row.name;
 
   constructor(private snackBar: MatSnackBar,
               private tokenService: TokensService,
@@ -25,19 +26,19 @@ export class EditTokenComponent implements OnInit {
 
   listToken() {
     if (this.rollno) {
-    this.tokenService.getEditTokens(this.rollno)
-        .subscribe(tokens => {
-          this.tokens = tokens;
-          this.submitted = true;
-        },
-        error => {
-          if (error === 404) {
-            this.snackBar.open('Rollno not found');
-          }
-        });
-    } else {
-      this.snackBar.open('Please Enter Rollno');
-    }
+      this.tokenService.getEditTokens(this.rollno)
+          .subscribe(tokens => {
+            this.tokens = tokens;
+            this.submitted = true;
+          },
+          error => {
+            if (error === 404) {
+              this.snackBar.open('Rollno not found');
+            }
+          });
+      } else {
+        this.snackBar.open('Please Enter Rollno');
+      }
   }
 
   getCost(token: TokenModel) {
@@ -59,12 +60,23 @@ export class EditTokenComponent implements OnInit {
   delete(dish: DishModel, token: TokenModel) {
     this.tokenService.reduceDishesInToken(dish, token)
     .subscribe((s: number) => {
-      if (s === 200) {
-        this.snackBar.open('Dish deleted successfully');
-      } else {
-        this.snackBar.open('Oops! Some error occured.', 'Retry')
-              .onAction().subscribe(_ => this.delete(dish, token));
-      }
+      this.snackBar.open('Oops! Some error occured.', 'Retry')
+            .onAction().subscribe(_ => this.delete(dish, token));
+  },
+  error => {
+    if (error === 200) {
+      this.snackBar.open('Dish deleted successfully');
+      const i = token.dishes.map(dishitem => dishitem._id.toString())
+                                      .indexOf(dish._id);
+      token.dishes.splice(i, 1);
+      console.log(token);
+      const j = this.tokens.indexOf(token);
+      this.tokens.splice(j, 1, token);
+      console.log(this.tokens);
+    } else {
+      this.snackBar.open('Oops! Some error occured.', 'Retry')
+            .onAction().subscribe(_ => this.delete(dish, token));
+    }
   });
-  }
+ }
 }
