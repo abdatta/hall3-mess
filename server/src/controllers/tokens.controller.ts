@@ -6,6 +6,7 @@ import XLSX from 'xlsx';
 import { TokenModel } from '../models/token.model';
 import { DishModel } from '../models/dish.model';
 import { UserModel } from '../models/user.model';
+import { XLSXConfig } from '../config/xlsx.config';
 
 export class TokensCtrl {
 
@@ -194,25 +195,30 @@ export class TokensCtrl {
         }
 
         let billData: any = {};
+        let totalBill: any = {'Total (₹)': 0};
         this.userModel.find({ permissions: { $size: 0 }, verified: true})
             .then((users: UserModel[]) => {
                 users.forEach(user => billData[user.rollno] = {'Name': user.name, 'Total (₹)': 0});
-                billData['TOTAL EXTRAS'] = {'Name': '', 'Total (₹)': 0};
                 return this.tokenModel.find({date: {$gte: from.format(), $lte: to.format()}}).exec();
             })
             .then((tokens: TokenModel[]) => {
                 tokens.forEach(token => {
                     token.dishes.forEach(dish => {
                         const dishName = `${dish.name} (₹${dish.price})`;
-                        billData[token.rollno] = billData[token.rollno] || {};
-                        billData[token.rollno][dishName] = billData[token.rollno][dishName] || 0;
-                        billData[token.rollno][dishName] += (dish.price * dish.quantity);
-                        billData[token.rollno]['Total (₹)'] = billData[token.rollno]['Total (₹)'] || 0;
+                        const date = moment(token.date).format('Do MMMM YYYY').toUpperCase();
+                        // Initializers
+                        billData[token.rollno] = billData[token.rollno] || {'Total (₹)': 0};
+                        billData[token.rollno][date] = billData[token.rollno][date] || {};
+                        billData[token.rollno][date][dishName] = billData[token.rollno][date][dishName] || 0;
+                        totalBill = totalBill || {'Total (₹)': 0};
+                        totalBill[date] = totalBill[date] || {};
+                        totalBill[date][dishName] = totalBill[date][dishName] || 0;
+
+                        // Updators
+                        billData[token.rollno][date][dishName] += (dish.price * dish.quantity);
                         billData[token.rollno]['Total (₹)'] += (dish.price * dish.quantity);
-                        billData['TOTAL EXTRAS'] = billData['TOTAL EXTRAS'] || {};
-                        billData['TOTAL EXTRAS'][dishName] = billData['TOTAL EXTRAS'][dishName] || 0;
-                        billData['TOTAL EXTRAS'][dishName] += (dish.price * dish.quantity);
-                        billData['TOTAL EXTRAS']['Total (₹)'] += (dish.price * dish.quantity);
+                        totalBill[date][dishName] += (dish.price * dish.quantity);
+                        totalBill['Total (₹)'] += (dish.price * dish.quantity);
                     });
                 });
             })
@@ -221,18 +227,20 @@ export class TokensCtrl {
                     'Roll No': key,
                     ...billData[key]
                 }));
-                const dishes: any = {};
+                billData.push({
+                    'Roll No': 'TOTAL EXTRAS',
+                    ...totalBill
+                });
+
+                const billDataConfig = XLSXConfig.configure(billData, { keys: ['Roll No', 'Name', ...Object.keys(totalBill)]});
+
                 let longestNameLength = 0;
                 billData.forEach((bill: any) => {
                     if (bill['Name'] && bill['Name'].length > longestNameLength) {
                         longestNameLength = bill['Name'].length;
                     }
-                    Object.keys(bill).forEach(col => {
-                        if (col !== 'Name' && col !== 'Roll No') {
-                            dishes[col] = true;
-                        }
-                    });
                 });
+
                 /* generate workbook */
                 // Add Heading Text
                 const ws = XLSX.utils.aoa_to_sheet([['INDIAN INSTITUTE OF TECHNOLOGY KANPUR', '', '', '', '',
@@ -241,14 +249,17 @@ export class TokensCtrl {
                                                       'FROM:', from.format('Do MMMM YYYY').toUpperCase(), '',
                                                       'TO:', to.format('Do MMMM YYYY').toUpperCase()]]);
                 // Append bill data
-                XLSX.utils.sheet_add_json(ws, billData, { origin: 'A4' });
-                ws['!cols'] = [{width: 13}, {width: longestNameLength}, ...Object.keys(dishes).map(dish => ({width: dish.length}))];
+                XLSX.utils.sheet_add_aoa(ws, billDataConfig.aoa, { origin: 'A4' });
+                ws['!cols'] = [{width: 8}, {width: longestNameLength}, {width: 8},
+                               ...billDataConfig.aoa[1].slice(3).map(dish => ({width: dish.length}))];
                 ws['!merges'] = [{s: {c: 0, r: 0}, e: {c: 3, r: 0}},
                                  {s: {c: 0, r: 1}, e: {c: 2, r: 1}},
                                  {s: {c: 0, r: 2}, e: {c: 2, r: 2}},
                                  {s: {c: 5, r: 0}, e: {c: 7, r: 0}},
                                  {s: {c: 5, r: 1}, e: {c: 6, r: 1}},
-                                 {s: {c: 8, r: 1}, e: {c: 9, r: 1}}]
+                                 {s: {c: 8, r: 1}, e: {c: 9, r: 1}},
+                                 ...billDataConfig.merges(3, 0),
+                                 {s: {c: 0, r: 2 + billDataConfig.aoa.length}, e: {c: 1, r: 2 + billDataConfig.aoa.length}}];
                 const wb = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(wb, ws, 'HALL3_EXTRAS');
 
