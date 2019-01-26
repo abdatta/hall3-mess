@@ -9,6 +9,7 @@ export interface TokenModel extends Document {
     date: string;
     rollno: string;
     dishes: {
+        _id: string;
         name: string;
         price: number;
         quantity: number;

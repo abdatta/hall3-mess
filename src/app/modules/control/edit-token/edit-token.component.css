@@ -1,6 +1,3 @@
-.mat-form-field {
-	text-align: center;
-}
 .container{
     width:100%;
 }
@@ -12,8 +9,8 @@
 }
 
 .mat-card {
-max-width:600px;
-width:80%;
+    max-width:600px;
+    width:80%;
 }
 
 .editlist {
@@ -38,9 +35,12 @@ width:80%;
     margin: 15px 20px 5px;
 }
 
-.mat-expansion-panel-spacing {
+.mat-input-element {
+    margin-left: 8px;
+}
+
+.mat-expanded {
     margin: 8px 2px;
-    padding: 5px;
 }
 
 :host >>> .mat-expansion-panel-body {
@@ -70,6 +70,12 @@ tr.mat-footer-row {
 
  .spinner{
     margin-top: 60px;
+}
+
+.mat-progress-bar {
+    margin: 16px 0;
+    width: 25%;
+    height: 4px;
 }
 
 button.mat-button.mat-primary {
@@ -116,9 +122,24 @@ button.mat-button.mat-primary {
  }
 
 .editlist[_ngcontent-c9] {
-    margin-top: 57px;
+    margin-bottom: 40px;
 }
 
 .mat-icon {
     color: slategray;
+}
+
+h4 {
+    font-weight: 400;
+    margin: 18px 0px 0px;
+}
+
+@keyframes deleting {
+    0%   {opacity: 1;}
+    75%  {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+.deleted {
+    animation: deleting 500ms ease-out;
 }

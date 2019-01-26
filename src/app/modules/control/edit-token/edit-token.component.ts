@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { TokensService } from '@app/services';
-import { TokenModel } from '@app/models';
+import { TokensService, DishesService } from '@app/services';
+import { TokenModel, DishModel } from '@app/models';
 import * as moment from 'moment';
 
 @Component({
@@ -11,30 +11,55 @@ import * as moment from 'moment';
 })
 export class EditTokenComponent implements OnInit {
 
-  tokens: TokenModel[];
-  deleting = -1;
+  grouped_tokens = {};
+  dates = [];
+  deleted: {date: string, i: number; j: number};
+  submitting: boolean;
+  submitted: boolean;
+  rollno: string;
+  trackBy = (index: number, row: DishModel) => row.name;
 
-  constructor(private snackbar: MatSnackBar,
-              private tokenService: TokensService) { }
+  constructor(private snackBar: MatSnackBar,
+              private tokenService: TokensService,
+              private dishService: DishesService) { }
 
   ngOnInit() {
   }
 
-  listToken(rollno: number) {
-    if (rollno) {
-    this.tokenService.getEditTokens(rollno)
-        .subscribe(tokens => {
-          this.tokens = tokens;
-          console.log(this.tokens);
-        },
-        error => {
-          if (error === 404) {
-            this.snackbar.open('Not a valid Rollno');
-          }
-        });
-    } else {
-      this.snackbar.open('Please Enter Rollno');
-    }
+  listToken() {
+    if (this.rollno) {
+      this.submitting = true;
+      this.tokenService.getEditTokens(this.rollno)
+          .subscribe(tokens => {
+            // sort tokens by date and time
+            tokens = tokens.sort((t1, t2) => t2.date.localeCompare(t1.date));
+
+            // group tokens by date
+            tokens.forEach(token => {
+              const date = moment(token.date).format('Do MMMM \'YY');
+              if (this.grouped_tokens[date]) {
+                this.grouped_tokens[date].push(token);
+              } else {
+                this.grouped_tokens[date] = [token];
+                this.dates.push(date);
+              }
+            });
+
+            this.submitting = false;
+            this.submitted = true;
+          },
+          error => {
+            if (error === 404) {
+              this.snackBar.open('User does not exist.');
+            } else {
+              this.snackBar.open('Oops! Some error occured.', 'Retry')
+                    .onAction().subscribe(_ => this.listToken());
+            }
+            this.submitting = false;
+          });
+      } else {
+        this.snackBar.open('Please enter a roll no.');
+      }
   }
 
   getCost(token: TokenModel) {
@@ -45,33 +70,41 @@ export class EditTokenComponent implements OnInit {
   }
 
   format(date: string) {
-    if (moment(date).format('HHmm') <= '1045') {
-      return 'Breakfast ' + moment(date).format('HH:mm') + '\u00A0hrs';
-    } else if ((moment(date).format('HHmm') > '1045') && (moment(date).format('HHmm') <= '1700')) {
-      return 'Lunch ' + moment(date).format('HH:mm') + '\u00A0hrs';
-    } else {return 'Dinner ' + moment(date).format('HH:mm') + '\u00A0hrs'; }
+      return this.dishService.getSlot(date) + ' ' + moment(date).format('HH:mm') + '\u00A0hrs';
   }
 
-  showConfirmDelete(i: number) {
-    this.deleting = i;
-    setTimeout(() => this.hideConfirmDelete(i), 6000);
+  back() {
+    this.submitted = false;
+    this.dates = [];
+    this.grouped_tokens = {};
+    this.rollno = '';
   }
 
-  hideConfirmDelete(i: number) {
-    if (this.deleting === i) {
-      this.deleting = -1;
-    }
+  delete(date: string, i: number, j: number) { // i is token index, j is dish index
+    this.tokenService.reduceDishesInToken(this.grouped_tokens[date][i], this.grouped_tokens[date][i].dishes[j])
+      .subscribe(
+        (updatedToken: TokenModel) => {
+          this.snackBar.open('Dish deleted successfully');
+          this.deleted = {date, i, j};
+          setTimeout(() => {
+            this.grouped_tokens[date][i] = updatedToken;
+            this.deleted = undefined;
+          }, 500); // match the delay with the css animation
+        },
+        (error) => {
+          if (error === 404) {
+            this.snackBar.open('Invalid token or dish.');
+          } else {
+            this.snackBar.open('Oops! Some error occured.', 'Retry')
+                  .onAction().subscribe(_ => this.delete(date, i, j));
+          }
+        });
   }
 
-  discard(i: number) {
-
-  }
-
-  changeQuantity(i: number, j: number ) {
-    this.tokens[i].dishes[j].quantity -= 1;
-  }
-
-  save(i: number) {
-
+  isDeleted(date: string, i: number, j: number) {
+    return this.deleted &&
+           this.deleted.date === date &&
+           this.deleted.i === i &&
+           this.deleted.j === j;
   }
 }
