@@ -1,8 +1,4 @@
 version: 2.1
-general:
-  branches:
-    only:
-     - dev
 
 workflows:
   version: 2.1
@@ -11,6 +7,9 @@ workflows:
       - lint
       - build
       - deploy:
+          filters:
+            branches:
+              only: dev
           requires:
             - lint
             - build
