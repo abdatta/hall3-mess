@@ -1,24 +1,23 @@
 <div class="container">
-    <h2>Edit Token</h2>
-    <mat-card *ngIf="!submitted">
-      <div>
-      Enter Roll no:
+  <h2>Edit Token</h2>
+  <mat-card *ngIf="!submitted">
+    <div>
+      Enter Roll No:
       <mat-form-field>
-      <input matInput type="text" (keyup.enter)="listToken()" [(ngModel)]="rollno">
+        <input matInput type="text" (keyup.enter)="listToken()" [(ngModel)]="rollno">
       </mat-form-field>
     </div>
     <br>
-    <button mat-raised-button (click)="listToken()" color="primary">List Tokens</button>
-  
+    <div class="container" *ngIf="submitting">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <button mat-raised-button *ngIf="!submitting" (click)="listToken()" color="primary">List Tokens</button>
   </mat-card>
 
-  <button *ngIf="submitted" mat-raised-button type="button" color="primary" (click)="back()">
-      Back
-  </button>
-  <h4 *ngIf="submitted">
-      Rollno: {{ rollno }}
-  </h4>
-    <div *ngIf="submitted" class="editlist">
+  <button *ngIf="submitted" mat-raised-button type="button" color="primary" (click)="back()"><b>Back</b></button>
+
+  <h4 *ngIf="submitted">Roll No: {{ rollno }}</h4>
+  <div *ngIf="submitted" class="editlist">
     <mat-expansion-panel *ngFor="let token of tokens; let i=index;" [expanded]="i === 0">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -38,18 +37,24 @@
         
           <ng-container matColumnDef="Quantity">
             <th mat-header-cell *matHeaderCellDef> Quantity </th>
-            <td mat-cell *matCellDef="let dish; let j= index">
+            <td mat-cell *matCellDef="let dish">
                   {{dish.quantity}}
             </td>
 
           </ng-container>
 
           <ng-container matColumnDef="Cost">
-            <th mat-header-cell *matHeaderCellDef> Delete </th>
-            <td mat-cell *matCellDef="let dish">
-                <button mat-icon-button (click)="delete(dish,token)">
-                  <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+            <th mat-header-cell *matHeaderCellDef> Options </th>
+            <td mat-cell *matCellDef="let dish; let j= index;">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
                 </button>
+                <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                  <button mat-menu-item (click)="delete(i, j)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
             </td>
 
           </ng-container>

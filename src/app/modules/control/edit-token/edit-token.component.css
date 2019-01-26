@@ -1,6 +1,3 @@
-.mat-form-field {
-	text-align: center;
-}
 .container{
     width:100%;
 }
@@ -12,8 +9,8 @@
 }
 
 .mat-card {
-max-width:600px;
-width:80%;
+    max-width:600px;
+    width:80%;
 }
 
 .editlist {
@@ -36,6 +33,10 @@ width:80%;
 
 .date {
     margin: 15px 20px 5px;
+}
+
+.mat-input-element {
+    margin-left: 8px;
 }
 
 .mat-expansion-panel-spacing {
@@ -75,6 +76,12 @@ tr.mat-footer-row {
 
  .spinner{
     margin-top: 60px;
+}
+
+.mat-progress-bar {
+    margin: 16px 0;
+    width: 25%;
+    height: 4px;
 }
 
 button.mat-button.mat-primary {

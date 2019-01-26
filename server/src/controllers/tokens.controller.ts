@@ -151,20 +151,15 @@ export class TokensCtrl {
     }
 
     public reduceDishesInToken = (req: Request, res: Response) => {
-        this.tokenModel.findById(req.params.id)
+        const tokenId = req.params.id;
+        const dishId = req.body._id;
+        this.tokenModel.findByIdAndUpdate(tokenId, {$pull: {dishes: {_id: dishId }}}, {new: true})
             .then(token => {
                 if (!token) {
                     res.sendStatus(404);
                     return;
                 }
-                const i = token.dishes.map(dish => dish._id.toString())
-                                        .indexOf(req.body._id)
-                if (i === -1 ) {console.log(token.dishes.map(dish => dish._id));
-                    res.sendStatus(404);
-                    return;
-                }
-                token.dishes.splice(i,1);
-                token.save().then(token => res.sendStatus(200));
+                res.status(200).json(token);
             })
             .catch((error) => this.internalServer(res, error));
     }
@@ -181,16 +176,17 @@ export class TokensCtrl {
     }
 
     public getEditTokens = (req: Request, res: Response) => {
-        const rollno = req.query.rollno;
         const maxtoken = 10;
-        this.userModel.findOne({ rollno: rollno }, 'tokens')
-            .populate('tokens')
+        this.userModel.findOne({ rollno: req.query.rollno }, 'tokens')
+            .populate({
+                path: 'tokens',
+                options: { sort: '-date', limit: maxtoken }
+            })
             .then(user => {
                 if (!user) {
                     res.sendStatus(404); // not found
                     return;
                 }
-                user.tokens.splice(maxtoken);
                 res.status(200).json(user.tokens);
             })
             .catch((error) => this.internalServer(res, error));

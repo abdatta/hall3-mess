@@ -52,12 +52,9 @@ export class TokensService {
       );
   }
 
-  reduceDishesInToken(dish: DishModel, token: TokenModel): Observable<number> {
-      return this.http.post('/api/tokens/reduce/' + token._id, dish )
-        .pipe(
-          map(response => 200),
-          catchError(this.handleError)
-        );
+  reduceDishesInToken(token: TokenModel, dish: DishModel): Observable<TokenModel> {
+      return this.http.post<TokenModel>('/api/tokens/reduce/' + token._id, dish )
+        .pipe(catchError(this.handleError));
   }
 
   getRecentTokens(): Observable<TokenModel[]> {
