@@ -234,7 +234,7 @@ export class Server {
     // API Routes
     this.app.use('/api/account', AccountsRoute.create(this.accountCtrl));
     this.app.use('/api/notifications', NotificationsRoute.create(this.notificationCtrl, this.accountCtrl));
-    this.app.use('/api/dishes', DishesRoute.create(this.dishesCtrl));
+    this.app.use('/api/dishes', DishesRoute.create(this.dishesCtrl, this.accountCtrl));
     this.app.use('/api/tokens', TokensRoute.create(this.tokensCtrl, this.accountCtrl));
 
     // Public Routes

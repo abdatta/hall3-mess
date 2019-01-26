@@ -49,6 +49,16 @@ export class AccountCtrl {
         }
     }
 
+    public checkPermissions(...permissions: string[]) {
+        return (req: Request, res: Response, next: NextFunction) => {
+            if (req.isAuthenticated() && permissions.every(permission => req.user.permissions.includes(permission))) {
+                next();
+            } else {
+                res.sendStatus(401);  // Unauthorized
+            }
+        };
+    }
+
     /**
      * Login user into the session
      *

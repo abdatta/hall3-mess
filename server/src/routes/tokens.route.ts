@@ -32,9 +32,8 @@ export class TokensRoute {
             .get('/user', accountCtrl.checkAuth, tokenCtrl.getUserTokens)
             .post('/book', accountCtrl.checkAuth, tokenCtrl.addToken)
             .get('/filter', accountCtrl.checkAuth, tokenCtrl.getEditTokens)
-            .get('/bill', tokenCtrl.getBillAsExcelSheet)
-            .post('/reduce/:id', accountCtrl.checkAuth, tokenCtrl.reduceDishesInToken)
-            .get('/filter', accountCtrl.checkAuth, tokenCtrl.getEditTokens);
+            .get('/bill',  accountCtrl.checkPermissions('make_bills'), tokenCtrl.getBillAsExcelSheet)
+            .post('/reduce/:id', accountCtrl.checkPermissions('reduce_token'), tokenCtrl.reduceDishesInToken);
         return router;
     }
 
