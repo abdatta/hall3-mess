@@ -67,7 +67,8 @@ export class NestedJsonToAoa {
             }
             if (dim[key].length > 1) {
                 this._merges.push({s: {r: i, c: j}, e: {r: i, c: j + dim[key].length - 1}});
-            } else if (dim[key].depth < this.maxDepth) {
+            }
+            if (!this.isObject(data[key]) && dim[key].depth < this.maxDepth) {
                 this._merges.push({s: {r: i, c: j}, e: {r: i + this.maxDepth - dim[key].depth, c: j}});
             }
             for (let k = 0; k < dim[key].length; k++) {
