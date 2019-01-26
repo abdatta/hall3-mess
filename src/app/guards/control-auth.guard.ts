@@ -14,13 +14,22 @@ export class ControlAuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      return this.authService.isAdmin()
-      .then((result: boolean) => {
-        if (!result) {
-          this.router.navigateByUrl('/');
-        }
-        return result;
-      });
+      return this.authService.hasControl()
+        .then((result: boolean) => {
+          if (!result) {
+            this.router.navigateByUrl('/');
+          }
+          if (next.data.permissions) {
+            return this.authService.hasPermissions(next.data.permissions)
+              .then(allowed => {
+                if (!allowed) {
+                  this.router.navigateByUrl(next.data.redirectTo);
+                }
+                return allowed;
+              });
+          }
+          return result;
+        });
   }
 
 }

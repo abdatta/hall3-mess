@@ -15,7 +15,7 @@ export class ControlUnAuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      return this.authService.isAdmin()
+      return this.authService.hasControl()
       .then((result: boolean) => {
         if (result) {
           this.router.navigateByUrl('/control');

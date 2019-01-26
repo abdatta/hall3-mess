@@ -34,13 +34,17 @@ export class MainNavComponent implements OnInit {
               }
 
   async ngOnInit() {
-    this.route.data.subscribe(data => {
+    this.route.data.subscribe(async data => {
       this.role = data.role;
-      this.navs = data.navs;
+
+      const permissions = await Promise.all(data.navs.map(async nav =>
+        // either no permission criteria given, or if given, meets permission criteria
+        !nav.permissions || await this.authService.hasPermissions(nav.permissions)
+      ));
+      this.navs = data.navs.filter((nav, i) => permissions[i]);
     });
 
-    this.navheader = this.role === 'mess' ? 'MESS' :
-                     (await this.authService.getUser()).rollno;
+    this.navheader = this.role === 'mess' ? 'Mess' : (await this.authService.getUser()).rollno;
 
   }
 

@@ -35,8 +35,11 @@ export class AuthService {
 
   check = (): Promise<boolean> => this.currentUser.then((user: UserModel) => user != null);
 
-  isAdmin = (): Promise<boolean> => this.currentUser.then((user: UserModel) =>
-                user.rollno === 'admin' || user.rollno === 'secy' || user.rollno === 'mess')
+  hasControl = (): Promise<boolean> => this.currentUser.then((user: UserModel) =>
+                                       user.permissions.length > 0 || user.rollno === 'admin')
+
+  hasPermissions = (perms: string[]): Promise<boolean> => this.currentUser.then((user: UserModel) =>
+                       perms.every(perm => user.permissions.includes(perm)) || user.rollno === 'admin')
 
   authIITK(IITKusername: string, IITKpassword: string): Observable<number> {
     return this.http.post('/api/account/auth/iitk', { IITKusername, IITKpassword })
