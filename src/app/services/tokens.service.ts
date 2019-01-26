@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 
 import { TokenModel, DishModel, UserModel } from '@app/models';
 import { AuthService } from '@app/services/auth.service';
+import { Moment } from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,20 @@ export class TokensService {
   getEditTokens(rollno: number): Observable<TokenModel[]> {
     return this.http.get<TokenModel[]>('/api/tokens/filter?rollno=' + rollno)
       .pipe(catchError(this.handleError));
+  }
+
+  downloadMessBill(from: Moment, to: Moment): Observable<{name: string, data: Blob}> {
+    const billName = `Mess_Bill_${from.format('DDMMMYYYY')}_TO_${to.format('DDMMMYYYY')}`.toUpperCase() + '.xlsx';
+    return this.http.get(`/api/tokens/bill?from=${encodeURIComponent(from.format())}` +
+                                         `&to=${encodeURIComponent(to.format())}`,
+                        {responseType: 'arraybuffer'})
+      .pipe(
+        map(data => ({
+          name: billName,
+          data: new Blob([data], {type: 'application/ms-excel'})
+        })),
+        catchError(this.handleError)
+        );
   }
 
   handleError(error: any): Observable<any> {

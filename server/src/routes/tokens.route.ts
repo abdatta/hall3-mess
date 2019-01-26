@@ -31,7 +31,8 @@ export class TokensRoute {
             .get('/', accountCtrl.checkMessAuth, tokenCtrl.getLatestTokens)
             .get('/user', accountCtrl.checkAuth, tokenCtrl.getUserTokens)
             .post('/book', accountCtrl.checkAuth, tokenCtrl.addToken)
-            .get('/filter', accountCtrl.checkAuth, tokenCtrl.getEditTokens);
+            .get('/filter', accountCtrl.checkAuth, tokenCtrl.getEditTokens)
+            .get('/bill', tokenCtrl.getBillAsExcelSheet);
         return router;
     }
 
