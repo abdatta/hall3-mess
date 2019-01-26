@@ -39,22 +39,16 @@
     margin-left: 8px;
 }
 
-.mat-expansion-panel-spacing {
+.mat-expanded {
     margin: 8px 2px;
-    padding: 5px;
 }
 
 :host >>> .mat-expansion-panel-body {
     padding: 0 16px 16px;
-    margin-bottom: 22px;
 }
 
 .mat-expansion-panel-header-title {
     color: rgba(0,0,0,.54);
-}
-
-.mat-expansion-panel-header {
-    margin: 6px 0px;
 }
 
 .mat-expansion-panel-header-description {

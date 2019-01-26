@@ -11,8 +11,9 @@ import * as moment from 'moment';
 })
 export class EditTokenComponent implements OnInit {
 
-  tokens: TokenModel[];
-  deleted: {i: number; j: number};
+  grouped_tokens = {};
+  dates = [];
+  deleted: {date: string, i: number; j: number};
   submitting: boolean;
   submitted: boolean;
   rollno: string;
@@ -33,7 +34,17 @@ export class EditTokenComponent implements OnInit {
             // sort tokens by date and time
             tokens = tokens.sort((t1, t2) => t2.date.localeCompare(t1.date));
 
-            this.tokens = tokens;
+            // group tokens by date
+            tokens.forEach(token => {
+              const date = moment(token.date).format('Do MMMM \'YY');
+              if (this.grouped_tokens[date]) {
+                this.grouped_tokens[date].push(token);
+              } else {
+                this.grouped_tokens[date] = [token];
+                this.dates.push(date);
+              }
+            });
+
             this.submitting = false;
             this.submitted = true;
           },
@@ -64,17 +75,19 @@ export class EditTokenComponent implements OnInit {
 
   back() {
     this.submitted = false;
+    this.dates = [];
+    this.grouped_tokens = {};
     this.rollno = '';
   }
 
-  delete(i: number, j: number) { // i is token index, j is dish index
-    this.tokenService.reduceDishesInToken(this.tokens[i], this.tokens[i].dishes[j])
+  delete(date: string, i: number, j: number) { // i is token index, j is dish index
+    this.tokenService.reduceDishesInToken(this.grouped_tokens[date][i], this.grouped_tokens[date][i].dishes[j])
       .subscribe(
         (updatedToken: TokenModel) => {
           this.snackBar.open('Dish deleted successfully');
-          this.deleted = {i, j};
+          this.deleted = {date, i, j};
           setTimeout(() => {
-            this.tokens[i] = updatedToken;
+            this.grouped_tokens[date][i] = updatedToken;
             this.deleted = undefined;
           }, 500); // match the delay with the css animation
         },
@@ -83,8 +96,15 @@ export class EditTokenComponent implements OnInit {
             this.snackBar.open('Invalid token or dish.');
           } else {
             this.snackBar.open('Oops! Some error occured.', 'Retry')
-                  .onAction().subscribe(_ => this.delete(i, j));
+                  .onAction().subscribe(_ => this.delete(date, i, j));
           }
         });
+  }
+
+  isDeleted(date: string, i: number, j: number) {
+    return this.deleted &&
+           this.deleted.date === date &&
+           this.deleted.i === i &&
+           this.deleted.j === j;
   }
 }
