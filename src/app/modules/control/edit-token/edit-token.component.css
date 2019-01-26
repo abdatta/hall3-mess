@@ -139,3 +139,13 @@ h4 {
     font-weight: 400;
     margin: 18px 0px 0px;
 }
+
+@keyframes deleting {
+    0%   {opacity: 1;}
+    75%  {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+.deleted {
+    animation: deleting 500ms ease-out;
+}

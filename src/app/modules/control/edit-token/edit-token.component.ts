@@ -12,6 +12,7 @@ import * as moment from 'moment';
 export class EditTokenComponent implements OnInit {
 
   tokens: TokenModel[];
+  deleted: {i: number; j: number};
   submitting: boolean;
   submitted: boolean;
   rollno: string;
@@ -71,7 +72,11 @@ export class EditTokenComponent implements OnInit {
       .subscribe(
         (updatedToken: TokenModel) => {
           this.snackBar.open('Dish deleted successfully');
-          this.tokens[i] = updatedToken;
+          this.deleted = {i, j};
+          setTimeout(() => {
+            this.tokens[i] = updatedToken;
+            this.deleted = undefined;
+          }, 500); // match the delay with the css animation
         },
         (error) => {
           if (error === 404) {
