@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material';
 import { TokensService, DishesService } from '@app/services';
 import { TokenModel, DishModel } from '@app/models';
 import * as moment from 'moment';
+import { d } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-edit-token',
@@ -17,7 +18,7 @@ export class EditTokenComponent implements OnInit {
   submitting: boolean;
   submitted: boolean;
   rollno: string;
-  trackBy = (index: number, row: DishModel) => row.name;
+  expandedTokens: string[];
 
   constructor(private snackBar: MatSnackBar,
               private tokenService: TokensService,
@@ -45,6 +46,7 @@ export class EditTokenComponent implements OnInit {
               }
             });
 
+            this.expandedTokens = [tokens[0]._id];
             this.submitting = false;
             this.submitted = true;
           },
@@ -78,6 +80,7 @@ export class EditTokenComponent implements OnInit {
     this.dates = [];
     this.grouped_tokens = {};
     this.rollno = '';
+    this.deleted = undefined;
   }
 
   delete(date: string, i: number, j: number) { // i is token index, j is dish index
@@ -106,5 +109,19 @@ export class EditTokenComponent implements OnInit {
            this.deleted.date === date &&
            this.deleted.i === i &&
            this.deleted.j === j;
+  }
+
+  openedToken(tokenId: string) {
+    if ( !this.expandedTokens.includes(tokenId) ) {
+      this.expandedTokens.push(tokenId);
+    }
+  }
+
+  closedToken(tokenId: string) {
+    this.expandedTokens.splice(this.expandedTokens.indexOf(tokenId), 1);
+  }
+
+  isExpanded(tokenId: string) {
+    return this.expandedTokens.includes(tokenId);
   }
 }
