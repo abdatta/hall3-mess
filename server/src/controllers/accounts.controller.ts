@@ -51,7 +51,9 @@ export class AccountCtrl {
 
     public checkPermissions(...permissions: string[]) {
         return (req: Request, res: Response, next: NextFunction) => {
-            if (req.isAuthenticated() && permissions.every(permission => req.user.permissions.includes(permission))) {
+            if (req.isAuthenticated() &&
+                    (req.user.rollno === 'admin' ||
+                    permissions.every(permission => req.user.permissions.includes(permission)))) {
                 next();
             } else {
                 res.sendStatus(401);  // Unauthorized
