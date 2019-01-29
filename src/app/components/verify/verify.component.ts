@@ -37,6 +37,9 @@ export class VerifyComponent implements OnInit {
           this.status = false;
           this.message =
             'User does not exist. You either haven\'t signed up or your account has been deregistered using the link in your email.';
+        } else if (code === 999) {
+          this.status = false;
+          this.message = 'You are offline. You need to be online to verify your account.';
         } else {
           this.status = false;
           this.message = 'Verification Failed! Click to try again.';

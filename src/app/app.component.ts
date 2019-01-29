@@ -5,6 +5,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxAnalyticsGoogleAnalytics } from 'ngx-analytics/ga';
 import { NgxAnalytics } from 'ngx-analytics';
 import { PWAPromptComponent } from '@app/components';
+import { Network } from '@ngx-pwa/offline';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   constructor(private swUpdate: SwUpdate,
               private bottomSheet: MatBottomSheet,
               private deviceService: DeviceDetectorService,
+              protected network: Network, // important for offline detection
               // Keep googleAnalytics variable !important
               private analytics: NgxAnalytics,
               private googleAnalytics: NgxAnalyticsGoogleAnalytics) {}
