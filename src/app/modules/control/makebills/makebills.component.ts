@@ -59,6 +59,8 @@ export class MakebillsComponent implements OnInit {
       }, (err) => {
         if (err === 400) {
           this.snackBar.open('Invalid date format. Please enter valid date.');
+        } else if (err === 999) {
+          this.snackBar.open('You are OFFLINE. Please come online and try again.');
         } else {
           this.snackBar.open('Oops! Some error occured.', 'Retry')
                 .onAction().subscribe(_ => this.requestDownload());

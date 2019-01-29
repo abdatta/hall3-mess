@@ -59,6 +59,16 @@ export class QRBookComponent implements OnInit {
                 .subscribe(token => {
                   this.snackBar.open('Dishes booked successfully');
                   this.dialogRef.close();
+                },
+                error => {
+                  if (error === 400) {
+                    this.snackBar.open('Invalid Request');
+                  } else if (error === 999) {
+                    this.snackBar.open('You are OFFLINE. Booking only works online.');
+                  } else {
+                    this.snackBar.open('Oops! Some error occured', 'Retry')
+                      .onAction().subscribe(_ => this.logInAndBook(pass));
+                  }
                 });
           } else if (s === 401) {
             pass.focus();

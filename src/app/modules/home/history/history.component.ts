@@ -68,7 +68,11 @@ export class HistoryComponent implements OnInit {
         this.loading = false;
       },
       error => {
-        this.snackBar.open('Oops! Some error occured. Please refresh the page.');
+        if (error === 999) {
+          this.snackBar.open('We have no offline data at the moment. Please come online to load some data.');
+        } else {
+          this.snackBar.open('Oops! Some error occured. Please refresh the page.');
+        }
         this.loading = false;
       });
 
