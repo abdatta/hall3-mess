@@ -51,6 +51,14 @@ export class QRBookComponent implements OnInit {
             this.dialogRef.close();
           }
           this.loading = false;
+        },
+        error => {
+          if (error === 999) {
+            this.snackBar.open('You are OFFLINE. Please come online and try again.');
+          } else {
+            this.snackBar.open('Oops! Some error occured. Please refresh the page.');
+          }
+          this.loading = false;
         });
   }
 
