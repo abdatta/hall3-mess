@@ -34,7 +34,7 @@ export class BookComponent implements OnInit, OnDestroy {
       },
       error => {
         if (error === 999) {
-          this.snackBar.open('We have no offline data at the moment. Please come online to load some data.');
+          this.snackBar.open('You are OFFLINE. Please come online and try again.');
         } else {
           this.snackBar.open('Oops! Some error occured. Please refresh the page.');
         }
