@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DishesService } from '@app/services';
 import { DishModel } from '@app/models';
 import * as moment from 'moment';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-thisweek',
@@ -22,7 +23,8 @@ export class ThisweekComponent implements OnInit {
   active: number;
   menu = {};
 
-  constructor(private dishesService: DishesService) { }
+  constructor(private dishesService: DishesService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.active = this.days.indexOf(moment().format('dddd'));
@@ -34,6 +36,12 @@ export class ThisweekComponent implements OnInit {
             Lunch: this.groupByPrebookable(this.filterSlot(dishes, 'Lunch')),
             Dinner: this.groupByPrebookable(this.filterSlot(dishes, 'Dinner')),
           };
+        }, error => {
+          if (error === 999) {
+            this.snackBar.open(`We have no offline data at the moment for ${day}. Please come online to load some data.`);
+          } else {
+            this.snackBar.open('Oops! Some error occured. Please refresh the page.');
+          }
         });
     }
   }

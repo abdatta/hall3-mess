@@ -33,7 +33,11 @@ export class BookComponent implements OnInit, OnDestroy {
         this.loading = false;
       },
       error => {
-        this.snackBar.open('Oops! Some error occured. Please refresh the page.');
+        if (error === 999) {
+          this.snackBar.open('We have no offline data at the moment. Please come online to load some data.');
+        } else {
+          this.snackBar.open('Oops! Some error occured. Please refresh the page.');
+        }
         this.loading = false;
       });
   }
@@ -52,12 +56,13 @@ export class BookComponent implements OnInit, OnDestroy {
         error => {
           if (error === 400) {
             this.snackBar.open('Invalid Request');
-            this.loading = false;
+          } else if (error === 999) {
+            this.snackBar.open('You are OFFLINE. Booking only works online.');
           } else {
             this.snackBar.open('Oops! Some error occured', 'Retry')
               .onAction().subscribe(_ => this.book(selected));
-            this.loading = false;
           }
+          this.loading = false;
           this.submitting = false;
         });
     } else {
