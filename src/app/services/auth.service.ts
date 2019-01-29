@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Network } from '@ngx-pwa/offline';
 
 import { UserModel } from '@app/models';
 import { NotificationsService } from '@app/services/notifications.service';
@@ -19,6 +20,7 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private router: Router,
+              private network: Network,
               private analytics: NgxAnalytics,
               private dishesService: DishesService,
               private notificationsService: NotificationsService) {
@@ -192,7 +194,10 @@ export class AuthService {
       return messingOut;
   }
 
-  handleError(error: any): Observable<any> {
+  handleError = (error: any): Observable<any> => {
+    if (!this.network.online) {
+      error.status = 999; // Custom Error Code for Offline Status
+    }
     if (error.status === 401) {
       this.currentUser = Promise.resolve(null);
     }

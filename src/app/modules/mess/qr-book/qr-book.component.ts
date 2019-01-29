@@ -81,6 +81,8 @@ export class QRBookComponent implements OnInit {
           } else if (s === 401) {
             pass.focus();
             this.snackBar.open('Incorrect Username or Password');
+          } else if (s === 999) {
+            this.snackBar.open('You are OFFLINE. Come online and try again.');
           } else {
             this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.logInAndBook(pass));

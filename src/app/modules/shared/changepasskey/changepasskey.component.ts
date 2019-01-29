@@ -48,6 +48,8 @@ export class ChangepasskeyComponent implements OnInit {
                 this.snackBar.open('Current password is incorrect.');
                 cp.value = '';
                 cp.focus();
+            } else if (s === 999) {
+              this.snackBar.open('You are OFFLINE. Come online and try again.');
             } else {
                 this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.changepassword(cp, np, rnp));
