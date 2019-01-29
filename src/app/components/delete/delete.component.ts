@@ -36,6 +36,9 @@ export class DeleteComponent implements OnInit {
         } else if (code === 404) {
           this.status = false;
           this.message = 'User does not exist. You might have already deregistered.';
+        } else if (code === 999) {
+          this.status = false;
+          this.message = 'You are offline. You need to be online to deregister your account.';
         } else {
           this.status = false;
           this.message = 'Failed to deregister! Click to try again.';

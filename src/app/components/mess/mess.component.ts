@@ -28,6 +28,8 @@ export class MessComponent implements OnInit {
             this.router.navigateByUrl('/mess/login');
           } else if (s === 403) {
             this.snackBar.open('Incorrect Password');
+          } else if (s === 999) {
+            this.snackBar.open('You are OFFLINE. Come online and try again.');
           } else {
             this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.messIn(password));

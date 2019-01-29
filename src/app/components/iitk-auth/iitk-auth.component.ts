@@ -32,6 +32,8 @@ export class IITKAuthComponent implements OnInit {
               this.snackBar.open('Incorrect IITK Username or Password.');
             } else if (code === 408) {
               this.snackBar.open('IITK server is down. Please try after some time.');
+            } else if (code === 999) {
+              this.snackBar.open('You are OFFLINE. You need to be online to authenticate.');
             } else {
               this.snackBar.open('Oops! Some error occured.', 'Retry')
                     .onAction().subscribe(_ => this.authoriseIITK(user, pass));

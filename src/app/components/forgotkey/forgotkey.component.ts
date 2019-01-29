@@ -26,6 +26,8 @@ export class ForgotkeyComponent implements OnInit {
           this.snackBar.open('Reset password link sent. Check mail.');
         } else if (code === 404) {
           this.snackBar.open('Roll no does not exist. Please sign up first.');
+        } else if (code === 999) {
+          this.snackBar.open('You are OFFLINE. Come online and try again.');
         } else {
           this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.submit(roll));
