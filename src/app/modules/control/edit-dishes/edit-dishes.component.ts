@@ -19,7 +19,7 @@ export class EditDishesComponent implements OnInit {
 
   constructor(private dishesService: DishesService,
               private dialog: MatDialog,
-              private snackbar: MatSnackBar) {
+              private snackBar: MatSnackBar) {
 
   }
 
@@ -30,6 +30,14 @@ export class EditDishesComponent implements OnInit {
         this.dishes = dishes;
         this.backupDishes = JSON.parse(JSON.stringify(dishes));
         this.loading = false;
+      },
+      error => {
+        if (error === 999) {
+          this.snackBar.open('You are OFFLINE. Please come online and try again.');
+        } else {
+          this.snackBar.open('Oops! Some error occured', 'Retry')
+            .onAction().subscribe(_ => this.ngOnInit());
+        }
       });
   }
 
@@ -37,7 +45,15 @@ export class EditDishesComponent implements OnInit {
     this.dishesService.updateDish(this.dishes[i])
       .subscribe(dish => {
         this.backupDishes[i] = JSON.parse(JSON.stringify(dish));
-        this.snackbar.open('Dish saved successfully');
+        this.snackBar.open('Dish saved successfully');
+      },
+      error => {
+        if (error === 999) {
+          this.snackBar.open('You are OFFLINE. Please come online and try again.');
+        } else {
+          this.snackBar.open('Oops! Some error occured', 'Retry')
+            .onAction().subscribe(_ => this.save(i));
+        }
       });
   }
 
@@ -74,7 +90,15 @@ export class EditDishesComponent implements OnInit {
     this.dishesService.deleteDish(this.dishes[i])
       .subscribe(dish => {
         this.dishes.splice(i, 1);
-        this.snackbar.open('Dish deleted successfully');
+        this.snackBar.open('Dish deleted successfully');
+      },
+      error => {
+        if (error === 999) {
+          this.snackBar.open('You are OFFLINE. Please come online and try again.');
+        } else {
+          this.snackBar.open('Oops! Some error occured', 'Retry')
+            .onAction().subscribe(_ => this.delete(i));
+        }
       });
   }
 

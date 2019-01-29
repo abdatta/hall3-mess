@@ -14,7 +14,7 @@ export class AddDishComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<AddDishComponent>,
               private dishesService: DishesService,
-              private snackbar: MatSnackBar) {
+              private snackBar: MatSnackBar) {
                 this.dish = {
                   _id: null,
                   short_id: null,
@@ -34,7 +34,15 @@ export class AddDishComponent implements OnInit {
     this.dishesService.addDish(this.dish)
       .subscribe(dish => {
         this.dialogRef.close(dish);
-        this.snackbar.open('Dish saved successfully');
+        this.snackBar.open('Dish saved successfully');
+      },
+      error => {
+        if (error === 999) {
+          this.snackBar.open('You are OFFLINE. Please come online and try again.');
+        } else {
+          this.snackBar.open('Oops! Some error occured', 'Retry')
+            .onAction().subscribe(_ => this.add());
+        }
       });
     }
   }
@@ -45,13 +53,13 @@ export class AddDishComponent implements OnInit {
 
   isValid(dish: DishModel) {
     if (!dish.name) {
-      this.snackbar.open('Please enter dish name');
+      this.snackBar.open('Please enter dish name');
     } else if (!dish.price) {
-      this.snackbar.open('Please enter dish price');
+      this.snackBar.open('Please enter dish price');
     } else if (!dish.slot.length) {
-      this.snackbar.open('Please enter dish slot(s)');
+      this.snackBar.open('Please enter dish slot(s)');
     } else if (!dish.days.length) {
-      this.snackbar.open('Please enter day(s)');
+      this.snackBar.open('Please enter day(s)');
     } else {
       return true;
     }

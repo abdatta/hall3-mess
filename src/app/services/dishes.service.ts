@@ -49,7 +49,7 @@ export class DishesService {
       .pipe(catchError(this.handleError));
   }
 
-  handleError(error: any): Observable<any> {
+  handleError = (error: any): Observable<any> => {
     if (!this.network.online) {
       error.status = 999; // Custom Error Code for Offline Status
     }
