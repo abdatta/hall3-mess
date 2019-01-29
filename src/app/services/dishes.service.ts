@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { Network } from '@ngx-pwa/offline';
 
 import { DishModel } from '@app/models/dish.model';
-import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DishesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private network: Network) { }
 
   getSlot(date = new Date().toISOString()): ('Breakfast' | 'Lunch' | 'Dinner') {
     if (moment(date).format('HHmm') <= '1100') {
@@ -48,6 +50,9 @@ export class DishesService {
   }
 
   handleError(error: any): Observable<any> {
+    if (!this.network.online) {
+      error.status = 999; // Custom Error Code for Offline Status
+    }
     return throwError(error.status || error.message || error);
   }
 }

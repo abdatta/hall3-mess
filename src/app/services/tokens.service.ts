@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError, Subject } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Moment } from 'moment';
+import { Network } from '@ngx-pwa/offline';
 
 import { TokenModel, DishModel } from '@app/models';
-import { Moment } from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class TokensService {
   private _recentTokens: TokenModel[];
   recentTokens: Subject<TokenModel[]>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private network: Network) {
     this._recentTokens = [];
     this.recentTokens = new Subject();
   }
@@ -66,19 +68,20 @@ export class TokensService {
 
   downloadMessBill(from: Moment, to: Moment): Observable<{name: string, data: Blob}> {
     const billName = `Mess_Bill_${from.format('DDMMMYYYY')}_TO_${to.format('DDMMMYYYY')}`.toUpperCase() + '.xlsx';
-    return this.http.get(`/api/tokens/bill?from=${encodeURIComponent(from.format())}` +
-                                         `&to=${encodeURIComponent(to.format())}`,
-                        {responseType: 'arraybuffer'})
+    return this.http.get(
+        `/api/tokens/bill?from=${encodeURIComponent(from.format())}&to=${encodeURIComponent(to.format())}`,
+        {responseType: 'arraybuffer'}
+      )
       .pipe(
-        map(data => ({
-          name: billName,
-          data: new Blob([data], {type: 'application/ms-excel'})
-        })),
+        map(data => ({ name: billName, data: new Blob([data], {type: 'application/ms-excel'})})),
         catchError(this.handleError)
-        );
+      );
   }
 
   handleError(error: any): Observable<any> {
+    if (!this.network.online) {
+      error.status = 999; // Custom Error Code for Offline Status
+    }
     return throwError(error.status || error.message || error);
   }
 }
