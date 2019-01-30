@@ -12,6 +12,7 @@ export class MakebillsComponent implements OnInit {
 
   fromDate: Date;
   toDate: Date;
+  earliestDate: Date;
 
   downloading: boolean;
   @ViewChild('downloadLink')
@@ -20,6 +21,8 @@ export class MakebillsComponent implements OnInit {
   constructor(private tokenService: TokensService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    // Set earliest date to 1st of last to last month
+    this.earliestDate = moment().subtract(2, 'M').startOf('M').toDate();
   }
 
   yesterday() {

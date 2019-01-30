@@ -209,6 +209,10 @@ export class TokensCtrl {
             return;
         }
 
+        // Log that mess bill is being generated
+        console.log('\x1b[32mMess Bill Generating:\x1b[0m', // For green color
+                    `FROM \x1b[32m${from.format('DD MMM\'YY HH:mm:ss')}\x1b[0m TO \x1b[32m${to.format('DD MMM\'YY HH:mm:ss')}\x1b[0m`);
+
         let billData: any = {};
         let totalBill: any = {'Total (₹)': 0};
         this.userModel.find({ permissions: { $size: 0 }, verified: true})
@@ -283,6 +287,7 @@ export class TokensCtrl {
 
                 /* send to client */
                 res.status(200).send(buf);
+
             })
             .catch((error) => this.internalServer(res, error));
     }
