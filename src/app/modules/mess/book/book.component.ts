@@ -29,7 +29,7 @@ export class BookComponent implements OnInit, OnDestroy {
 
     this.dishesService.getSomedaysDishes(moment().format('dddd'))
       .subscribe(dishes => {
-        this.dishes = dishes.filter(dish => !dish.prebookable);
+        this.dishes = dishes; // .filter(dish => !dish.prebookable);
         this.loading = false;
       },
       error => {
