@@ -159,8 +159,13 @@ export class AuthService {
       .subscribe(_ => {
         this.isInMess.then(mess => {
           this.router.navigateByUrl(mess ? '/mess/login' : '/');
+          if (mess) {
+            this.router.navigateByUrl('/mess/login');
+          } else {
+            this.router.navigateByUrl('/');
+            this.http.get('/api/account/auth').toPromise().catch(); // Re-caches the auth api endpoint
+          }
         });
-        this.http.get('/api/account/auth').toPromise().catch(); // Re-caches the auth api endpoint
       });
   }
 

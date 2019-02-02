@@ -46,7 +46,6 @@ export class BookComponent implements OnInit, OnDestroy {
       this.tokensService.bookToken(dishes)
         .subscribe(_ => {
           this.snackBar.open('Dishes booked successfully');
-          this.router.navigateByUrl('/mess/login');
           this.submitting = false;
           this.dialogRef.close();
         },
@@ -66,13 +65,12 @@ export class BookComponent implements OnInit, OnDestroy {
     }
   }
 
-  logout() {
-    this.authService.logout();
+  cancel() {
     this.dialogRef.close();
     this.snackBar.open('No dishes booked');
   }
 
   ngOnDestroy() {
-    this.authService.logout();
+    this.authService.logout(); // logout the user when the dialog closes
   }
 }

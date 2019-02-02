@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { TokenModel, DishModel, UserModel } from '@app/models';
-import { AuthService } from '@app/services/auth.service';
+import { TokenModel, DishModel } from '@app/models';
 import { Moment } from 'moment';
 
 @Injectable({
@@ -15,8 +14,7 @@ export class TokensService {
   private _recentTokens: TokenModel[];
   recentTokens: Subject<TokenModel[]>;
 
-  constructor(private http: HttpClient,
-              private authService: AuthService) {
+  constructor(private http: HttpClient) {
     this._recentTokens = [];
     this.recentTokens = new Subject();
   }
@@ -41,11 +39,6 @@ export class TokensService {
     return this.http.post<TokenModel>('/api/tokens/book', { dishes })
       .pipe(
         map((token: TokenModel) => {
-          this.authService.checkMess().then(mess => {
-            if (mess) {
-              this.authService.logout();
-            }
-          });
           this.updateRecentTokens(token);
           return token;
         }),

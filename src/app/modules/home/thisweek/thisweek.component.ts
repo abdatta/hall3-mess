@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DishesService, TokensService } from '@app/services';
+import { DishesService } from '@app/services';
 import { DishModel } from '@app/models';
 import * as moment from 'moment';
 
@@ -22,7 +22,7 @@ export class ThisweekComponent implements OnInit {
   active: number;
   menu = {};
 
-  constructor(private dishesService: DishesService, private tokensService: TokensService) { }
+  constructor(private dishesService: DishesService) { }
 
   ngOnInit() {
     this.active = this.days.indexOf(moment().format('dddd'));

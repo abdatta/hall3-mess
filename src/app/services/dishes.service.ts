@@ -13,7 +13,7 @@ export class DishesService {
 
   constructor(private http: HttpClient) { }
 
-  getSlot(date = Date()): ('Breakfast' | 'Lunch' | 'Dinner') {
+  getSlot(date = new Date().toISOString()): ('Breakfast' | 'Lunch' | 'Dinner') {
     if (moment(date).format('HHmm') <= '1100') {
       return 'Breakfast';
     } else if (moment(date).format('HHmm') <= '1700') {

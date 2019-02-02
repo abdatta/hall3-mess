@@ -51,7 +51,7 @@
         mat-icon-button
         (click)="drawer.toggle()"
         *ngIf="role === 'mess' ? true : isHandset$ | async">
-        <mat-icon [matBadge]="navs[0].badge" matBadgeColor="accent" aria-label="Side nav toggle icon">menu</mat-icon>
+        <mat-icon [matBadge]="navs && navs[0].badge" matBadgeColor="accent" aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Hall 3 Mess Automation</span>
     </mat-toolbar>
