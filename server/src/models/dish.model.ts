@@ -11,5 +11,6 @@ export interface DishModel extends Document {
     price: number;
     days: ('Sun' | 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat')[];
     slot: ('Breakfast' | 'Lunch' | 'Dinner')[];
+    frequency: any;
     prebookable: boolean;
 }

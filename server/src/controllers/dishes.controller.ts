@@ -19,6 +19,24 @@ export class DishesCtrl {
     }
 
     /**
+     * Sanitize token json being sent
+     *
+     * @class TokensCtrl
+     * @method sanitize
+     */
+    private sanitize(dish: DishModel) {
+        const copyDish = JSON.parse(JSON.stringify(dish));
+        copyDish.frequency = 0;
+        const thirtyDaysAgo = moment().startOf('day').subtract(30, 'days');
+        for (const day in dish.frequency) {
+            if (moment(day).isSameOrAfter(thirtyDaysAgo)) {
+                copyDish.frequency += dish.frequency[day];
+            }
+        }
+        return copyDish;
+    }
+
+    /**
      * Add a new dish to database
      *
      * @class DishesCtrl
@@ -41,7 +59,7 @@ export class DishesCtrl {
             this.internalServer(res, { err: 'short_id is undefined'});
         } else {
             dish.save()
-                .then((savedDish: DishModel) => res.status(200).json(savedDish))
+                .then((savedDish: DishModel) => res.status(200).json(this.sanitize(savedDish)))
                 .catch((error: Error) => this.internalServer(res, error));
         }
     }
@@ -54,14 +72,11 @@ export class DishesCtrl {
      */
     public getSomedaysDishes = (req: Request, res: Response) => {
         const day = moment(req.params.day + 'day', 'dddd').format('ddd');
-        this.dishModel.find({ days: day }, '-days -__v',
-          (err: Error, dishes: DishModel[]) => {
-            if (err) {
-                this.internalServer(res, err);
-            } else {
-                res.status(200).json(dishes);
-            }
-          });
+        this.dishModel.find({ days: day }, '-days -__v')
+            .then((dishes: DishModel[]) => {
+                res.status(200).json(dishes.map(dish => this.sanitize(dish)));
+            })
+            .catch((error) => this.internalServer(res, error));
     }
 
     /**
@@ -76,7 +91,7 @@ export class DishesCtrl {
             if (err) {
                 this.internalServer(res, err);
             } else {
-                res.status(200).json(dishes);
+                res.status(200).json(dishes.map(dish => this.sanitize(dish)));
             }
           });
     }
@@ -105,7 +120,7 @@ export class DishesCtrl {
                     if (err2) {
                         this.internalServer(res, err2);
                     } else {
-                        res.status(200).json(savedDish);
+                        res.status(200).json(this.sanitize(savedDish));
                     }
                 });
             }

@@ -59,7 +59,7 @@ export class TokensCtrl {
         const quantity: any = {};
         try {
             req.body.dishes.forEach((dish: any) =>
-                quantity[dish._id] = dish.quantity);
+                quantity[dish._id] = (quantity[dish._id] || 0) + dish.quantity);
         } catch (err) {
             console.log(err);
             this.internalServer(res, 'Property `dishes` is missing or invalid');
@@ -91,6 +91,7 @@ export class TokensCtrl {
                     })
                     .then((savedToken: TokenModel) => {
                             this.insertTokenIntoUser(req, res, savedToken);
+                            dishes.forEach(dish => this.updateFrequencyOfDish(dish));
                     });
             })
             .catch((error) => this.internalServer(res, error));
@@ -114,6 +115,35 @@ export class TokensCtrl {
                         res.status(200).json(this.sanitize(token)));
             })
             .catch((error) => this.internalServer(res, error));
+    }
+
+    /**
+     * Update frequency of dish
+     *
+     * @class TokenCtrl
+     * @method updateFrequencyOfDishes
+     */
+    private updateFrequencyOfDish(dish: DishModel) {
+        this.dishModel.findById(dish._id)
+            .then((dishToBeUpdated: DishModel | null) => {
+                if (!dishToBeUpdated) {
+                    console.error('Could not update dish frequency: Dish not found!', JSON.stringify(dish));
+                    return;
+                }
+                const today = moment().startOf('day');
+                dishToBeUpdated.frequency[today.format()] =
+                    (dishToBeUpdated.frequency[today.format()] || 0) + 1;
+                dishToBeUpdated.markModified('frequency');
+
+                // Optional TODO: add this in a daily cron job
+                for (const day in dishToBeUpdated.frequency) {
+                    if (moment(day).isBefore(today.subtract(30, 'days'))) {
+                        dishToBeUpdated.frequency[day] = undefined;
+                    }
+                }
+                dishToBeUpdated.save();
+            })
+            .catch(error => console.error('Could not update dish frequency: ', error));
     }
 
     /**
