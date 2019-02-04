@@ -12,7 +12,7 @@ mat-checkbox {
 }
 
 .mat-progress-bar {
-    margin: 17px 0;
+    margin: 27px 0;
     width: 45%;
     max-width: 300px;
     height: 3px;
@@ -57,4 +57,10 @@ mat-checkbox {
 :host >>> .mat-tab-body-content {
     display: flex;
     justify-content: center;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }

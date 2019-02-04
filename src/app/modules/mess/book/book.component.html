@@ -1,10 +1,12 @@
-<app-dish-picker title="Book Today's Extras"
-                 [dishes]="dishes"
-                 [loading]="loading"
-                 [submitting]="submitting"
-                 submitText="Book"
-                 (submit)="book($event)">
-</app-dish-picker>
-<div class="btm">
-<button *ngIf="!loading && !submitting" mat-raised-button color="accent" (click)="cancel()"><b>Cancel</b></button>
+<div class="relative">
+    <button *ngIf="!loading && !submitting" mat-icon-button color="warn" (click)="cancel()">
+        <mat-icon>cancel</mat-icon>
+    </button>
+    <app-dish-picker title="Book Today's Extras"
+                    [dishes]="dishes"
+                    [loading]="loading"
+                    [submitting]="submitting"
+                    submitText="Book"
+                    (submit)="book($event)">
+    </app-dish-picker>
 </div>
