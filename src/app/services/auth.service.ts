@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Network } from '@ngx-pwa/offline';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 import { UserModel } from '@app/models';
 import { NotificationsService } from '@app/services/notifications.service';
@@ -18,17 +19,20 @@ export class AuthService {
   private currentUser: Promise<UserModel>;
   private isInMess: Promise<boolean>;
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private network: Network,
-              private analytics: NgxAnalytics,
-              private dishesService: DishesService,
-              private notificationsService: NotificationsService) {
+  private async setCurrentUser($user: Promise<UserModel>) {
+    this.currentUser = $user;
+    // Update local storage
+    const user = await $user;
+    if (user) {
+      this.localStorage.setItemSubscribe('user', user);
+    } else {
+      this.localStorage.removeItemSubscribe('user');
+    }
+  }
 
-    const authStatus = this.http.get<{user: UserModel, mess: boolean}>('/api/account/auth')
-                                .toPromise();
-    this.currentUser = authStatus.then(auth => auth.user).catch(_ => null);
-    this.isInMess = authStatus.then(auth => auth.mess === true).catch(_ => false);
+  private async setInMess(mess: Promise<boolean>) {
+    this.isInMess = mess;
+    this.localStorage.setItemSubscribe('mess', (await mess) === true); // Update local storage
   }
 
   checkMess = (): Promise<boolean> => this.isInMess;
@@ -43,6 +47,24 @@ export class AuthService {
   hasPermissions = (perms: string[]): Promise<boolean> => this.currentUser.then((user: UserModel) =>
                        perms.every(perm => user.permissions.includes(perm)) || user.rollno === 'admin')
 
+  constructor(private http: HttpClient,
+              private router: Router,
+              private network: Network,
+              private analytics: NgxAnalytics,
+              private localStorage: LocalStorage,
+              private dishesService: DishesService,
+              private notificationsService: NotificationsService) {
+
+    if (this.network.online) {
+      const authStatus = this.http.get<{user: UserModel, mess: boolean}>('/api/account/auth').toPromise();
+      this.setCurrentUser(authStatus.then(auth => auth.user).catch(_ => null));
+      this.setInMess(authStatus.then(auth => auth.mess === true).catch(_ => false));
+    } else {
+      this.currentUser = this.localStorage.getItem<UserModel>('user').toPromise();
+      this.isInMess = this.localStorage.getItem<boolean>('mess').toPromise();
+    }
+  }
+
   authIITK(IITKusername: string, IITKpassword: string): Observable<number> {
     return this.http.post('/api/account/auth/iitk', { IITKusername, IITKpassword })
       .pipe(
@@ -54,8 +76,8 @@ export class AuthService {
   logIn(roll: string, pass: string): Observable<number> {
     return this.http.post<UserModel>('/api/account/login', { rollno: roll, password: pass})
       .pipe(
-        map((response: UserModel) => {
-          this.currentUser = Promise.resolve(response);
+        map((user: UserModel) => {
+          this.setCurrentUser(Promise.resolve(user));
           // this.isInMess.then(mess => mess ? null : this.notificationsService.subscribeToNotifications());
 
           this.isInMess.then(mess => {
@@ -67,11 +89,12 @@ export class AuthService {
             ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
                     .forEach(day => this.dishesService.getSomedaysDishes(day).subscribe());
 
+            // Track login event
             this.analytics.eventTrack.next({
               action: 'Login',
               properties: {
                 category: 'Auth',
-                label: response.rollno,
+                label: user.rollno,
               },
             });
           });
@@ -125,8 +148,8 @@ export class AuthService {
   chngpin(oldpin: string, newpin: string): Observable<number> {
     return this.http.patch<UserModel>('/api/account/update', { password: oldpin, newpassword: newpin })
       .pipe(
-        map((response: UserModel) => {
-          this.currentUser = Promise.resolve(response);
+        map((user: UserModel) => {
+          this.setCurrentUser(Promise.resolve(user));
           return 200;
         }),
         catchError(this.handleError)
@@ -136,13 +159,14 @@ export class AuthService {
   like(liked: boolean): Observable<number> {
     return this.http.patch<UserModel>('/api/account/update', { liked })
     .pipe(
-      map((response: UserModel) => {
-        this.currentUser = Promise.resolve(response);
+      map((user: UserModel) => {
+        this.setCurrentUser(Promise.resolve(user));
+        // Track like event
         this.analytics.eventTrack.next({
           action: liked ? 'Like' : 'Unlike',
           properties: {
             category: 'Like/Unlike',
-            label: response.rollno
+            label: user.rollno
           },
         });
         return 200;
@@ -152,13 +176,14 @@ export class AuthService {
   }
 
   logout(): void {
-    this.currentUser = Promise.resolve(null);
+    this.setCurrentUser(Promise.resolve(null));
     // To execute observable, it is converted to a promise
     this.http.post('/api/account/logout', {})
       .pipe(
         catchError(this.handleError)
       )
       .subscribe(_ => {
+        this.localStorage.removeItemSubscribe('tokens');
         this.isInMess.then(mess => {
           this.router.navigateByUrl(mess ? '/mess/login' : '/');
           if (mess) {
@@ -175,22 +200,23 @@ export class AuthService {
     return this.http.post<{mess: boolean}>('/api/account/messin', {password: pass})
       .pipe(
         map((res: {mess: boolean}) => {
-          this.isInMess = Promise.resolve(res.mess);
+          this.setInMess(Promise.resolve(res.mess));
           return 200;
         }),
         catchError(this.handleError)
       );
   }
 
-  messOut(pass: string): Promise<number> {
+  async messOut(pass: string): Promise<number> {
     const messingOut = this.http.post('/api/account/messout', { password: pass })
       .pipe(
         map((res) => 200),
         catchError(this.handleError)
       ).toPromise();
 
-      this.isInMess = messingOut.then(res => res !== 200);
-      this.currentUser = messingOut.then(async res => res === 200 ? null : await this.currentUser);
+      this.setInMess(messingOut.then(res => res !== 200));
+      this.setCurrentUser(messingOut.then(async res => res === 200 ? null : await this.currentUser));
+
       return messingOut;
   }
 
@@ -199,7 +225,8 @@ export class AuthService {
       error.status = 999; // Custom Error Code for Offline Status
     }
     if (error.status === 401) {
-      this.currentUser = Promise.resolve(null);
+      this.setCurrentUser(Promise.resolve(null));
+      this.router.navigateByUrl('/login');
     }
     if (error.status) {
       return of(error.status);
