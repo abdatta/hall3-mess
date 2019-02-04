@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError, Subject } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, of, throwError, Subject } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Moment } from 'moment';
 import { Network } from '@ngx-pwa/offline';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 import { TokenModel, DishModel } from '@app/models';
 
@@ -16,7 +17,8 @@ export class TokensService {
   recentTokens: Subject<TokenModel[]>;
 
   constructor(private http: HttpClient,
-              private network: Network) {
+              private network: Network,
+              private localStorage: LocalStorage) {
     this._recentTokens = [];
     this.recentTokens = new Subject();
   }
@@ -33,8 +35,20 @@ export class TokensService {
   }
 
   getTokens(): Observable<TokenModel[]> {
-    return this.http.get<TokenModel[]>('/api/tokens/user')
-      .pipe(catchError(this.handleError));
+    if (this.network.online) {
+      return this.http.get<TokenModel[]>('/api/tokens/user')
+        .pipe(
+          tap(tokens => this.localStorage.setItemSubscribe('tokens', tokens)),
+          catchError(this.handleError)
+        );
+    } else {
+      return this.localStorage.getItem<TokenModel[]>('tokens')
+        .pipe(tap(dishes => {
+          if (dishes === null) {
+            throw 999; // offline error code
+          }
+        }));
+    }
   }
 
   bookToken(dishes: DishModel[]): Observable<TokenModel> {
