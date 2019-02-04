@@ -6,5 +6,6 @@ export interface DishModel {
     days?: ('Sun' | 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat')[];
     slot?: ('Breakfast' | 'Lunch' | 'Dinner')[];
     prebookable?: boolean;
+    frequency?: number;
     quantity?: number;
 }

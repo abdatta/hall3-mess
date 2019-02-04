@@ -17,6 +17,7 @@ export class DishPickerComponent implements OnInit {
   @Input('dishes')
   set setDishes(dishes: DishModel[]) {
     if (dishes) {
+      dishes.sort((a: DishModel, b: DishModel) => b.frequency - a.frequency);
       dishes.forEach(dish => dish.quantity = dish.quantity || 0);
       this.selected = dishes.map(_ => false);
       this.dishes = dishes;
