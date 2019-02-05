@@ -107,3 +107,13 @@ p{
 .this-month-total {
     color: rgba(0,0,0,.54);
 }
+
+.mat-progress-bar {
+    margin: 10px 0 25px;
+    width: 25%;
+    height: 3px;
+}
+
+.hide {
+    opacity: 0;
+}
