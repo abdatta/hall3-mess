@@ -17,6 +17,8 @@ export class HistoryComponent implements OnInit {
   dates = [];
   init_id: string;
   loading: boolean;
+  fetching: boolean;
+  fetchedAll: boolean;
   tab = 0;
   newbie = false;
   total = 0;
@@ -87,5 +89,51 @@ export class HistoryComponent implements OnInit {
 
   format(date: string) {
     return this.dishService.getSlot(date) + ' ' + moment(date).format('HH:mm') + '\u00A0hrs';
+  }
+
+  fetchMoreTokens() {
+    this.fetching = true;
+    let offset = this.getLastElement(this.grouped_tokens[this.getLastElement(this.dates)]);
+    offset = offset && offset.date;
+    this.tokensService.getTokens(offset)
+      .subscribe(tokens => {
+        if (tokens.length === 0) {
+          this.fetching = false;
+          this.fetchedAll = true;
+          return;
+        }
+
+        // remove any duplicate tokens
+        tokens = tokens.filter(token => this.dates
+                         .every(date => this.grouped_tokens[date]
+                           .every(gtoken => gtoken._id !== token._id)));
+
+        // sort tokens by date and time
+        tokens = tokens.sort((t1, t2) =>
+                        t2.date.localeCompare(t1.date));
+
+        // group tokens by date
+        tokens.forEach(token => {
+          const date = moment(token.date).format('Do MMMM \'YY');
+          if (this.grouped_tokens[date]) {
+            this.grouped_tokens[date].push(token);
+          } else {
+            this.grouped_tokens[date] = [token];
+            this.dates.push(date);
+          }
+        });
+        this.fetching = false;
+      },
+      error => {
+        this.snackBar.open('Could not fetch more tokens. Some error occured.');
+        this.fetching = false;
+      });
+  }
+
+  private getLastElement(elems: any[]) {
+    if (elems.length === 0) {
+      return null;
+    }
+    return elems[elems.length - 1];
   }
 }

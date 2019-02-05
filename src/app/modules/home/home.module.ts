@@ -7,6 +7,7 @@ import { MainNavModule } from '@shared/main-nav';
 import { ChangepasskeyModule } from '@shared/changepasskey';
 import { DishPickerModule } from '@shared/dish-picker';
 import { NgxKjuaModule } from 'ngx-kjua';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // Components
 import { NavComponent } from '@home/nav/nav.component';
@@ -29,7 +30,8 @@ import { CreditsComponent } from './credits/credits.component';
     MainNavModule,
     NgxKjuaModule,
     DishPickerModule,
-    ChangepasskeyModule
+    ChangepasskeyModule,
+    InfiniteScrollModule
   ],
   declarations: [
     NavComponent,

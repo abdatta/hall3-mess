@@ -34,11 +34,24 @@ export class TokensService {
     this.recentTokens.next(this._recentTokens);
   }
 
-  getTokens(): Observable<TokenModel[]> {
+  private updateUserTokens(newTokens: TokenModel[]) {
+    this.localStorage.getItem<TokenModel[]>('tokens')
+      .subscribe(oldTokens => {
+        const idExists = {};
+        // Union of old and new tokens
+        oldTokens.forEach(oldToken => idExists[oldToken._id] = true);
+        newTokens.forEach(newToken => idExists[newToken._id] || oldTokens.push(newToken));
+        // Sort the unioned set of tokens
+        const tokens = oldTokens.sort((t1, t2) => t2.date.localeCompare(t1.date));
+        this.localStorage.setItemSubscribe('tokens', tokens);
+      });
+  }
+
+  getTokens(offset?: string): Observable<TokenModel[]> {
     if (this.network.online) {
-      return this.http.get<TokenModel[]>('/api/tokens/user')
+      return this.http.get<TokenModel[]>('/api/tokens/user' + (offset ? `?offset=${encodeURIComponent(offset)}` : ''))
         .pipe(
-          tap(tokens => this.localStorage.setItemSubscribe('tokens', tokens)),
+          tap(tokens => this.updateUserTokens(tokens)),
           catchError(this.handleError)
         );
     } else {
