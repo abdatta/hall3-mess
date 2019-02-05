@@ -154,8 +154,14 @@ export class TokensCtrl {
      */
     public getUserTokens = (req: Request, res: Response) => {
         const rollno = req.user.rollno;
+        const maxtoken = 20;
+        const offset = req.query.offset && moment(req.query.offset).isValid() && moment(req.query.offset) || moment();
         this.userModel.findOne({ rollno: rollno }, 'tokens')
-          .populate('tokens')
+          .populate({
+              path: 'tokens',
+              match: { date: { $lt: offset.format() }},
+              options: { sort: '-date', limit: maxtoken }
+          })
           .exec((err: Error, user: UserModel) => {
             if (err) {
                 this.internalServer(res, err);
