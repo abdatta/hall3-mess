@@ -1,4 +1,8 @@
-<div class="container">
+<div class="container" infiniteScroll
+                      [infiniteScrollDistance]="1"
+                      [scrollWindow]="false"
+                      [infiniteScrollDisabled]="fetching || fetchedAll"
+                      (scrolled)="fetchMoreTokens()">
   <h2>Bills and History</h2>
 <!--<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tab">
     <mat-tab label="Daily History">-->
@@ -50,6 +54,7 @@
         </div>
         <div></div> <!-- so that margin-bottom of last element is not set to 0 -->
       </mat-accordion>
+      <mat-progress-bar mode="indeterminate" [class.hide]="!fetching" *ngIf="!fetchedAll"></mat-progress-bar>
 <!--</mat-tab>
     <mat-tab label="Monthly Bills"> 
       <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
