@@ -23,14 +23,20 @@ export class QRBookComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: string) { }
 
   ngOnInit() {
+    if (!this.isValidQR(this.data)) {
+      this.snackBar.open('Invalid QR Code. Update your App and Try again.');
+      this.dialogRef.close();
+      return;
+    }
+
     const data = this.data.split('\u200B');
     this.rollno = data.shift();
 
     this.loading = true;
     this.dishesService.getSomedaysDishes(moment().format('dddd'))
         .subscribe(dishes => {
-          const data_ids = data.map(d => d.slice(0, 2));
-          const data_qty = data.map(d => +d.slice(2));
+          const data_ids = data.filter((d, i) => i % 2 === 0);
+          const data_qty = data.filter((d, i) => i % 2 !== 0).map(q => +q);
 
           this.dishes = dishes.filter(dish => {
             if (data_ids.includes(dish.short_id)) {
@@ -46,6 +52,18 @@ export class QRBookComponent implements OnInit {
           }
           this.loading = false;
         });
+  }
+
+  isValidQR(QRdata: string): boolean {
+    const data = QRdata.split('\u200B');
+    data.shift(); // remove the roll no at front
+
+    if (data.length <= 0 || data.length % 2 !== 0) {
+      return false;
+    }
+
+    // id should be of length 2 and qty should be a number
+    return data.every((d, i) => i % 2 === 0 ? d.length === 2 : !isNaN(+d));
   }
 
   logInAndBook(pass) {
