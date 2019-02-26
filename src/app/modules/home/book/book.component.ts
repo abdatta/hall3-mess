@@ -60,11 +60,11 @@ export class BookComponent implements OnInit {
         width: '95%',
         maxWidth: '450px',
         data: { qrdata, qrlogo: this.logoElement.nativeElement }
-      });
+      })
+      .afterClosed().subscribe(() => selected.forEach((sel, i) => selected[i] = false));
     } else {
       this.snackBar.open('No dish is selected.');
     }
-
   }
 
 }
