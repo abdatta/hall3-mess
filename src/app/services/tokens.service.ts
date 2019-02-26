@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError, Subject } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Moment } from 'moment';
+import * as moment from 'moment';
 import { Network } from '@ngx-pwa/offline';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 
@@ -37,12 +37,13 @@ export class TokensService {
   private updateUserTokens(newTokens: TokenModel[]) {
     this.localStorage.getItem<TokenModel[]>('tokens')
       .subscribe(oldTokens => {
-        const idExists = {};
+        oldTokens = oldTokens || [];
         // Union of old and new tokens
-        oldTokens.forEach(oldToken => idExists[oldToken._id] = true);
-        newTokens.forEach(newToken => idExists[newToken._id] || oldTokens.push(newToken));
+        const idExists = {};
+        newTokens.forEach(newToken => idExists[newToken._id] = true);
+        oldTokens.forEach(oldToken => idExists[oldToken._id] || newTokens.push(oldToken));
         // Sort the unioned set of tokens
-        const tokens = oldTokens.sort((t1, t2) => t2.date.localeCompare(t1.date));
+        const tokens = newTokens.sort((t1, t2) => t2.date.localeCompare(t1.date));
         this.localStorage.setItemSubscribe('tokens', tokens);
       });
   }
@@ -56,11 +57,14 @@ export class TokensService {
         );
     } else {
       return this.localStorage.getItem<TokenModel[]>('tokens')
-        .pipe(tap(dishes => {
-          if (dishes === null) {
-            throw 999; // offline error code
-          }
-        }));
+        .pipe(
+          map(tokens => {
+            if (tokens === null) {
+              throw 999; // offline error code
+            }
+            return tokens.filter(token => moment(token.date).isBefore(offset));
+          })
+        );
     }
   }
 
@@ -93,7 +97,7 @@ export class TokensService {
       .pipe(catchError(this.handleError));
   }
 
-  downloadMessBill(from: Moment, to: Moment): Observable<{name: string, data: Blob}> {
+  downloadMessBill(from: moment.Moment, to: moment.Moment): Observable<{name: string, data: Blob}> {
     const billName = `Mess_Bill_${from.format('DDMMMYYYY')}_TO_${to.format('DDMMMYYYY')}`.toUpperCase() + '.xlsx';
     return this.http.get(
         `/api/tokens/bill?from=${encodeURIComponent(from.format())}&to=${encodeURIComponent(to.format())}`,
