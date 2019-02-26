@@ -54,7 +54,7 @@ export class QRBookComponent implements OnInit {
         },
         error => {
           if (error === 999) {
-            this.snackBar.open('You are OFFLINE. Please come online and try again.');
+            this.snackBar.open('No internet connection. Please come online and try again.');
           } else {
             this.snackBar.open('Oops! Some error occured. Please refresh the page.');
           }
@@ -90,7 +90,7 @@ export class QRBookComponent implements OnInit {
                   if (error === 400) {
                     this.snackBar.open('Invalid Request');
                   } else if (error === 999) {
-                    this.snackBar.open('You are OFFLINE. Booking only works online.');
+                    this.snackBar.open('No internet connection. Booking only works online.');
                   } else {
                     this.snackBar.open('Oops! Some error occured', 'Retry')
                       .onAction().subscribe(_ => this.logInAndBook(pass));
@@ -100,7 +100,7 @@ export class QRBookComponent implements OnInit {
             pass.focus();
             this.snackBar.open('Incorrect Username or Password');
           } else if (s === 999) {
-            this.snackBar.open('You are OFFLINE. Come online and try again.');
+            this.snackBar.open('No internet connection. Come online and try again.');
           } else {
             this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.logInAndBook(pass));

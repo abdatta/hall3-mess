@@ -34,7 +34,7 @@ export class BookComponent implements OnInit, OnDestroy {
       },
       error => {
         if (error === 999) {
-          this.snackBar.open('You are OFFLINE. Please come online and try again.');
+          this.snackBar.open('No internet connection. Please come online and try again.');
         } else {
           this.snackBar.open('Oops! Some error occured. Please refresh the page.');
         }
@@ -57,7 +57,7 @@ export class BookComponent implements OnInit, OnDestroy {
           if (error === 400) {
             this.snackBar.open('Invalid Request');
           } else if (error === 999) {
-            this.snackBar.open('You are OFFLINE. Booking only works online.');
+            this.snackBar.open('No internet connection. Booking only works online.');
           } else {
             this.snackBar.open('Oops! Some error occured', 'Retry')
               .onAction().subscribe(_ => this.book(selected));

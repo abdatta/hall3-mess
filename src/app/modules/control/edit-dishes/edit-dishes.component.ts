@@ -33,7 +33,7 @@ export class EditDishesComponent implements OnInit {
       },
       error => {
         if (error === 999) {
-          this.snackBar.open('You are OFFLINE. Please come online and try again.');
+          this.snackBar.open('No internet connection. Please come online and try again.');
         } else {
           this.snackBar.open('Oops! Some error occured', 'Retry')
             .onAction().subscribe(_ => this.ngOnInit());
@@ -49,7 +49,7 @@ export class EditDishesComponent implements OnInit {
       },
       error => {
         if (error === 999) {
-          this.snackBar.open('You are OFFLINE. Please come online and try again.');
+          this.snackBar.open('No internet connection. Please come online and try again.');
         } else {
           this.snackBar.open('Oops! Some error occured', 'Retry')
             .onAction().subscribe(_ => this.save(i));
@@ -94,7 +94,7 @@ export class EditDishesComponent implements OnInit {
       },
       error => {
         if (error === 999) {
-          this.snackBar.open('You are OFFLINE. Please come online and try again.');
+          this.snackBar.open('No internet connection. Please come online and try again.');
         } else {
           this.snackBar.open('Oops! Some error occured', 'Retry')
             .onAction().subscribe(_ => this.delete(i));
