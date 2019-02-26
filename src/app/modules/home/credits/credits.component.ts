@@ -27,7 +27,7 @@ export class CreditsComponent implements OnInit {
               this.snackBar.open('Thank you for your feedback! 😊');
           } else if (s === 999) {
               this.ngOnInit();
-              this.snackBar.open('You are OFFLINE. Come online and try again.');
+              this.snackBar.open('No internet connection. Come online and try again.');
           } else {
               this.ngOnInit();
               this.snackBar.open('Oops! Some error occured.', 'Retry')

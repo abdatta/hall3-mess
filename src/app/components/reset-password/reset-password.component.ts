@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
             } else if (code === 404) {
               this.snackBar.open('The link has expired or does not exist.');
             } else if (code === 999) {
-              this.snackBar.open('You are OFFLINE. Come online and try again.');
+              this.snackBar.open('No internet connection. Come online and try again.');
             } else {
               this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.reset(newpass, renewpass));

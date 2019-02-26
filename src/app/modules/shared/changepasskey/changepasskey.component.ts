@@ -49,7 +49,7 @@ export class ChangepasskeyComponent implements OnInit {
                 cp.value = '';
                 cp.focus();
             } else if (s === 999) {
-              this.snackBar.open('You are OFFLINE. Come online and try again.');
+              this.snackBar.open('No internet connection. Come online and try again.');
             } else {
                 this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.changepassword(cp, np, rnp));
