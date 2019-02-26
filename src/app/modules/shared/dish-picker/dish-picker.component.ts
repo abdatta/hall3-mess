@@ -36,7 +36,10 @@ export class DishPickerComponent implements OnInit {
   constructor(public dishService: DishesService) { }
 
   ngOnInit() {
+  }
 
+  getSelectedCount() {
+    return this.selected && this.selected.filter(_ => _).length;
   }
 
   resetQuantity(i: number) {
