@@ -54,7 +54,7 @@ export class EditTokenComponent implements OnInit {
             if (error === 404) {
               this.snackBar.open('User does not exist.');
             } else if (error === 999) {
-              this.snackBar.open('You are OFFLINE. Please come online and try again.');
+              this.snackBar.open('No internet connection. Please come online and try again.');
             } else {
               this.snackBar.open('Oops! Some error occured.', 'Retry')
                     .onAction().subscribe(_ => this.listToken());
@@ -100,7 +100,7 @@ export class EditTokenComponent implements OnInit {
           if (error === 404) {
             this.snackBar.open('Invalid token or dish.');
           } else if (error === 999) {
-            this.snackBar.open('You are OFFLINE. Please come online and try again.');
+            this.snackBar.open('No internet connection. Please come online and try again.');
           } else {
             this.snackBar.open('Oops! Some error occured.', 'Retry')
                   .onAction().subscribe(_ => this.delete(date, i, j));

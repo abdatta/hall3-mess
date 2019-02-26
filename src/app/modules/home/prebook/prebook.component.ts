@@ -54,7 +54,7 @@ export class PrebookComponent implements OnInit {
           if (error === 400) {
             this.snackBar.open('Invalid Request');
           } else if (error === 999) {
-            this.snackBar.open('You are OFFLINE. Prebooking only works online.');
+            this.snackBar.open('No internet connection. Prebooking only works online.');
           } else {
             this.snackBar.open('Oops! Some error occured', 'Retry')
               .onAction().subscribe(_ => this.prebook(selected));
