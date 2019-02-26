@@ -5,7 +5,7 @@ import moment from 'moment';
 import path from 'path';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
-import mongoose from 'mongoose';
+import mongoose, { Mongoose } from 'mongoose';
 import passport from 'passport';
 
 // Routes
@@ -25,16 +25,20 @@ import { UserModel } from './models/user.model';
 import { DishModel } from './models/dish.model';
 import { TokenModel } from './models/token.model';
 import { SubscriptionModel } from './models/subscription.model';
+import { PrebookingModel } from './models/prebooking.model';
 
 // Schema
 import { UserSchema } from './schemas/user.schema';
 import { DishSchema } from './schemas/dish.schema';
 import { TokenSchema } from './schemas/token.schema';
 import { SubscriptionSchema } from './schemas/subscription.schema';
+import { PrebookingSchema } from './schemas/prebooking.schema';
 
 // Config
 import { PassportConfig } from './config/passport.config';
 import { MailerConfig } from './config/mailer.config';
+import { PrebookingRoute } from './routes/prebooking.route';
+import { PrebookingCtrl } from './controllers/prebooking.controller';
 
 /**
  * The server.
@@ -54,12 +58,14 @@ export class Server {
   private dishModel!: mongoose.Model<DishModel>; // an instance of DishModel
   private tokenModel!: mongoose.Model<TokenModel>; // an instance of TokenModel
   private subscriptionModel!: mongoose.Model<SubscriptionModel>; // an instance of SubscriptionModel
+  private prebookingModel!: mongoose.Model<PrebookingModel>; // an instance of PrebookingModel
 
   // Global instances of controllers for dependency injection
   private accountCtrl!: AccountCtrl; // an instance of AccountCtrl
   private dishesCtrl!: DishesCtrl; // an instance of DishesCtrl
   private tokensCtrl!: TokensCtrl; // an instance of TokensCtrl
   private notificationCtrl!: NotificationsCtrl; // an instance of NotificationCtrl
+  private prebookingCtrl!: PrebookingCtrl; // an instance of Prebooking
 
   /**
    * Bootstrap the application
@@ -200,6 +206,7 @@ export class Server {
     this.dishModel = this.connection.model<DishModel>('Dish', DishSchema);
     this.tokenModel = this.connection.model<TokenModel>('Token', TokenSchema);
     this.subscriptionModel = this.connection.model<SubscriptionModel>('Subscription', SubscriptionSchema);
+    this.prebookingModel = this.connection.model<PrebookingModel>('Prebooking', PrebookingSchema);
   }
 
   /**
@@ -222,6 +229,7 @@ export class Server {
     this.dishesCtrl = new DishesCtrl(this.dishModel);
     this.tokensCtrl = new TokensCtrl(this.tokenModel, this.dishModel, this.userModel);
     this.notificationCtrl = new NotificationsCtrl(this.subscriptionModel);
+    this.prebookingCtrl = new PrebookingCtrl(this.prebookingModel);
   }
 
   /**
@@ -237,6 +245,7 @@ export class Server {
     this.app.use('/api/notifications', NotificationsRoute.create(this.notificationCtrl, this.accountCtrl));
     this.app.use('/api/dishes', DishesRoute.create(this.dishesCtrl, this.accountCtrl));
     this.app.use('/api/tokens', TokensRoute.create(this.tokensCtrl, this.accountCtrl));
+    this.app.use('/api/prebooking', PrebookingRoute.create(this.prebookingCtrl, this.accountCtrl));
 
     // Public Routes
     this.app.use('/', express.static(path.join(__dirname, '../public')));
