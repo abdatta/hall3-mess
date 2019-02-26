@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Observable, throwError, of } from 'rxjs';
+import { catchError, tap, switchMap } from 'rxjs/operators';
 import * as moment from 'moment';
 import { Network } from '@ngx-pwa/offline';
 import { LocalStorage } from '@ngx-pwa/local-storage';
@@ -28,20 +28,24 @@ export class DishesService {
   }
   getSomedaysDishes(day: string): Observable<DishModel[]> {
     day = day.toLowerCase();
-    if (this.network.online) {
-      return this.http.get<DishModel[]>('/api/dishes/' + day)
-        .pipe(
-          tap(dishes => this.localStorage.setItemSubscribe(day, dishes)),
-          catchError(this.handleError)
-        );
-    } else {
-      return this.localStorage.getItem<DishModel[]>(day)
-        .pipe(tap(dishes => {
+
+    const fromApi: Observable<DishModel[]> =
+      this.http.get<DishModel[]>('/api/dishes/' + day)
+      .pipe(
+        tap(dishes => this.localStorage.setItemSubscribe(day, dishes)),
+        catchError(this.handleError)
+      );
+
+    return this.localStorage.getItem<DishModel[]>(day)
+      .pipe(
+        switchMap(dishes => {
           if (dishes === null) {
-            throw 999; // offline error code
+            return fromApi;
           }
-        }));
-    }
+          fromApi.toPromise().catch(_ => _); // Update dishes in background
+          return of(dishes);
+        })
+      );
   }
 
   getAllDishes(): Observable<DishModel[]> {
