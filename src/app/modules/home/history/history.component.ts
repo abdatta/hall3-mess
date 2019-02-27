@@ -22,6 +22,16 @@ export class HistoryComponent implements OnInit {
   tab = 0;
   newbie = false;
   total = 0;
+  testbills = [
+  {
+    month: 'January \'19',
+    total: 1278
+  },
+  {
+    month: 'February \'19',
+    total: 983
+  }
+];
 
   constructor(private tokensService: TokensService,
               private dishService: DishesService,
