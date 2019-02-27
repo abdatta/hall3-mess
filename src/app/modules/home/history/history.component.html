@@ -4,11 +4,8 @@
                       [infiniteScrollDisabled]="fetching || fetchedAll"
                       (scrolled)="fetchMoreTokens()">
   <h2>Bills and History</h2>
-<!--<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tab">
-    <mat-tab label="Daily History">-->
-      <div *ngIf="!loading" class="this-month-total">
-          Total this month: &#8377;{{ total }}
-      </div>
+<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tab">
+    <mat-tab label="Daily History">
       <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
       <div class="centr" *ngIf="newbie">
         No History to show
@@ -55,32 +52,19 @@
         <div></div> <!-- so that margin-bottom of last element is not set to 0 -->
       </mat-accordion>
       <mat-progress-bar mode="indeterminate" [class.hide]="!fetching" *ngIf="!fetchedAll"></mat-progress-bar>
-<!--</mat-tab>
+    </mat-tab>
     <mat-tab label="Monthly Bills"> 
       <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
-      <mat-accordion *ngIf="!loading">
-        <div class="passes">
-          <div class="date">November'18</div>
-          <mat-card>
-              <mat-card-subtitle class="dark"><span>Cost Heading</span><span>:</span><span>Cost(&#8377;)</span></mat-card-subtitle>
-              <mat-divider></mat-divider>
-              <mat-card-subtitle><span>Basic</span><span>:</span><span>1097</span></mat-card-subtitle>
-              <mat-card-subtitle><span>Veg Extra</span><span>:</span><span>789</span></mat-card-subtitle>
-              <mat-card-subtitle><span>Non-Veg Extra</span><span>:</span><span>450</span></mat-card-subtitle>
-              <mat-card-subtitle><span>Ice-Cream</span><span>:</span><span>200</span></mat-card-subtitle>
-              <mat-card-subtitle><span>Juice</span><span>:</span><span>240</span></mat-card-subtitle>
-              <mat-card-subtitle><span>Electricity Bill</span><span>:</span><span>456</span></mat-card-subtitle>
-              <mat-card-subtitle><span>Est. Charge</span><span>:</span><span>60</span></mat-card-subtitle>
-              <mat-card-subtitle><span>Refund</span><span>:</span><span>-100</span></mat-card-subtitle>
-              <mat-divider></mat-divider>
-              <mat-card-subtitle class="dark"><span>Total</span><span>:</span><span>&#8377;4520</span></mat-card-subtitle>
-              <mat-divider></mat-divider>
-              <p>*Basic per day : &#8377;47.56<br>**Rebate applied for 3 days</p>
-              <mat-divider></mat-divider>
-              <div class="center"><button mat-raised-button color="primary">Pay Mess Bill</button></div>
-          </mat-card>
-        </div>
-      </mat-accordion>
+        <mat-card class="bills" *ngFor="let bill of testbills">
+          <mat-card-header>
+            <mat-card-title>{{ bill.month }}</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <div>Total Cost of Extras:</div>
+            <div>&#8377;{{ bill.total }}</div>
+          </mat-card-content>
+        </mat-card>
     </mat-tab>
-  </mat-tab-group> -->
+  </mat-tab-group>
 </div>
