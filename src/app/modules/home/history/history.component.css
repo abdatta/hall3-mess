@@ -3,12 +3,15 @@ h2 {
 }
 
 .mat-tab-group {
-    width:100%;
+    width: 100%;
+    max-width: 650px;
 }
 
 :host >>> .mat-tab-body-content {
     display: flex;
     justify-content: center;
+    flex-flow: column;
+    align-items: center;
 }
 
 .mat-accordion {
@@ -59,8 +62,30 @@ tr.mat-footer-row {
     margin-top: 60px;
 }
 
-.passes{
-    padding: 5px;
+.bills {
+    width: 80%;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+.bills:first-child {
+    margin-top: 20px;
+}
+
+.mat-card-title {
+    font-size: 18px;
+}
+
+.mat-card-header {
+    justify-content: center;
+}
+
+.mat-card-content {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 12px;
+    font-size: 15px;
+    padding: 0 5px;
 }
 
 h4 {
@@ -80,9 +105,8 @@ span{
     text-align: center;
 }
 
-.mat-card{
-    padding-top: 16px;
-    padding-bottom: 0px;
+.mat-card {
+    padding: 16px;
 }
 
 .dark{
