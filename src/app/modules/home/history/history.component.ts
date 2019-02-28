@@ -22,25 +22,21 @@ export class HistoryComponent implements OnInit {
   tab = 0;
   newbie = false;
   total = 0;
-  testbills = [
-  {
-    month: 'January \'19',
-    total: 1278
-  },
-  {
-    month: 'February \'19',
-    total: 983
-  }
-];
+  bills: { month: string; total: number; }[];
 
   constructor(private tokensService: TokensService,
               private dishService: DishesService,
               private snackBar: MatSnackBar,
               private route: ActivatedRoute) {}
+
   ngOnInit() {
+    this.fetchTokens();
+    this.fetchBills();
+  }
+
+  fetchTokens() {
     // tokens are being loaded
     this.loading = true;
-
     this.tokensService.getTokens()
       .subscribe(tokens => {
         // If no token is found
@@ -87,7 +83,27 @@ export class HistoryComponent implements OnInit {
         }
         this.loading = false;
       });
+  }
 
+  fetchBills() {
+    this.tokensService.getMonthlyBills()
+      .subscribe(
+        bills => {
+          bills.forEach(bill =>
+            bill.month = moment(bill.month, 'YYYY-MM').format('MMMM \'YY'));
+          this.bills = bills;
+        },
+        error => {
+          if (error === 999) {
+            this.snackBar.open('We have no offline data at the moment. Please come online to load some data.');
+          } else {
+            this.snackBar.open('Oops! Some error occured. Please refresh the page.');
+          }
+      });
+  }
+
+  isThisMonth(month: string) {
+    return moment(month, 'MMMM \'YY').isSame(moment(), 'month');
   }
 
   getCost(token: TokenModel) {
