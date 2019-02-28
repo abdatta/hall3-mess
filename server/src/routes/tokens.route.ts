@@ -30,9 +30,10 @@ export class TokensRoute {
         router
             .get('/', accountCtrl.checkMessAuth, tokenCtrl.getLatestTokens)
             .get('/user', accountCtrl.checkAuth, tokenCtrl.getUserTokens)
-            .post('/book', accountCtrl.checkAuth, tokenCtrl.addToken)
+            .get('/user/bills', accountCtrl.checkAuth, tokenCtrl.getUserBills)
             .get('/filter', accountCtrl.checkAuth, tokenCtrl.getEditTokens)
             .get('/bill',  accountCtrl.checkPermissions('make_bills'), tokenCtrl.getBillAsExcelSheet)
+            .post('/book', accountCtrl.checkAuth, tokenCtrl.addToken)
             .post('/reduce/:id', accountCtrl.checkPermissions('reduce_token'), tokenCtrl.reduceDishesInToken);
         return router;
     }
