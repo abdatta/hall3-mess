@@ -4,7 +4,7 @@
                       [infiniteScrollDisabled]="fetching || fetchedAll"
                       (scrolled)="fetchMoreTokens()">
   <h2>Bills and History</h2>
-<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tab">
+  <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tab">
     <mat-tab label="Daily History">
       <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
       <div class="centr" *ngIf="newbie">
@@ -53,18 +53,19 @@
       </mat-accordion>
       <mat-progress-bar mode="indeterminate" [class.hide]="!fetching" *ngIf="!fetchedAll"></mat-progress-bar>
     </mat-tab>
-    <mat-tab label="Monthly Bills"> 
-      <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
-        <mat-card class="bills" *ngFor="let bill of testbills">
-          <mat-card-header>
-            <mat-card-title>{{ bill.month }}</mat-card-title>
-          </mat-card-header>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-            <div>Total Cost of Extras:</div>
-            <div>&#8377;{{ bill.total }}</div>
-          </mat-card-content>
-        </mat-card>
+    <mat-tab label="Monthly Bills">
+      <div *ngIf="!bills"><mat-spinner class="spinner"></mat-spinner><br></div>
+      <mat-card class="bills" *ngFor="let bill of bills">
+        <mat-card-header>
+          <mat-card-title>{{ bill.month }}</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div>Total Extras Booked<span *ngIf="isThisMonth(bill.month)">*</span>:</div>
+          <div><b>&#8377;{{ bill.total }}</b></div>
+        </mat-card-content>
+        <div *ngIf="isThisMonth(bill.month)" class="running-total">*This is the current running total, and is subject to change.</div>
+      </mat-card>
     </mat-tab>
   </mat-tab-group>
 </div>
