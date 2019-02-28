@@ -32,7 +32,7 @@ export class TokensCtrl {
     }
 
     /**
-     * Sanitize token json being sent
+     * Sanitize token json before being sent
      *
      * @class TokensCtrl
      * @method sanitize
@@ -94,7 +94,7 @@ export class TokensCtrl {
                             dishes.forEach(dish => this.updateFrequencyOfDish(dish));
                     });
             })
-            .catch((error) => this.internalServer(res, error));
+            .catch(error => this.internalServer(res, error));
     }
 
    /**
@@ -114,7 +114,7 @@ export class TokensCtrl {
                 user.save().then((savedUser: UserModel) =>
                         res.status(200).json(this.sanitize(token)));
             })
-            .catch((error) => this.internalServer(res, error));
+            .catch(error => this.internalServer(res, error));
     }
 
     /**
@@ -157,21 +157,65 @@ export class TokensCtrl {
         const maxtoken = 20;
         const offset = req.query.offset && moment(req.query.offset).isValid() && moment(req.query.offset) || moment();
         this.userModel.findOne({ rollno: rollno }, 'tokens')
-          .populate({
-              path: 'tokens',
-              match: { date: { $lt: offset.format() }},
-              options: { sort: '-date', limit: maxtoken }
-          })
-          .exec((err: Error, user: UserModel) => {
-            if (err) {
-                this.internalServer(res, err);
-            } else {
-                res.status(200).json((user.tokens as TokenModel[])
-                    .map(token => this.sanitize(token)));
-            }
-          });
+            .populate({
+                path: 'tokens',
+                match: { date: { $lt: offset.format() }},
+                options: { sort: '-date', limit: maxtoken }
+            })
+            .then((user: UserModel | null) => {
+                if (!user) {
+                    res.sendStatus(404);
+                    return;
+                }
+                res.status(200).json(
+                    (<TokenModel[]>user.tokens).map(token => this.sanitize(token))
+                );
+            })
+            .catch(error => this.internalServer(res, error));
     }
 
+    /**
+     * Get list of user's monthly bills
+     *
+     * @class TokensCtrl
+     * @method getUserBills
+     */
+    public getUserBills = (req: Request, res: Response) => {
+        const rollno = req.user.rollno;
+        this.userModel.aggregate([
+            { $match: { rollno: rollno } }, // queries user with given rollno
+            { $lookup: { // populates the tokens field
+                from: 'tokens',
+                localField: 'tokens',
+                foreignField: '_id',
+                as: 'tokens'
+            }},
+            { $project: { 'tokens': 1 }}, // selects only the tokens fields from the user data
+            { $unwind: '$tokens'},          // splits the user object into multiple objects,
+            { $unwind: '$tokens.dishes'},   // one for each dish for each token,
+            { $group: {                     // to help in better grouping by month
+                _id: { $substr: ['$tokens.date', 0, 7] }, // selects first 7 chars as YYYY-MM
+                bill: { $sum: { // calculates bill = sum of (price * quantity) of all dishes in all tokens
+                    $multiply : ['$tokens.dishes.price', '$tokens.dishes.quantity']
+                }}
+            }},
+            { $sort: { _id: -1 }}, // sort the bills in order of decreasing month
+            { $project: { // finalises output as an array of { month: string, total: number }
+                _id: 0,
+                month: '$_id',
+                total: '$bill'
+            }}
+        ])
+        .then(bills => res.status(200).json(bills))
+        .catch(error => this.internalServer(res, error));
+    }
+
+    /**
+     * Reduces mistakenly booked dishes in tokens
+     *
+     * @class TokensCtrl
+     * @method reduceDishesInToken
+     */
     public reduceDishesInToken = (req: Request, res: Response) => {
         const tokenId = req.params.id;
         const dishId = req.body._id;
@@ -183,7 +227,7 @@ export class TokensCtrl {
                 }
                 res.status(200).json(token);
             })
-            .catch((error) => this.internalServer(res, error));
+            .catch(error => this.internalServer(res, error));
     }
 
     /**
@@ -200,7 +244,7 @@ export class TokensCtrl {
             .then((tokens: TokenModel[]) => {
                 res.status(200).json(tokens);
             })
-            .catch((error) => this.internalServer(res, error));
+            .catch(error => this.internalServer(res, error));
     }
 
     /**
@@ -224,7 +268,7 @@ export class TokensCtrl {
                 }
                 res.status(200).json(user.tokens);
             })
-            .catch((error) => this.internalServer(res, error));
+            .catch(error => this.internalServer(res, error));
     }
 
     /**
@@ -325,7 +369,7 @@ export class TokensCtrl {
                 res.status(200).send(buf);
 
             })
-            .catch((error) => this.internalServer(res, error));
+            .catch(error => this.internalServer(res, error));
     }
 
     /**
