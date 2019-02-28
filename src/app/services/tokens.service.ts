@@ -68,6 +68,26 @@ export class TokensService {
     }
   }
 
+  getMonthlyBills(): Observable<{month: string, total: number}[]> {
+    if (this.network.online) {
+      return this.http.get<{month: string, total: number}[]>('/api/tokens/user/bills')
+        .pipe(
+          tap(bills => this.localStorage.setItemSubscribe('bills', bills)),
+          catchError(this.handleError)
+        );
+    } else {
+      return this.localStorage.getItem<{month: string, total: number}[]>('bills')
+        .pipe(
+          map(bills => {
+            if (bills === null) {
+              throw 999; // offline error code
+            }
+            return bills;
+          })
+        );
+    }
+  }
+
   bookToken(dishes: DishModel[]): Observable<TokenModel> {
     return this.http.post<TokenModel>('/api/tokens/book', { dishes })
       .pipe(
