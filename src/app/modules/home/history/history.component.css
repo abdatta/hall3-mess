@@ -109,6 +109,10 @@ span{
     padding: 16px;
 }
 
+.running-total {
+    font-size: x-small
+}
+
 .dark{
     color: black;
 }
