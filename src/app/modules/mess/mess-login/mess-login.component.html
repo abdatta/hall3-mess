@@ -6,8 +6,8 @@
         <h4>Scan QR Code</h4>
         <zxing-scanner #scanner start="true" (scanSuccess)="handleQRdata($event)"></zxing-scanner>
       </div>
-      <mat-divider [vertical]="true"></mat-divider>
-      <div class="qr-login">
+      <mat-divider [vertical]="true" *ngIf="rollno_login"></mat-divider>
+      <div class="qr-login" *ngIf="rollno_login">
         <h4>Or Login</h4>
         <div class="qr-login">
           <mat-form-field>
