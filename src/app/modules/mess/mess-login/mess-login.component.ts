@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '@app/services';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { QRBookComponent } from '@mess/qr-book/qr-book.component';
@@ -20,7 +20,10 @@ export class MessLoginComponent implements OnInit {
   submitting: boolean;
   dialog_open: boolean;
 
+  rollno_login = true;
+
   constructor(private authService: AuthService,
+              private route: ActivatedRoute,
               private dialog: MatDialog,
               public snackBar: MatSnackBar) { }
 
@@ -38,6 +41,13 @@ export class MessLoginComponent implements OnInit {
         this.snackBar.open('No cameras found in this device.');
       }
     });
+
+    this.route.data
+      .subscribe(params => {
+        if (params['only'] === 'qr') {
+          this.rollno_login = false;
+        }
+      });
   }
 
   logIn(roll, pass) {

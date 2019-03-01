@@ -19,6 +19,7 @@ const messRoutes: Routes = [
         children : [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
             { path: 'login', component: MessLoginComponent },
+            { path: 'scan', component: MessLoginComponent, data: { only: 'qr' } },
 //          { path: 'nonvegbookings', component: NonvegbookingsComponent },
         ]
     }
