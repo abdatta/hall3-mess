@@ -22,7 +22,12 @@ export class SignupComponent implements OnInit {
   }
 
   signUp(name: string, rollno: string, password: string, repassword: string) {
+    // Remove leading and trailing spaces
+    name = name.trim();
+    rollno = rollno.trim();
+    // Check if all fields are filled before proceeding
     if (name && rollno && password && repassword) {
+      // Check if password matches retyped password before proceeding
       if (password === repassword) {
         this.dialog.open(IITKAuthComponent, {
             width: '90%',
