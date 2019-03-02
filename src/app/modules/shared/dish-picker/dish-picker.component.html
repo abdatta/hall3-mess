@@ -1,6 +1,6 @@
 <div class="container">
   <h2>{{title}}</h2>
-  <mat-tab-group class="fullwidth" mat-stretch-tabs [selectedIndex]="currentSlot()">
+  <mat-tab-group class="fullwidth" mat-stretch-tabs [selectedIndex]="currentSlot()" *ngIf="!prebook">
     <mat-tab *ngFor="let slot of slots;" label="{{ slot }}">
       <div class="disher" *ngIf="!loading">
         <ng-container *ngFor="let dish of dishes; let i=index;">
@@ -23,6 +23,29 @@
       </div>
     </mat-tab>
   </mat-tab-group>
+  
+  <ng-container *ngIf="prebook">
+      <div class="disher" *ngIf="!loading">
+        <ng-container *ngFor="let dish of dishes; let i=index;">
+          <h4>{{ dish.slot }} :</h4>
+          <mat-card class="dish-item" *ngIf = "dish">
+            <mat-checkbox [(ngModel)]="selected[i]" (ngModelChange)="resetQuantity(i)"></mat-checkbox>
+            <button mat-button class="dish-button"
+                    (click)="selected[i] = !selected[i]; resetQuantity(i)">{{dish.name}} (&#8377;{{dish.price}})</button>
+            <div></div>
+            <div *ngIf="selected[i]" class="no-shrink">
+              <button mat-icon-button (click)="changeQuantity(i,-1)" [disabled]="dish.quantity<=1">
+                <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_left</mat-icon>
+              </button>
+              <span>{{dish.quantity}}</span>
+              <button mat-icon-button  (click)="changeQuantity(i,1)">
+                <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_right</mat-icon>
+              </button>
+            </div>
+          </mat-card>
+        </ng-container>
+      </div>
+    </ng-container>
   <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
   <div class="submit">
     <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>

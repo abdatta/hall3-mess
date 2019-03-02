@@ -7,6 +7,7 @@ import { Network } from '@ngx-pwa/offline';
 import { PrebookingModel } from '@app/models/prebooking.model';
 
 import { catchError } from 'rxjs/operators';
+import { DishModel } from '@app/models';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class PrebookingService {
               private localStorage: LocalStorage,
               private network: Network) { }
 
-   prebook(dishes: PrebookingModel): Observable<PrebookingModel> {
+   prebook(dishes: PrebookingModel[]): Observable<PrebookingModel> {
     return this.http.post<PrebookingModel>('/api/prebooking/add', { dishes })
       .pipe(
         catchError(this.handleError)

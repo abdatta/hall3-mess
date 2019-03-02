@@ -13,6 +13,7 @@ export class DishPickerComponent implements OnInit {
   @Input() submitText: string;
   @Input() loading: boolean;
   @Input() submitting: boolean;
+  @Input() prebook: boolean;
 
   @Input('dishes')
   set setDishes(dishes: DishModel[]) {

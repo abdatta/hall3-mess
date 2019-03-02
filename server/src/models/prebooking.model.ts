@@ -7,6 +7,6 @@ import { Document } from 'mongoose';
 export interface PrebookingModel extends Document {
     dish_id: string;
     quantity: number;
-    date: string;
-    rollno: string;
+    date?: string;
+    rollno?: string;
 }

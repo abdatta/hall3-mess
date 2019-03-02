@@ -4,6 +4,9 @@ import { DishModel } from '@app/models';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { MatSnackBar } from '@angular/material';
+import { PrebookingService } from '@app/services/prebooking.service';
+import { PrebookingModel } from '@app/models/prebooking.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-prebook',
@@ -15,14 +18,18 @@ export class PrebookComponent implements OnInit {
   dishes: DishModel[];
   loading: boolean;
   submitting: boolean;
+  selected: boolean[];
+  prebooked: PrebookingModel[];
+  prebooking = true;
 
   constructor(private router: Router,
               private snackBar: MatSnackBar,
               private dishesService: DishesService,
-              private tokensService: TokensService) { }
+              private prebookingService: PrebookingService) { }
 
   ngOnInit() {
     this.loading = true;
+
     this.dishesService.getSomedaysDishes(moment().add(1, 'd').format('dddd'))
       .subscribe(dishes => {
         this.dishes = dishes.filter(dish => dish.prebookable);
@@ -38,17 +45,30 @@ export class PrebookComponent implements OnInit {
       });
   }
 
+  set setDishes(dishes: DishModel[]) {
+    if (dishes) {
+      dishes.sort((a: DishModel, b: DishModel) => b.frequency - a.frequency);
+      dishes.forEach(dish => dish.quantity = dish.quantity || 0);
+      this.selected = dishes.map(_ => false);
+      this.dishes = dishes;
+    }
+  }
+
   prebook(selected: boolean[]) {
     const dishes = this.dishes && this.dishes.filter((_, i) => selected[i]);
     if (dishes && dishes.length) {
       this.submitting = true;
-      this.tokensService
-        .bookToken(dishes)
+      dishes.forEach(dish => {
+//        this.prebooked[dishes.indexOf(dish)].dish_id = dish._id;
+//        this.prebooked[dishes.indexOf(dish)].quantity = dish.quantity;
+//    copy value from dishmodel to a prebookmodel -> prebooked
+      });
+      this.prebookingService
+        .prebook(this.prebooked)
         .subscribe(token => {
           if (token) {
-            this.router.navigateByUrl('/home/history?show=' + token._id);
+//          add this part
           }
-          this.submitting = false;
         },
         error => {
           if (error === 400) {

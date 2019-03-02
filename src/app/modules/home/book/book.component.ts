@@ -19,6 +19,7 @@ export class BookComponent implements OnInit {
   loading: boolean;
   submitting: boolean;
   slot: ('Breakfast' | 'Lunch' | 'Dinner');
+  prebook = false;
 
   @ViewChild('logo')
   logoElement: ElementRef;
