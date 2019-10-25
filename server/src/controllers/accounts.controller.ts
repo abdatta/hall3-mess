@@ -304,7 +304,10 @@ export class AccountCtrl {
         this.userModel.findOneAndUpdate(
                 { rollno: req.body.rollno, resetPasswordCode: req.body.reset_code },
                 {
-                    $set: { password: new this.userModel().generateHash(req.body.password) },
+                    $set: {
+                        password: new this.userModel().generateHash(req.body.password),
+                        verified: true
+                    },
                     $unset: { resetPasswordCode: 1 }
                 }
             )
