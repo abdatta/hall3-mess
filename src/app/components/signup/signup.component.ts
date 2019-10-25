@@ -42,6 +42,9 @@ export class SignupComponent implements OnInit {
                     this.signupsuccess = true;
                   } else if (s === 401) {
                     this.snackBar.open('User already exists.');
+                  } else if (s === 400) {
+                    this.snackBar.open('User already exists. Use Forgot Password to verify your account.');
+                    this.router.navigateByUrl('/forgotpassword');
                   } else if (s === 999) {
                     this.snackBar.open('No internet connection. Come online and try again.');
                   } else {
