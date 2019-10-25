@@ -146,7 +146,7 @@ export class AccountCtrl {
         this.userModel.findOne({ 'rollno': req.body.rollno })
             .then((user: UserModel | null) => {
                 if (user) {
-                    res.sendStatus(401);
+                    res.sendStatus(user.verified ? 401 : 400);
                     return;
                 }
                 const newUser = new this.userModel();
