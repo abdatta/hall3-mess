@@ -40,7 +40,7 @@ import {
   ResetPasswordComponent
 } from '@app/components';
 import { IITKAuthComponent } from './components/iitk-auth/iitk-auth.component';
-
+import {ContactusComponent} from './components/login/contactus/contactus.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +54,8 @@ import { IITKAuthComponent } from './components/iitk-auth/iitk-auth.component';
     VerifyComponent,
     DeleteComponent,
     ResetPasswordComponent,
-    IITKAuthComponent
+    IITKAuthComponent,
+    ContactusComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +80,7 @@ import { IITKAuthComponent } from './components/iitk-auth/iitk-auth.component';
     DishesService,
     TokensService
   ],
-  entryComponents: [SettingsComponent, PWAPromptComponent, IITKAuthComponent],
+  entryComponents: [SettingsComponent, PWAPromptComponent, IITKAuthComponent, ContactusComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
