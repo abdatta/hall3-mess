@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '@app/services';
-
+import {MatDialog, MatDialogRef} from '@angular/material';
+import {ContactusComponent} from './contactus/contactus.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
   submitting: boolean;
 
   constructor(private authService: AuthService,
-              private router: Router ,  public snackBar: MatSnackBar) { }
+              private router: Router ,  public snackBar: MatSnackBar,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -42,4 +44,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  contactUs() {
+    this.dialog.open(ContactusComponent);
+  }
 }
