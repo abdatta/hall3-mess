@@ -14,7 +14,8 @@ export class MailerConfig {
             auth: {
                 user: process.env.MAIL_AUTH || '',
                 pass: process.env.MAIL_PASS || ''
-            }
+            },
+            tls: { rejectUnauthorized: false }
         });
     }
 
@@ -116,5 +117,8 @@ interface MailConfig {
     auth: {
         user: string;
         pass: string;
+    };
+    tls: {
+        rejectUnauthorized: boolean;
     };
 }
