@@ -31,7 +31,7 @@ export class Mailer {
     }
 
     private sendMail(mailOptions: nodemailer.SendMailOptions): Promise<any> {
-        mailOptions.html += this.FOOTER;
+        mailOptions.html += Mailer.FOOTER;
         if (!process.env.MAIL_ENABLED) {
             console.log('Mail would have been sent to ' + mailOptions.to);
             console.log('Mail Payoad: ', JSON.stringify(mailOptions, null, 2));
@@ -91,16 +91,16 @@ export class Mailer {
         return this.sendMail(mailOptions);
     }
 
-    private readonly FOOTER = `------` +
+    private static FOOTER = `------` +
                                 `<div style="font: 10px/1.4 Arial,Helvetica,sans-serif;">` +
-                                    `<p>In case of any difficulty or concern, please feel free to contact any one of us.</p>` +  
+                                    `<p>In case of any difficulty or concern, please feel free to contact any one of us.</p>` +
                                     `<p>` +
                                         `Utkarsh Srivastava<br>` +
                                         `Web-Incharge<br>` +
                                         `Hall 3 IIT Kanpur<br>` +
                                         `<a href="mailto:utkarshs20@iitk.ac.in">utkarshs20@iitk.ac.in</a> | 6387196722` +
                                     `</p>` +
-            
+
                                     `<p>` +
                                         `Swayam Gupta<br>` +
                                         `Web-Incharge<br>` +

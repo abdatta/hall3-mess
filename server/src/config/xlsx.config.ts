@@ -35,7 +35,7 @@ export class NestedJsonToAoa {
         data.forEach((d, i) => {
             i += this.maxDepth;
             this.aoa[i].forEach((_, j) => {
-                this.aoa[i][j] = this.getValue(d, j);;
+                this.aoa[i][j] = this.getValue(d, j);
             });
         });
     }
