@@ -1,0 +1,14 @@
+{
+    "extends": "../tslint.json",
+    "rules": {
+        "member-ordering": [
+            true,
+            {
+              "order": [
+                "instance-field",
+                "instance-method"
+              ]
+            }
+        ]
+    }
+}

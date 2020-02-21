@@ -3,13 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently -i \"npm:server -s\" \"npm:client -s\"",
-    "client": "ng serve -o",
-    "server": "cd server && npm start",
-    "build": "concurrently \"ng build --configuration development\" \"cd server && npm run build -s\"",
-    "prod": "concurrently \"ng build --configuration production\" \"cd server && npm run prod -s\"",
+    "concurrently": "concurrently --kill-others-on-fail -n \"server,client\"",
+    "start": "npm run concurrently -s -- -i \"cd server && npm start\" \"ng serve -o\" ",
+    "build": "npm run concurrently -s -- \"cd server && npm run build\" \"ng build --configuration development\"",
+    "prod": "npm run concurrently -s -- \"cd server && npm run prod\" \"ng build --configuration production\"",
+    "lint": "npm run concurrently -s -- \"cd server && npm run lint\" \"ng lint\"",
     "test": "ng test",
-    "lint": "ng lint",
     "e2e": "ng e2e",
     "commit": "commit-wizard"
   },
