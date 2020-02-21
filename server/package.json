@@ -8,6 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 0",
     "build": "tsc && copyfiles package.json package-lock.json ../mess-build && cd ../mess-build && npm install --production",
     "prod": "tsc --outDir ../mess-build-prod && copyfiles package.json package-lock.json ../mess-build-prod && cd ../mess-build-prod && npm install --production",
+    "lint": "tslint index.ts src/**/*.ts && (echo. && echo All server files pass linting.)",
+    "lint-fix": "tslint --fix index.ts src/**/*.ts",
     "keys": "web-push generate-vapid-keys"
   },
   "keywords": [],
@@ -47,6 +49,7 @@
     "@types/web-push": "^3.3.0",
     "copyfiles": "^2.1.0",
     "nodemon": "^1.18.4",
-    "ts-node": "^7.0.1"
+    "ts-node": "^7.0.1",
+    "tslint": "^5.20.1"
   }
 }
