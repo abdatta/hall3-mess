@@ -95,10 +95,10 @@ export class Mailer {
                                 `<div style="font: 10px/1.4 Arial,Helvetica,sans-serif;">` +
                                     `<p>In case of any difficulty or concern, please feel free to contact any one of us.</p>` +  
                                     `<p>` +
-                                        `Ashish Kumar Singh<br>` +
+                                        `Utkarsh Srivastava<br>` +
                                         `Web-Incharge (Present)<br>` +
                                         `Hall 3 IIT Kanpur<br>` +
-                                        `<a href="mailto:ashsgh@iitk.ac.in">ashsgh@iitk.ac.in</a> | 8778124118` +
+                                        `<a href="mailto:utkarshs20@iitk.ac.in">utkarshs20@iitk.ac.in</a> | 6387196722` +
                                     `</p>` +
             
                                     `<p>` +
