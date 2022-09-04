@@ -96,16 +96,16 @@ export class Mailer {
                                     `<p>In case of any difficulty or concern, please feel free to contact any one of us.</p>` +  
                                     `<p>` +
                                         `Utkarsh Srivastava<br>` +
-                                        `Web-Incharge (Present)<br>` +
+                                        `Web-Incharge<br>` +
                                         `Hall 3 IIT Kanpur<br>` +
                                         `<a href="mailto:utkarshs20@iitk.ac.in">utkarshs20@iitk.ac.in</a> | 6387196722` +
                                     `</p>` +
             
                                     `<p>` +
-                                        `Abhishek Datta<br>` +
-                                        `Web-Incharge (2017-2018)<br>` +
+                                        `Swayam Gupta<br>` +
+                                        `Web-Incharge<br>` +
                                         `Hall 3 IIT Kanpur<br>` +
-                                        `<a href="mailto:abdatta@iitk.ac.in">abdatta@iitk.ac.in</a> | 7003801867` +
+                                        `<a href="mailto:swayamg20@iitk.ac.in">swayamg20@iitk.ac.in</a> | 8957370095` +
                                     `</p>` +
                                `</div>`;
 }
