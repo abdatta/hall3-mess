@@ -92,7 +92,7 @@ export class Mailer {
         return this.sendMail(mailOptions);
     }
 
-    public sendInactivityWarningMail(user: UserModel, lastUse: Number, daysLeft: Number, deleteLink: string): Promise<any> {
+    public sendInactivityWarningMail(user: UserModel, lastUse: Number, daysLeft: Number): Promise<any> {
         const mailOptions: nodemailer.SendMailOptions = {
             to: user.email,
             from: SENDER,
@@ -103,8 +103,7 @@ export class Mailer {
                     `It seems that you haven't used the Hall 3 Mess Automation Portal for a while. It has been ${lastUse} days since your last booking.` +
                     `Please book some extras within ${ daysLeft } day${ daysLeft !== 1 ? 's' : '' } or your account will be deleted due to inactivity.` +
                   `</p>` +
-                  `<p>If you have left Hall 3 and would like to deregister from our Mess Automation Portal, please use the following link to delete your account.</p>` +
-                  `<p><a href="${ deleteLink }">${ deleteLink }</a></p>`
+                  `<p>If you have left Hall 3 and would like to deregister from our Mess Automation Portal, please ignore these emails.</p>`
         };
 
         return this.sendMail(mailOptions);

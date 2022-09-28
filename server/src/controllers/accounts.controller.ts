@@ -267,16 +267,15 @@ export class AccountCtrl {
      */
     public deleteUnverifiedUser = (req: Request, res: Response) => {
         this.userModel.findOneAndRemove({ _id: req.params.id, verified: false })
-                .then((user: UserModel | null) => {
-                    if (!user) {
-                        res.sendStatus(404); // Not found
-                        return;
-                    }
-                    console.log('Deleted unverified user: ',
-                                JSON.stringify({ rollno: user.rollno }));
-                    res.sendStatus(200);
-                })
-                .catch((error) => this.internalServer(res, error));
+            .then((user: UserModel | null) => {
+                if (!user) {
+                    res.sendStatus(404); // Not found
+                    return;
+                }
+                console.log('Deleted unverified user: ', JSON.stringify({ rollno: user.rollno }));
+                res.sendStatus(200);
+            })
+            .catch((error) => this.internalServer(res, error));
     }
 
     /**
@@ -476,7 +475,7 @@ export class AccountCtrl {
             const daysSinceLastActive = today.diff(lastUseDate(user), 'days');
             const daysLeftTillDeletion = MAX_INACTIVITY_THRESHOLD - daysSinceLastActive;
             try {
-                await this.mailer.sendInactivityWarningMail(user, daysSinceLastActive, daysLeftTillDeletion, '');
+                await this.mailer.sendInactivityWarningMail(user, daysSinceLastActive, daysLeftTillDeletion);
                 await this.userModel.findByIdAndUpdate(user.id, { inactivityMailSentOn: today.format() });
             } catch (error) {
                 console.error('Error warning inactive user: ' + user.rollno, error);
