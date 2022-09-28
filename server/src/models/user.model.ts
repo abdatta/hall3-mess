@@ -15,6 +15,7 @@ export interface UserModel extends Document {
     resetPasswordCode?: string;
     liked?: boolean;
     tokens: string[] | TokenModel[];
+    inactivityMailSentOn?: string;
     generateHash: (password: string) => string;
     validPassword: (password: string) => boolean;
 }

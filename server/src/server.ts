@@ -163,6 +163,7 @@ export class Server {
 
     mongoose.set('useNewUrlParser', true);
     mongoose.set('useCreateIndex', true);
+    mongoose.set('useFindAndModify', false);
     const connection: mongoose.Connection = mongoose.createConnection(MONGODB_CONNECTION);
     this.connection = connection;
 
@@ -217,7 +218,7 @@ export class Server {
     const mailer = MailerConfig.setup();
 
     // Set up controllers
-    this.accountCtrl = new AccountCtrl(this.userModel, passport, mailer);
+    this.accountCtrl = new AccountCtrl(this.userModel, this.tokenModel, passport, mailer);
     this.dishesCtrl = new DishesCtrl(this.dishModel);
     this.tokensCtrl = new TokensCtrl(this.tokenModel, this.dishModel, this.userModel);
     this.notificationCtrl = new NotificationsCtrl(this.subscriptionModel);

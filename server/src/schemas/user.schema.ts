@@ -10,7 +10,8 @@ export let UserSchema: Schema = new Schema({
     verified: {type: Boolean, default: false},
     resetPasswordCode: {type: String},
     liked: {type: Boolean},
-    tokens: {type: [{type: SchemaTypes.ObjectId, ref: 'Token'}], default: []}
+    tokens: {type: [{type: SchemaTypes.ObjectId, ref: 'Token'}], default: []},
+    inactivityMailSentOn: {type: String}
 });
 
 // Generating Password hash

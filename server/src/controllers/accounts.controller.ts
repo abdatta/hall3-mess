@@ -4,8 +4,10 @@ import request from 'request';
 const ssh = new (require('node-ssh'))();
 
 import { UserModel } from '../models/user.model';
+import { TokenModel } from '../models/token.model';
 import { Mailer } from '../config/mailer.config';
 import { PassportStatic } from 'passport';
+import moment from 'moment';
 
 export class AccountCtrl {
 
@@ -15,9 +17,13 @@ export class AccountCtrl {
      * @class AccountCtrl
      * @constructor
      */
-    constructor(private userModel: Model<UserModel>,
-                private passport: PassportStatic,
-                private mailer: Mailer) {
+    constructor(
+        private userModel: Model<UserModel>,
+        private tokenModel: Model<TokenModel>,
+        private passport: PassportStatic,
+        private mailer: Mailer
+    ) {
+        this.cleaupInactiveUsers();
     }
 
     /**
@@ -412,6 +418,80 @@ export class AccountCtrl {
                 res.sendStatus(200);
             }
         });
+    }
+
+    public cleaupInactiveUsers = async () => {
+        const users = await this.userModel
+            .find({ permissions: { $size: 0 } })
+            .populate({
+                path: 'tokens',
+                options: { sort: '-date', limit: 1 },
+                select: 'date'
+            });
+
+        const MAX_INACTIVITY_THRESHOLD = 110;
+        const MIN_INACTIVITY_THRESHOLD = 100;
+        const WARNING_INTERVAL = 3;
+        const today = moment().startOf('day');
+        const lastUseDate = (user: UserModel): string => {
+            const lastToken = user.tokens[0] as TokenModel;
+            return lastToken ? lastToken.date : user._id.getTimestamp();
+        };
+
+        const inactiveUsers = users.filter(user => today.diff(lastUseDate(user), 'days') >= MIN_INACTIVITY_THRESHOLD);
+
+        const unverifiedInactiveUsers = inactiveUsers.filter(user => !user.verified);
+        const verifiedInactiveUsers = inactiveUsers.filter(user => !!user.verified);
+
+        // We will send a warning email iff they have not crossed the max threshold,
+        // and do not aleady have a warning email sent in last WARNING_INTERVAL days.
+        const verifiedInactiveUsersToBeWarned = verifiedInactiveUsers.filter(user =>
+            today.diff(lastUseDate(user), 'days') < MAX_INACTIVITY_THRESHOLD &&
+            (!user.inactivityMailSentOn || today.diff(user.inactivityMailSentOn, 'days') >= WARNING_INTERVAL)
+        );
+
+        // We will delete any user who have crossed the max threshold without any warning email
+        const verifiedInactiveUsersToBeDeleted = verifiedInactiveUsers.filter(user =>
+            today.diff(lastUseDate(user), 'days') >= MAX_INACTIVITY_THRESHOLD
+        );
+
+        console.log('Number of inactive users found: ' + inactiveUsers.length);
+        console.log('Number of unverified inactive users found: ' + unverifiedInactiveUsers.length);
+        console.log('Number of verified inactive users to be warned: ' + verifiedInactiveUsersToBeWarned.length);
+        console.log('Number of verified inactive users to be deleted: ' + verifiedInactiveUsersToBeDeleted.length);
+
+        // delete the unverified inactive users first
+        if (unverifiedInactiveUsers.length > 0) {
+            const unverifiedInactiveUsersRollNos = unverifiedInactiveUsers.map(u => u.rollno);
+            await this.userModel.deleteMany({ rollno: { $in: unverifiedInactiveUsersRollNos }})
+                .then(() => console.log('Deleted unverified users:', unverifiedInactiveUsersRollNos.join(',')))
+                .catch((err) => console.error('Failed to delete unverified users:', err));
+        }
+
+        // warn inactive users that have crossed the min inactivity threshold
+        for (const user of verifiedInactiveUsersToBeWarned) {
+            const daysSinceLastActive = today.diff(lastUseDate(user), 'days');
+            const daysLeftTillDeletion = MAX_INACTIVITY_THRESHOLD - daysSinceLastActive;
+            try {
+                await this.mailer.sendInactivityWarningMail(user, daysSinceLastActive, daysLeftTillDeletion, '');
+                await this.userModel.findByIdAndUpdate(user.id, { inactivityMailSentOn: today.format() });
+            } catch (error) {
+                console.error('Error warning inactive user: ' + user.rollno, error);
+            }
+        }
+
+        // inform and remove inactive users that have crossed the max inactivity threshold
+        for (const user of verifiedInactiveUsersToBeDeleted) {
+            try {
+                // ideally these two operations should be part of a transaction
+                // however transactions are only supported post MongoDB 4.0
+                await this.tokenModel.deleteMany({ rollno: user.rollno });
+                await this.userModel.findByIdAndRemove(user.id);
+                await this.mailer.sendAccountDeletionMail(user);
+            } catch (error) {
+                console.error('Error removing inactive user: ' + user.rollno, error);
+            }
+        }
     }
 
     /**
