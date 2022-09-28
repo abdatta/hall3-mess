@@ -8,6 +8,7 @@ import { TokenModel } from '../models/token.model';
 import { Mailer } from '../config/mailer.config';
 import { PassportStatic } from 'passport';
 import moment from 'moment';
+import schedule from 'node-schedule';
 
 export class AccountCtrl {
 
@@ -23,7 +24,8 @@ export class AccountCtrl {
         private passport: PassportStatic,
         private mailer: Mailer
     ) {
-        this.cleaupInactiveUsers();
+        // cleanup inactive users at 00:02 AM every day
+        schedule.scheduleJob('2 0 * * *', this.cleanupInactiveUsers);
     }
 
     /**
@@ -420,7 +422,8 @@ export class AccountCtrl {
         });
     }
 
-    public cleaupInactiveUsers = async () => {
+    private cleanupInactiveUsers = async () => {
+        console.log('Starting cleanupInactiveUsers job');
         const users = await this.userModel
             .find({ permissions: { $size: 0 } })
             .populate({
@@ -492,6 +495,7 @@ export class AccountCtrl {
                 console.error('Error removing inactive user: ' + user.rollno, error);
             }
         }
+        console.log('Finished cleanupInactiveUsers job');
     }
 
     /**
