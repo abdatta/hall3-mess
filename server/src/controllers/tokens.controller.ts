@@ -10,10 +10,6 @@ import { XLSXConfig } from '../config/xlsx.config';
 
 export class TokensCtrl {
 
-    private tokenModel: Model<TokenModel>;
-    private dishModel: Model<DishModel>;
-    private userModel: Model<UserModel>;
-
     private static sid = (id: string) => '5bd00e2bf7c1a46a48' + id;
     private static gid = (id: string) => id.slice(-6);
 
@@ -23,11 +19,11 @@ export class TokensCtrl {
      * @class TokensCtrl
      * @constructor
      */
-    constructor(model: Model<TokenModel>,
-        model2: Model<DishModel>, model3: Model<UserModel>) {
-        this.tokenModel = model;
-        this.dishModel = model2;
-        this.userModel = model3;
+    constructor(
+        private tokenModel: Model<TokenModel>,
+        private dishModel: Model<DishModel>,
+        private userModel: Model<UserModel>
+    ) {
         moment.defaultFormat = 'YYYY-MM-DD HH:mm:ss';
     }
 
@@ -68,33 +64,35 @@ export class TokensCtrl {
 
         const today = moment().format('ddd');
         const tomorrow = moment().add(1, 'd').format('ddd');
-        this.dishModel.find({_id: { $in: Object.keys(quantity) },
+        this.dishModel.find({
+            _id: { $in: Object.keys(quantity) },
             $or: [
                 {days: today},
                 {days: tomorrow, prebookable: true}
-            ]})
-            .then((dishes: DishModel[]) => {
-                token.dishes = dishes.map(dish => ({
-                    _id: dish._id,
-                    name: dish.name,
-                    price: dish.price,
-                    quantity: quantity[dish._id]
-                }));
-                if (token.dishes.length === 0) {
-                    res.sendStatus(400); // Bad Request
-                    return;
-                }
-                this.getUniqueId()
-                    .then((id: string) => {
-                        token._id = Types.ObjectId(id);
-                        return token.save();
-                    })
-                    .then((savedToken: TokenModel) => {
-                            this.insertTokenIntoUser(req, res, savedToken);
-                            dishes.forEach(dish => this.updateFrequencyOfDish(dish));
-                    });
-            })
-            .catch(error => this.internalServer(res, error));
+            ]
+        })
+        .then((dishes: DishModel[]) => {
+            token.dishes = dishes.map(dish => ({
+                _id: dish._id,
+                name: dish.name,
+                price: dish.price,
+                quantity: quantity[dish._id]
+            }));
+            if (token.dishes.length === 0) {
+                res.sendStatus(400); // Bad Request
+                return;
+            }
+            this.getUniqueId()
+                .then((id: string) => {
+                    token._id = Types.ObjectId(id);
+                    return token.save();
+                })
+                .then((savedToken: TokenModel) => {
+                        this.insertTokenIntoUser(req, res, savedToken);
+                        dishes.forEach(dish => this.updateFrequencyOfDish(dish));
+                });
+        })
+        .catch(error => this.internalServer(res, error));
     }
 
    /**

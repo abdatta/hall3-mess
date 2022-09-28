@@ -41,6 +41,7 @@ export class Mailer {
         return new Promise((resolve, reject) => {
             this.transporter.sendMail(mailOptions, (error: any, info: any) => {
                 if (error) {
+                    console.error('Error sending mail to ' + mailOptions.to, error);
                     reject(error);
                 } else {
                     console.log('Mail sent to ' + mailOptions.to);
@@ -86,6 +87,40 @@ export class Mailer {
                   `<p>` +
                     `If you didn't request for reset password, kindly ignore this mail.` +
                   `</p>`
+        };
+
+        return this.sendMail(mailOptions);
+    }
+
+    public sendInactivityWarningMail(user: UserModel, lastUse: Number, daysLeft: Number, deleteLink: string): Promise<any> {
+        const mailOptions: nodemailer.SendMailOptions = {
+            to: user.email,
+            from: SENDER,
+            bcc: BCC,
+            subject: 'Mess Account Deletion Warning',
+            html: `<p>Hi ${ user.name } (${ user.rollno }),</p>` +
+                  `<p>` +
+                    `It seems that you haven't used the Hall 3 Mess Automation Portal for a while. It has been ${lastUse} days since your last booking.` +
+                    `Please book some extras within ${ daysLeft } day${ daysLeft !== 1 ? 's' : '' } or your account will be deleted due to inactivity.` +
+                  `</p>` +
+                  `<p>If you have left Hall 3 and would like to deregister from our Mess Automation Portal, please use the following link to delete your account.</p>` +
+                  `<p><a href="${ deleteLink }">${ deleteLink }</a></p>`
+        };
+
+        return this.sendMail(mailOptions);
+    }
+
+    public sendAccountDeletionMail(user: UserModel): Promise<any> {
+        const mailOptions: nodemailer.SendMailOptions = {
+            to: user.email,
+            from: SENDER,
+            bcc: BCC,
+            subject: 'Mess Account Deleted due to Inactivity',
+            html: `<p>Hi ${ user.name } (${ user.rollno }),</p>` +
+                  `<p>` +
+                    `Since you haven't booked any extras since the last warning, your account is being deleted.` +
+                  `</p>` +
+                  `<p>Thank you for using Mess Automation Portal, Hall 3.</p>`
         };
 
         return this.sendMail(mailOptions);
