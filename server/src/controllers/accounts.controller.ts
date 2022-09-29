@@ -24,8 +24,10 @@ export class AccountCtrl {
         private passport: PassportStatic,
         private mailer: Mailer
     ) {
-        // cleanup inactive users at 00:02 AM every day
-        schedule.scheduleJob('2 0 * * *', this.cleanupInactiveUsers);
+        if (process.env.SCHEDULE_CLEANUP_INACTIVE_USERS === 'true') {
+            schedule.scheduleJob('2 0 * * *', this.cleanupInactiveUsers);
+            console.log('scheduled: cleanup-inactive-users at 00:02 AM every day.');
+        }
     }
 
     /**
@@ -421,6 +423,10 @@ export class AccountCtrl {
         });
     }
 
+    /**
+     * Cleans up inactive users and sends warning/deletion emails to them.
+     * This method is supposed to be scheduled as a cron job.
+     */
     private cleanupInactiveUsers = async () => {
         console.log('Starting cleanupInactiveUsers job');
         const users = await this.userModel
