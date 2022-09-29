@@ -41,11 +41,17 @@ export class AuthService {
 
   check = (): Promise<boolean> => this.currentUser.then((user: UserModel) => user != null);
 
-  hasControl = (): Promise<boolean> => this.currentUser.then((user: UserModel) =>
-                                       user.permissions.length > 0 || user.rollno === 'admin')
+  hasControl = async (): Promise<boolean> => {
+    const user = await this.currentUser;
+    if (user.rollno === 'admin') { return true; }
+    return user.permissions.length > 0 && !user.permissions.includes('user');
+  }
 
-  hasPermissions = (perms: string[]): Promise<boolean> => this.currentUser.then((user: UserModel) =>
-                       perms.every(perm => user.permissions.includes(perm)) || user.rollno === 'admin')
+  hasPermissions = async (perms: string[]): Promise<boolean> => {
+    const user = await this.currentUser;
+    if (user.rollno === 'admin') { return true; }
+    return perms.every(perm => user.permissions.includes(perm));
+  }
 
   constructor(private http: HttpClient,
               private router: Router,
