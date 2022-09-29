@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { Model, Types } from 'mongoose';
 import moment from 'moment';
 import XLSX from 'xlsx';
-import schedule from 'node-schedule';
 
 import { TokenModel } from '../models/token.model';
 import { DishModel } from '../models/dish.model';
@@ -26,8 +25,6 @@ export class TokensCtrl {
         private userModel: Model<UserModel>
     ) {
         moment.defaultFormat = 'YYYY-MM-DD HH:mm:ss';
-        // cleanup inactive users at 00:01 AM every day
-        schedule.scheduleJob('0 1 * * *', this.cleanupOldFreqsOfDishes);
     }
 
     /**
@@ -138,26 +135,6 @@ export class TokensCtrl {
                 dishToBeUpdated.save();
             })
             .catch(error => console.error('Could not update dish frequency: ', error));
-    }
-
-    private cleanupOldFreqsOfDishes = async () => {
-        console.log('Starting cleanupOldFreqsOfDishes job');
-        const today = moment().startOf('day');
-        const dishes = await this.dishModel.find({});
-        await Promise.all(dishes.map(dish => {
-            for (const day in dish.frequency) {
-                if (today.diff(moment(day), 'days') > 30) {
-                    delete dish.frequency[day];
-                }
-            }
-            dish.markModified('frequency');
-            return dish.save().catch(err => {
-                console.error(`Couldn\'t cleanup old frequencies for dish ${dish.name}`, err);
-            });
-        })).catch(err => {
-            console.error(`Error while cleaning up old frequencies from dishes`, err);
-        });
-        console.log('Finished cleanupOldFreqsOfDishes job');
     }
 
     /**

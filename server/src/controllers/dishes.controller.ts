@@ -1,12 +1,11 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { Model } from 'mongoose';
 import moment from 'moment';
+import schedule from 'node-schedule';
 
 import { DishModel } from '../models/dish.model';
 
 export class DishesCtrl {
-
-    private dishModel: Model<DishModel>;
 
     /**
      * Constructor
@@ -14,8 +13,9 @@ export class DishesCtrl {
      * @class DishesCtrl
      * @constructor
      */
-    constructor(model: Model<DishModel>) {
-        this.dishModel = model;
+    constructor(private dishModel: Model<DishModel>) {
+        schedule.scheduleJob('0 1 * * *', this.cleanupOldFreqsOfDishes);
+        console.log('scheduled: cleanup-old-freq-of-dishes at 00:01 AM every day.');
     }
 
     /**
@@ -149,6 +149,30 @@ export class DishesCtrl {
                 });
             }
         });
+    }
+
+    /**
+     * Cleans up the frequency record of dishes by deleting old usage counts.
+     * This method is supposed to be scheduled as a cron job.
+     */
+    private cleanupOldFreqsOfDishes = async () => {
+        console.log('Starting cleanupOldFreqsOfDishes job');
+        const today = moment().startOf('day');
+        const dishes = await this.dishModel.find({});
+        await Promise.all(dishes.map(dish => {
+            for (const day in dish.frequency) {
+                if (today.diff(moment(day), 'days') > 30) {
+                    delete dish.frequency[day];
+                }
+            }
+            dish.markModified('frequency');
+            return dish.save().catch(err => {
+                console.error(`Couldn\'t cleanup old frequencies for dish ${dish.name}`, err);
+            });
+        })).catch(err => {
+            console.error(`Error while cleaning up old frequencies from dishes`, err);
+        });
+        console.log('Finished cleanupOldFreqsOfDishes job');
     }
 
     /**
