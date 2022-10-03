@@ -28,3 +28,9 @@ jobs:
         cache: 'npm'
     - run: npm ci && cd server && npm ci
     - run: npm run prod
+    - name: Upload the production build artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: prod-build
+        path: ./mess-build-prod
+        if-no-files-found: error
