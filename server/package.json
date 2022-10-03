@@ -7,7 +7,7 @@
     "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 0",
     "build": "tsc && copyfiles package.json package-lock.json ../mess-build && cd ../mess-build && npm install --production",
-    "prod": "tsc --outDir ../mess-build-prod && copyfiles package.json package-lock.json ../mess-build-prod && cd ../mess-build-prod && npm install --production",
+    "prod": "tsc --outDir ../mess-build-prod && copyfiles package.json package-lock.json ../mess-build-prod",
     "keys": "web-push generate-vapid-keys"
   },
   "keywords": [],
