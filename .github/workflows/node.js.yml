@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Deployment CI
 
 on:
   push:
@@ -11,26 +11,56 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [10.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci && cd server && npm ci
-    - run: npm run prod
-    - name: Upload the production build artifact
-      uses: actions/upload-artifact@v3.1.0
-      with:
-        name: prod-build
-        path: ./mess-build-prod
-        if-no-files-found: error
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci && cd server && npm ci
+      - run: npm run prod
+      - name: Upload the production build artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: prod-build
+          path: ./mess-build-prod
+          if-no-files-found: error
+  
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: prod-build
+          path: ./prod-build
+      - name: Pull build repo
+        run: git clone "https://gitlab.com/hall3-iitk/mess-build-prod.git"
+      - name: Replace with new build
+        run: |
+          cd mess-build-prod
+          rm -rf public
+          rm -rf src
+          cp -rf ../prod-build/. ./
+          git diff
+      - name: Install build
+        run: |
+          cd mess-build-prod
+          npm install --production
+      - name: Push build repo
+        env:
+          token: ${{ secrets.GITLAB_ACCESS_TOKEN }}
+        run: |
+          cd mess-build-prod
+          git config user.name "Github Actions CI"
+          git config user.email "hall3web+ci@gmail.com"
+          git remote set-url origin "https://mess-build-prod:${token}@gitlab.com/hall3-iitk/mess-build-prod.git"
+          git push origin master
