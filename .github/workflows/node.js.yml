@@ -34,9 +34,12 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment: Deploy
     strategy:
       matrix:
         node-version: [10.x]
+    env:
+      build_url: ${{ secrets.PROD_BUILD_REPO_URL }}
     steps:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
@@ -44,7 +47,7 @@ jobs:
           name: prod-build
           path: ./prod-build
       - name: Pull build repo
-        run: git clone "https://gitlab.com/hall3-iitk/mess-build-prod.git"
+        run: git clone "${build_url}"
       - name: Replace with new build
         run: |
           cd mess-build-prod
@@ -57,11 +60,9 @@ jobs:
           cd mess-build-prod
           npm install --production
       - name: Push build repo
-        env:
-          token: ${{ secrets.GITLAB_ACCESS_TOKEN }}
         run: |
           cd mess-build-prod
           git config user.name "Github Actions CI"
           git config user.email "hall3web+ci@gmail.com"
-          git remote set-url origin "https://mess-build-prod:${token}@gitlab.com/hall3-iitk/mess-build-prod.git"
+          git remote set-url origin "${build_url}"
           git push origin master
