@@ -48,11 +48,10 @@ jobs:
           rm -rf public
           rm -rf src
           cp -rf ../prod-build/. ./
-          git diff
+          git status
       - name: Push build repo
         run: |
           cd mess-build-prod
           git config user.name "Github Actions CI"
           git config user.email "hall3web+ci@gmail.com"
-          git remote set-url origin "${build_url}"
           git push origin master
