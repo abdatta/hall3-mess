@@ -12,18 +12,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x]
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 10.x
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 10.x
           cache: 'npm'
       - run: npm ci && cd server && npm ci
-      - run: npm run prod
+      - run: npm run prod && rm -rf ./mess-build-prod/node_modules
       - name: Upload the production build artifact
         uses: actions/upload-artifact@v3.1.0
         with:
@@ -35,9 +32,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: Deploy
-    strategy:
-      matrix:
-        node-version: [10.x]
     env:
       build_url: ${{ secrets.PROD_BUILD_REPO_URL }}
     steps:
@@ -55,10 +49,6 @@ jobs:
           rm -rf src
           cp -rf ../prod-build/. ./
           git diff
-      - name: Install build
-        run: |
-          cd mess-build-prod
-          npm install --production
       - name: Push build repo
         run: |
           cd mess-build-prod
