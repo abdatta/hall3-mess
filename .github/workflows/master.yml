@@ -38,13 +38,13 @@ jobs:
       - name: Load Branch-based environment variables
         uses: iamtheyammer/branch-env-vars@v1.2.0
         with:
-          build_url: |
+          BUILD_URL: |
             master: ${{ secrets.PROD_BUILD_REPO_URL }}
             dev: ${{ secrets.DEV_BUILD_REPO_URL }}
-          deploy_token: |
+          DEPLOY_TOKEN: |
             master: ${{ secrets.PROD_DEPLOY_HOOK_TOKEN }}
             dev: ${{ secrets.DEV_DEPLOY_HOOK_TOKEN }}
-          deploy_url: |
+          DEPLOY_URL: |
             master: ${{ secrets.PROD_DEPLOY_HOOK_URL }}
             dev: ${{ secrets.DEV_DEPLOY_HOOK_URL }}
       - name: Download a Build Artifact
@@ -53,7 +53,7 @@ jobs:
           name: prod-build
           path: ./prod-build
       - name: Pull build repo
-        run: git clone "${build_url}"
+        run: git clone "${BUILD_URL}"
       - name: Replace with new build
         run: |
           cd mess-build-prod
@@ -71,4 +71,4 @@ jobs:
           git push origin master
       - name: Call deploy hook
         run: |
-          curl --fail -X POST -H 'X-Deploy-Token: '${deploy_token} "${deploy_url}"
+          curl --fail -X POST -H 'X-Deploy-Token: '${DEPLOY_TOKEN} "${DEPLOY_URL}"
