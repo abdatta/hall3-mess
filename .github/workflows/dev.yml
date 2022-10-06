@@ -36,7 +36,7 @@ jobs:
     environment: Deploy
     env:
       build_url: ${{ secrets.DEV_BUILD_REPO_URL }}
-      deploy_token: ${{ secrets.DEV_DEPLOY_HOOK_TOKEN }}
+      deploy_token: ${{ secrets.PROD_DEPLOY_HOOK_TOKEN }}
       deploy_url: ${{ secrets.DEV_DEPLOY_HOOK_URL }}
     steps:
       - name: Download the dev build artifact
