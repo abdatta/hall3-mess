@@ -34,11 +34,19 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: Deploy
-    env:
-      build_url: ${{ secrets.PROD_BUILD_REPO_URL }}
-      deploy_token: ${{ secrets.PROD_DEPLOY_HOOK_TOKEN }}
-      deploy_url: ${{ secrets.PROD_DEPLOY_HOOK_URL }}
     steps:
+      - name: Load Branch-based environment variables
+        uses: iamtheyammer/branch-env-vars@v1.2.0
+        with:
+          build_url: |
+            master: ${{ secrets.PROD_BUILD_REPO_URL }}
+            dev: ${{ secrets.DEV_BUILD_REPO_URL }}
+          deploy_token: |
+            master: ${{ secrets.PROD_DEPLOY_HOOK_TOKEN }}
+            dev: ${{ secrets.DEV_DEPLOY_HOOK_TOKEN }}
+          deploy_url: |
+            master: ${{ secrets.PROD_DEPLOY_HOOK_URL }}
+            dev: ${{ secrets.DEV_DEPLOY_HOOK_URL }}
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
         with:
