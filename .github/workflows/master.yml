@@ -29,7 +29,7 @@ jobs:
           name: prod-build
           path: ./mess-build-prod
           if-no-files-found: error
-  
+
   deploy:
     if: github.event_name == 'push'
     needs: build
@@ -53,14 +53,12 @@ jobs:
           rm -rf public src
           cp -rf ../prod-build/. ./
           git status
-          git diff --quiet || echo "Found diff!"
       - name: Push build repo
         run: |
           cd mess-build-prod
           git config user.name "Github Actions CI"
           git config user.email "hall3web+ci@gmail.com"
-          git add .
-          git commit -m "Release update on `date`"
+          git add . && git diff --staged --quiet || git commit -m "Release update on `date`"
           git push origin master
       - name: Call deploy hook
         run: |
