@@ -45,7 +45,7 @@ jobs:
           name: prod-build
           path: ./prod-build
       - name: Pull build repo
-        run: git clone "${BUILD_URL}"
+        run: git clone "${build_url}"
       - name: Replace with new build
         run: |
           cd mess-build-prod
@@ -63,4 +63,4 @@ jobs:
           git push origin master
       - name: Call deploy hook
         run: |
-          curl --fail -X POST -H 'X-Deploy-Token: '${DEPLOY_TOKEN} "${DEPLOY_URL}"
+          curl --fail -X POST -H 'X-Deploy-Token: '${deploy_token} "${deploy_url}"
