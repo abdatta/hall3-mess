@@ -52,15 +52,16 @@ jobs:
           rm -rf public src
           cp -rf ../prod-build/. ./
           git status
+          git diff --quiet
       - name: Push build repo
         run: |
           cd mess-build-prod
           git config user.name "Github Actions CI"
           git config user.email "hall3web+ci@gmail.com"
-          git add . && git diff --staged --quiet || export GIT_DIFF=exists 
-          [[ -z "$GIT_DIFF" ]] || git commit -m "Release update on `date`"
-          [[ -z "$GIT_DIFF" ]] || git push origin master
-          [[ -z "$GIT_DIFF" ]] || echo "::set-env name=GIT_DIFF::$GIT_DIFF"
+          git add . && git diff --staged --quiet
+          git commit -m "Release update on `date`"
+          git push origin master
+          echo "::set-env name=GIT_DIFF::$GIT_DIFF"
       - name: Call deploy hook
         run: |
-          [[ -z "$GIT_DIFF" ]] || curl --fail -X POST -H 'X-Deploy-Token: '${deploy_token} "${deploy_url}"
+          curl --fail -X POST -H 'X-Deploy-Token: '${deploy_token} "${deploy_url}"
