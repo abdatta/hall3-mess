@@ -1,0 +1,67 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Prod Deployment CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 10.x
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci && cd server && npm ci
+      - name: Build production bundles
+        run: npm run prod && rm -rf ./mess-build-prod/node_modules
+      - name: Upload the production build artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: prod-build
+          path: ./mess-build-prod
+          if-no-files-found: error
+  
+  deploy:
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: Deploy
+    env:
+      build_url: ${{ secrets.PROD_BUILD_REPO_URL }}
+      deploy_token: ${{ secrets.PROD_DEPLOY_HOOK_TOKEN }}
+      deploy_url: ${{ secrets.PROD_DEPLOY_HOOK_URL }}
+    steps:
+      - name: Download the production build artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: prod-build
+          path: ./prod-build
+      - name: Pull build repo
+        run: git clone "${build_url}"
+      - name: Replace with new build
+        run: |
+          cd mess-build-prod
+          rm -rf public src
+          cp -rf ../prod-build/. ./
+          git status
+          git diff --quiet || echo "Found diff!"
+      - name: Push build repo
+        run: |
+          cd mess-build-prod
+          git config user.name "Github Actions CI"
+          git config user.email "hall3web+ci@gmail.com"
+          git add .
+          git commit -m "Release update on `date`"
+          git push origin master
+      - name: Call deploy hook
+        run: |
+          curl --fail -X POST -H 'X-Deploy-Token: '${deploy_token} "${deploy_url}"
