@@ -433,7 +433,12 @@ export class AccountCtrl {
             .find({ permissions: { $size: 0 } })
             .populate({
                 path: 'tokens',
-                options: { sort: '-date', limit: 1 },
+                options: {
+                    sort: '-date',
+                    // use 'perDocumentLimit' instead of 'limit' to avoid empty tokens list for some users
+                    // more info: https://mongoosejs.com/docs/populate.html#limit-vs-perDocumentLimit
+                    perDocumentLimit: 1
+                },
                 select: 'date'
             });
 
