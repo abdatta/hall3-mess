@@ -336,6 +336,7 @@ export class AccountCtrl {
      *
      * @class AccountCtrl
      * @method fetchPhoto
+     * @deprecated
      */
     public fetchPhoto = (req: Request, res: Response) => {
         const url = `https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/${req.params.roll}_0.jpg`;

@@ -137,14 +137,27 @@ export class Server {
         }
     });
 
-    this.app.use(httpLogger('[:date] :method :url [:user] (:status) :post',
-      {
-        skip: (req, res) => !['.css', '.js', '.json', '.ico', '.jpg', '.jpeg', '.png']
-                              .every(ext => !req.url.includes(ext))
-                            || (req.url.endsWith('day') &&
-                               !req.url.endsWith(moment().format('dddd').toLowerCase()) &&
-                               !req.url.endsWith(moment().add(1, 'days').format('dddd').toLowerCase()))
-      }));
+    this.app.use(
+      httpLogger('[:date] :method :url [:user] (:status) :post', {
+        skip: (req) => {
+          // exclude logs for assets except if they are from api call
+          const ignoredExtensions = ['.css', '.js', '.json', '.ico', '.jpg', '.jpeg', '.png'];
+          if (!req.originalUrl.startsWith('/api/') && ignoredExtensions.some(ext => req.url.includes(ext))) {
+            return true;
+          }
+          // exclude spam logging of dishes api call for all days except today & tomorrow
+          if (
+            req.url.endsWith('day') &&
+            !req.url.endsWith(moment().format('dddd').toLowerCase()) &&
+            !req.url.endsWith(moment().add(1, 'days').format('dddd').toLowerCase())
+          ) {
+            return true;
+          }
+
+          return false;
+        }
+      })
+    );
 
     // use json bodyparser
     this.app.use(bodyParser.json());

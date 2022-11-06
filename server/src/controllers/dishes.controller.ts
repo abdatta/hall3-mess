@@ -14,7 +14,7 @@ export class DishesCtrl {
      * @constructor
      */
     constructor(private dishModel: Model<DishModel>) {
-        schedule.scheduleJob('0 1 * * *', this.cleanupOldFreqsOfDishes);
+        schedule.scheduleJob('1 0 * * *', this.cleanupOldFreqsOfDishes);
         console.log('scheduled: cleanup-old-freq-of-dishes at 00:01 AM every day.');
     }
 
